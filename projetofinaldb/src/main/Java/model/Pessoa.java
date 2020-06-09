@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Pessoa {
     private String nome;
-    private String cpf;
+    private Integer cpf;
     private String escolhaItem;
 
     public Pessoa (String nome, String cpf) {
