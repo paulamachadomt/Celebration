@@ -1,4 +1,3 @@
-Esboço projeto final banco de dados
+# Projeto final disciplina Banco de Dados
 
-
-Testando
+Modelagem de dados, prototipação e implementação.
