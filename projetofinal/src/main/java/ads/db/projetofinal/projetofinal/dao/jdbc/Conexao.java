@@ -5,14 +5,15 @@ import java.sql.DriverManager;
 
 public class Conexao {
     public static Connection getConexao() {
+        Settings settings = new Settings();
         Connection conexao = null;
         try {            
-            Class.forName(Settings.getDriver());
+            Class.forName(settings.getDriver());
             try {
                 conexao = DriverManager.getConnection(
-                    Settings.getUrl(),
-                    Settings.getUser(),
-                    Settings.getSenha()
+                    settings.getUrl(),
+                    settings.getUser(),
+                    settings.getSenha()
                 );
             } catch (Exception e) {
                 System.out.println("erro ao conectar no banco \n" + e);
