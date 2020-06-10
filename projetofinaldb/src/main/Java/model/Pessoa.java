@@ -6,7 +6,7 @@ import lombok.Data;
 public class Pessoa {
     private String nome;
     private Integer cpf;
-    private String escolhaItem;
+    private Integer codigoItem;
 
     public Pessoa (String nome, String cpf) {
         this.nome = nome;

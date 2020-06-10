@@ -1,0 +1,100 @@
+mysql> create database projetoFinalDB;
+
+mysql> use projetoFinalDB;
+Database changed
+
+mysql> create table Evento (
+    -> codigo int not null primary key auto_increment,
+    -> senha int not null,
+    -> local varchar(100),
+    -> data date,
+    -> descricao varchar(200)
+    -> );
+
+mysql> desc Evento;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| codigo    | int          | NO   | PRI | NULL    | auto_increment |
+| senha     | int          | NO   |     | NULL    |                |
+| local     | varchar(100) | YES  |     | NULL    |                |
+| data      | date         | YES  |     | NULL    |                |
+| descricao | varchar(200) | YES  |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+
+
+mysql> create table ComesBebes (
+    -> codigoItem int not null primary key auto_increment,
+    -> nomeItem varchar(30) not null
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+
+mysql> desc comesbebes;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| codigoItem | int         | NO   | PRI | NULL    | auto_increment |
+| nomeItem   | varchar(30) | NO   |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+
+mysql> create table Pessoa (
+    -> cpf char(11) not null primary key,
+    -> nome varchar(50) not null
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc pessoa;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| cpf   | char(11)    | NO   | PRI | NULL    |       |
+| nome  | varchar(50) | NO   |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+
+mysql> create table ListaComesBebes (
+    -> codigoEvento int not null,
+    -> codigoComesBebes int not null,
+    -> foreign key (codigoEvento) references Evento(codigo),
+    -> foreign key (codigoComesBebes) references ComesBebes(codigoItem)
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> desc ListaComesBebes;
++------------------+------+------+-----+---------+-------+
+| Field            | Type | Null | Key | Default | Extra |
++------------------+------+------+-----+---------+-------+
+| codigoEvento     | int  | NO   | MUL | NULL    |       |
+| codigoComesBebes | int  | NO   | MUL | NULL    |       |
++------------------+------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+mysql> create table ListaConvidados (
+    -> confirmacao boolean,
+    -> cpfPessoa char(11) not null,
+    -> codigoEvento int not null,
+    -> codigoComesBebes int,
+    -> foreign key (cpfPessoa) references Pessoa(cpf),
+    -> foreign key (codigoEvento) references Evento(codigo),
+    -> foreign key (codigoComesBebes) references ComesBebes(codigoItem)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> desc listaconvidados;
++------------------+------------+------+-----+---------+-------+
+| Field            | Type       | Null | Key | Default | Extra |
++------------------+------------+------+-----+---------+-------+
+| confirmacao      | tinyint(1) | YES  |     | NULL    |       |
+| cpfPessoa        | char(11)   | NO   | MUL | NULL    |       |
+| codigoEvento     | int        | NO   | MUL | NULL    |       |
+| codigoComesBebes | int        | YES  | MUL | NULL    |       |
++------------------+------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
