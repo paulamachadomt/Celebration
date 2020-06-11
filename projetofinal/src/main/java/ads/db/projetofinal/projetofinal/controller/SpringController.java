@@ -48,10 +48,36 @@ public class SpringController {
             retorno = "Nome não encontrado";
         } else {
             for (Pessoa pessoa : listaNomes) {
-                retorno += "ola," + pessoa.getNome() + "\n\n" + pessoa.getCpf();
+                retorno += "Olá, " + pessoa.getNome() + "\n\n" + pessoa.getCpf();
             }
         }
         return retorno;
     }
+
+    @GetMapping("/update")
+    public String atualizaNome(String nome, String cpf) {
+
+        Pessoa pessoa = new Pessoa(cpf, nome);
+
+        PessoaDAO update = new PessoaDAO();
+
+        boolean resultado = update.updatePessoa(pessoa);
+
+        pessoa = update.selectCPFPessoa(cpf);
+
+        return "ola," + pessoa.getNome() + "\n\n  " + resultado;
+    }
+
+    @GetMapping("/delete")
+    public String deletaPessoa(String cpf) {
+
+        PessoaDAO delete = new PessoaDAO();
+
+        boolean resultado = delete.deletePessoa(cpf);
+
+        return resultado == true ? "Deletado com sucesso." : "Erro ao deletar";
+    }
+
+    
 
 }

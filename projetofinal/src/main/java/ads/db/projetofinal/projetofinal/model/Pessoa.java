@@ -8,8 +8,7 @@ public class Pessoa {
     private String cpf;
     
     public Pessoa (String cpf, String nome) {
-        this.nome = nome;
         this.cpf = cpf;
+        this.nome = nome;
     }
-    
 }
