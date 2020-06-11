@@ -12,26 +12,30 @@ import ads.db.projetofinal.projetofinal.model.Pessoa;
 
 public class EventoDAO {
 
-    public boolean cadastroEvento(Evento evento) {
-        boolean resultado = false;
+    public int cadastroEvento(Evento evento) {
+        int codigo = -1;
         try {
             Connection conexao = Conexao.getConexao();
-            String comandoSQL = "INSERT INTO evento (senha, local, data, descricao, nome) VALUES (?, ?, ?, ?, ?)";
+            String comandoSQL = "INSERT INTO evento (local, data, descricao, nome) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement statement = conexao.prepareStatement(comandoSQL);
             statement.setInt(1, evento.getSenha());
             statement.setString(2, evento.getLocal());
             statement.setDate(3, Date.valueOf(evento.getData()));
             statement.setString(4, evento.getDescricao());
             statement.setString(5, evento.getNome());
-            if (statement.executeUpdate() >= 1) {
-                resultado = true;
+            statement.executeUpdate();
+            ResultSet resultSet = statement.executeQuery("SELECT LAST_INSERT_ID()");
+            if (resultSet.next()) {
+                codigo = resultSet.getInt(1);
+            } else {
+                System.out.println("Algum erro ao resgatar auto_increment evento \n" + e);
             }
             statement.close();
             conexao.close();
         } catch (Exception e) {
             System.out.println("Erro ao cadastrar evento \n" + e);
         }
-        return resultado;
+        return codigo;
     }
 
     public Evento selectSenhaEvento(Integer senha) {
@@ -43,8 +47,11 @@ public class EventoDAO {
             statement.setInt(1, senha);
             ResultSet resultadoSelect = statement.executeQuery();
             while (resultadoSelect.next()) {
-                evento = new Evento(resultadoSelect.getString("local"), resultadoSelect.getDate("data").toLocalDate(),
-                        resultadoSelect.getString("descricao"), resultadoSelect.getString("nome"));
+                evento = new Evento(
+                        resultadoSelect.getString("local"), 
+                        resultadoSelect.getDate("data").toLocalDate(),
+                        resultadoSelect.getString("descricao"), 
+                        resultadoSelect.getString("nome"));
                 evento.setCodigo(resultadoSelect.getInt("codigo"));
             }
             resultadoSelect.close();

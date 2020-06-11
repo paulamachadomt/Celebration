@@ -1,8 +1,12 @@
 package ads.db.projetofinal.projetofinal.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ads.db.projetofinal.projetofinal.dao.PessoaDAO;
@@ -77,9 +81,5 @@ public class PessoaController {
 
         return resultado == true ? "Deletado com sucesso." : "Erro ao deletar";
     }
-
-    
-
-    
 
 }

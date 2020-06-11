@@ -1,38 +1,59 @@
 package ads.db.projetofinal.projetofinal.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import ads.db.projetofinal.projetofinal.dao.EventoDAO;
+import ads.db.projetofinal.projetofinal.dao.PessoaDAO;
 import ads.db.projetofinal.projetofinal.model.Evento;
+import ads.db.projetofinal.projetofinal.model.Pessoa;
 
+@RestController
 public class EventoController {
-    
+
+    // @PostMapping("/localdate")
+    // public String testa(
+    // @RequestParam("localDate")
+    // @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    // LocalDate localDate) {
+
+    // System.out.println(localDate);
+
+    // System.out.println("" + localDate.getDayOfMonth()
+    // + localDate.getDayOfWeek() + localDate.getMonth() + localDate.getYear());
+
+    // return "" + localDate;
+    // }
+
     @PostMapping("/cadastroEvento")
     public String doGet(
-        String local,  
-        @RequestParam("localDate")
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) 
-        LocalDate localDate, 
-        String descricao, 
-        String nome
-        ) {
+            @RequestParam("localidade") String local,
+            @RequestParam("localDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data, 
+            String descricao,
+            String nome) {
 
-        Evento evento = new Evento(local, localDate, descricao, nome);
+        String retorno = "falha ao cadastrar evento";
 
-        // metodo que gera senhas
-
-        evento.setSenha(01);
+        Evento evento = new Evento(local, data, descricao, nome);
 
         EventoDAO cadastro = new EventoDAO();
 
-        boolean resultado = cadastro.cadastroEvento(evento);
+        Integer resultado = cadastro.cadastroEvento(evento);
 
-        return evento.getNome() + "\n\n" + resultado;
+        Integer senha;
+
+        if (resultado >= 1) {
+            evento.setCodigo(resultado);
+            evento.gerarSenhaEvento(resultado, data);
+        }
+
+        return evento.toString();
     }
 
     @GetMapping("/pesquisaCodEvento")
@@ -42,43 +63,43 @@ public class EventoController {
 
         Evento evento = pesquisa.selectCodEvento(codigo);
 
-        return evento == null ? "Evento não encontrado" : "Evento cadastrado: "+ evento.getNome();
+        return evento == null ? "Evento não encontrado" : "Evento cadastrado: " + evento.getNome();
 
         // TERNARIO --==> (condição) ? [true] : [false]
     }
 
-    // @GetMapping("/pesquisaNomeEvento")
-    // public String selectNome(String nome) {
+    @GetMapping("/pesquisaNomeEvento")
+    public String selectNome(String nome) {
 
-    //     PessoaDAO pesquisa = new PessoaDAO();
+        PessoaDAO pesquisa = new PessoaDAO();
 
-    //     ArrayList<Pessoa> listaNomes = pesquisa.selectNomePessoa(nome);
+        ArrayList<Pessoa> listaNomes = pesquisa.selectNomePessoa(nome);
 
-    //     String retorno = "";
+        String retorno = "";
 
-    //     if (listaNomes.isEmpty()) {
-    //         retorno = "Nome não encontrado";
-    //     } else {
-    //         for (Pessoa pessoa : listaNomes) {
-    //             retorno += "Olá, " + pessoa.getNome() + "\n\n" + pessoa.getCpf();
-    //         }
-    //     }
-    //     return retorno;
+        if (listaNomes.isEmpty()) {
+            retorno = "Nome não encontrado";
+        } else {
+            for (Pessoa pessoa : listaNomes) {
+                retorno += "Olá, " + pessoa.getNome() + "\n\n" + pessoa.getCpf();
+            }
+        }
+        return retorno;
     }
 
-    // @GetMapping("/update")
-    // public String atualizaNome(String nome, String cpf) {
+    @GetMapping("/updateEvento")
+    public String atualizaNome(String nome, String cpf) {
 
-    //     Pessoa pessoa = new Pessoa(cpf, nome);
+        Pessoa pessoa = new Pessoa(cpf, nome);
 
-    //     PessoaDAO update = new PessoaDAO();
+        PessoaDAO update = new PessoaDAO();
 
-    //     boolean resultado = update.updatePessoa(pessoa);
+        boolean resultado = update.updatePessoa(pessoa);
 
-    //     pessoa = update.selectCPFPessoa(cpf);
+        pessoa = update.selectCPFPessoa(cpf);
 
-    //     return "ola," + pessoa.getNome() + "\n\n  " + resultado;
-    // }
+        return "ola," + pessoa.getNome() + "\n\n  " + resultado;
+    }
 
     @GetMapping("/deleteEvento")
     public String deleteEvento(Integer codigo) {
@@ -89,4 +110,5 @@ public class EventoController {
 
         return resultado == true ? "Deletado com sucesso." : "Erro ao deletar";
     }
+
 }
