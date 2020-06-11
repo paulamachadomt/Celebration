@@ -115,3 +115,21 @@ mysql> desc listaconvidados;
 | codigoComesBebes | int        | YES  | MUL | NULL    |       |
 +------------------+------------+------+-----+---------+-------+
 4 rows in set (0.00 sec)
+
+
+mysql> alter table evento modify column senha int null;
+Query OK, 0 rows affected (0.20 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc evento;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| codigo    | int          | NO   | PRI | NULL    | auto_increment |
+| senha     | int          | YES  |     | NULL    |                |
+| local     | varchar(100) | YES  |     | NULL    |                |
+| data      | date         | YES  |     | NULL    |                |
+| descricao | varchar(200) | YES  |     | NULL    |                |
+| nome      | varchar(50)  | YES  |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)

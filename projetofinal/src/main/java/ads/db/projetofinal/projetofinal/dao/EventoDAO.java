@@ -18,18 +18,19 @@ public class EventoDAO {
             Connection conexao = Conexao.getConexao();
             String comandoSQL = "INSERT INTO evento (local, data, descricao, nome) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement statement = conexao.prepareStatement(comandoSQL);
-            statement.setInt(1, evento.getSenha());
-            statement.setString(2, evento.getLocal());
-            statement.setDate(3, Date.valueOf(evento.getData()));
-            statement.setString(4, evento.getDescricao());
-            statement.setString(5, evento.getNome());
+            statement.setString(1, evento.getLocal());
+            statement.setDate(2, Date.valueOf(evento.getData()));
+            statement.setString(3, evento.getDescricao());
+            statement.setString(4, evento.getNome());
             statement.executeUpdate();
             ResultSet resultSet = statement.executeQuery("SELECT LAST_INSERT_ID()");
             if (resultSet.next()) {
                 codigo = resultSet.getInt(1);
+                System.out.println(codigo);
             } else {
-                System.out.println("Algum erro ao resgatar auto_increment evento \n" + e);
+                System.out.println("Algum erro ao resgatar auto_increment evento \n");
             }
+            System.out.println(resultSet);
             statement.close();
             conexao.close();
         } catch (Exception e) {

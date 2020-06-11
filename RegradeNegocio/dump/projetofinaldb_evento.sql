@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `evento`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `evento` (
   `codigo` int NOT NULL AUTO_INCREMENT,
-  `senha` int NOT NULL,
+  `senha` int DEFAULT NULL,
   `local` varchar(100) DEFAULT NULL,
   `data` date DEFAULT NULL,
   `descricao` varchar(200) DEFAULT NULL,
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-10 23:59:23
+-- Dump completed on 2020-06-11 14:21:08
