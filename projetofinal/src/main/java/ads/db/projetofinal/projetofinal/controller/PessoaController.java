@@ -9,7 +9,7 @@ import ads.db.projetofinal.projetofinal.dao.PessoaDAO;
 import ads.db.projetofinal.projetofinal.model.Pessoa;
 
 @RestController
-public class SpringController {
+public class PessoaController {
 
     @GetMapping("/cadastro")
     public String doGet(String nome, String cpf) {
@@ -77,6 +77,8 @@ public class SpringController {
 
         return resultado == true ? "Deletado com sucesso." : "Erro ao deletar";
     }
+
+    
 
     
 

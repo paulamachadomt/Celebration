@@ -1,4 +1,4 @@
-package model;
+package ads.db.projetofinal.projetofinal.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
