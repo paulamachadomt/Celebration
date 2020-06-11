@@ -16,7 +16,7 @@ public class EventoDAO {
         int codigo = -1;
         try {
             Connection conexao = Conexao.getConexao();
-            String comandoSQL = "INSERT INTO evento (local, data, descricao, nome) VALUES (?, ?, ?, ?, ?)";
+            String comandoSQL = "INSERT INTO evento (local, data, descricao, nome) VALUES (?, ?, ?, ?)";
             PreparedStatement statement = conexao.prepareStatement(comandoSQL);
             statement.setString(1, evento.getLocal());
             statement.setDate(2, Date.valueOf(evento.getData()));

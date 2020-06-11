@@ -46,8 +46,6 @@ public class EventoController {
 
         Integer resultado = cadastro.cadastroEvento(evento);
 
-        Integer senha;
-
         if (resultado >= 1) {
             evento.setCodigo(resultado);
             evento.gerarSenhaEvento(resultado, data);
