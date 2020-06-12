@@ -36,10 +36,10 @@ public class Evento {
     }
 
     // gerar senha de evento 
-    public void gerarSenhaEvento(int codigo, LocalDate data){
+    public void gerarSenhaEvento(){
         
         // ==---> senha é: [codigo] + [ano] + [dia]
-        String concatSenha = "" + codigo + "" + data.getYear() + "" + data.getDayOfMonth() + "";
+        String concatSenha = "" + this.codigo + "" + this.data.getYear() + "" + this.data.getDayOfMonth() + "";
 
         this.senha = Integer.parseInt(concatSenha);
     }

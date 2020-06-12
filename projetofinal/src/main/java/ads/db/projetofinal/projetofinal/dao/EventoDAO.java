@@ -12,6 +12,16 @@ import ads.db.projetofinal.projetofinal.model.Pessoa;
 
 public class EventoDAO {
 
+    public Evento gerarEvento(Evento gerarEvento){
+        Integer resultado = cadastroEvento(gerarEvento);
+        if (resultado >= 1) {
+            gerarEvento.setCodigo(resultado);
+            gerarEvento.gerarSenhaEvento();
+            updateEvento(gerarEvento);
+        }
+        return gerarEvento;
+    }
+
     public int cadastroEvento(Evento evento) {
         int codigo = -1;
         try {
@@ -26,11 +36,9 @@ public class EventoDAO {
             ResultSet resultSet = statement.executeQuery("SELECT LAST_INSERT_ID()");
             if (resultSet.next()) {
                 codigo = resultSet.getInt(1);
-                System.out.println(codigo);
             } else {
                 System.out.println("Algum erro ao resgatar auto_increment evento \n");
             }
-            System.out.println(resultSet);
             statement.close();
             conexao.close();
         } catch (Exception e) {
@@ -49,11 +57,12 @@ public class EventoDAO {
             ResultSet resultadoSelect = statement.executeQuery();
             while (resultadoSelect.next()) {
                 evento = new Evento(
+                        resultadoSelect.getInt("codigo"),
+                        resultadoSelect.getInt("senha"),
                         resultadoSelect.getString("local"), 
                         resultadoSelect.getDate("data").toLocalDate(),
                         resultadoSelect.getString("descricao"), 
                         resultadoSelect.getString("nome"));
-                evento.setCodigo(resultadoSelect.getInt("codigo"));
             }
             resultadoSelect.close();
             statement.close();
@@ -100,6 +109,7 @@ public class EventoDAO {
             statement.setDate(3, Date.valueOf(evento.getData()));
             statement.setString(4, evento.getDescricao());
             statement.setString(5, evento.getNome());
+            statement.setInt(6, evento.getCodigo());
             if (statement.executeUpdate() >= 1) {
                 resultado = true;
             }

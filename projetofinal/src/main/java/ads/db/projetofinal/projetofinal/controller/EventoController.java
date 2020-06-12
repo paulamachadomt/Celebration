@@ -38,19 +38,12 @@ public class EventoController {
             String descricao,
             String nome) {
 
-        String retorno = "falha ao cadastrar evento";
-
-        Evento evento = new Evento(local, data, descricao, nome);
-
         EventoDAO cadastro = new EventoDAO();
 
-        Integer resultado = cadastro.cadastroEvento(evento);
-
-        if (resultado >= 1) {
-            evento.setCodigo(resultado);
-            evento.gerarSenhaEvento(resultado, data);
-        }
-
+        Evento evento = cadastro.gerarEvento(
+            new Evento(local, data, descricao, nome)
+            );
+        
         return evento.toString();
     }
 
