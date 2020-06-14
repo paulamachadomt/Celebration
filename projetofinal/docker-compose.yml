@@ -1,12 +1,14 @@
 version: '3.7'
 services:
   db:
-    image: mysql:5.7
+    image: mysql:latest #5.7
+    volumes: 
+      - ./db/:/var/lib/mysql
     restart: always
     command: --default-authentication-plugin=mysql_native_password    
     environment:
-      MYSQL_ROOT_PASSWORD: "pass"
-      MYSQL_DATABASE: "db"
+      MYSQL_ROOT_PASSWORD: "123456"
+      MYSQL_DATABASE: "projetofinaldb"
     ports:
       - "3306:3306"
   adminer:

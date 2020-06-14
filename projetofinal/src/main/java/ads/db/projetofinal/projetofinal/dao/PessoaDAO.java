@@ -14,7 +14,7 @@ public class PessoaDAO {
 
         try {
             Connection conexao = Conexao.getConexao();
-            String comandoSQL = "INSERT INTO Pessoa VALUES (?, ?)";
+            String comandoSQL = "INSERT INTO pessoa VALUES (?, ?)";
             PreparedStatement statement = conexao.prepareStatement(comandoSQL);
             statement.setString(1, pessoa.getCpf());
             statement.setString(2, pessoa.getNome());
