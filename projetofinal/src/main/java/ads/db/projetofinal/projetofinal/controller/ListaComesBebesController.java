@@ -24,7 +24,7 @@ public class ListaComesBebesController {
         // abstrair para "pesquisar/cadastrar item de festa"
         ComesBebes comesBebes = new ComesBebesDAO().selectNomeItemUnico(nomeItem);
         if (comesBebes == null) {
-            comesBebes = new ComesBebes(new ComesBebesDAO().cadastrarItem(nomeItem), nomeItem);
+            comesBebes = new ComesBebes(new ComesBebesDAO().cadastrarItem(nomeItem), nomeItem); 
         }
         ListaComesBebes novoRegistroComesBebesEvento = new ListaComesBebes(comesBebes.getCodigoItem(), codigoEvento);
         // agora cadastra na tabela
@@ -36,7 +36,7 @@ public class ListaComesBebesController {
                 + "  || " + novoRegistroComesBebesEvento.toString();
     }
 
-    @GetMapping("/listaComesBebesEvento")
+    @GetMapping("/listaComesBebesEvento") 
     public String listaComesBebesEvento(Integer codigoEvento) {
 
         ArrayList<ComesBebes> listaComesBebes = new ArrayList<>();

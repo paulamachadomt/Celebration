@@ -1,4 +1,4 @@
-package ads.db.projetofinal.projetofinal.dao;
+package ads.db.projetofinal.projetofinal.model;
 
 import lombok.Data;
 

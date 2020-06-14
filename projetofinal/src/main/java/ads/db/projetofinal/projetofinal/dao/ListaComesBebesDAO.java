@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import ads.db.projetofinal.projetofinal.dao.jdbc.Conexao;
+import ads.db.projetofinal.projetofinal.model.ListaComesBebes;
 
 public class ListaComesBebesDAO {
 
