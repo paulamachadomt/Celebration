@@ -7,13 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ads.db.projetofinal.projetofinal.dao.ComesBebesDAO;
 import ads.db.projetofinal.projetofinal.dao.EventoDAO;
-import ads.db.projetofinal.projetofinal.dao.ListaComesBebes;
+import ads.db.projetofinal.projetofinal.model.ListaComesBebes;
 import ads.db.projetofinal.projetofinal.dao.ListaComesBebesDAO;
 import ads.db.projetofinal.projetofinal.model.ComesBebes;
 import ads.db.projetofinal.projetofinal.model.Evento;
 
 @RestController
 public class ListaComesBebesController {
+
+    ArrayList<ListaComesBebesDAO> listaComesBebes = new ArrayList<>();
 
     /**
      * Esse metodo é complicado e deve ser alterado com cuidado. Apenas a criação do

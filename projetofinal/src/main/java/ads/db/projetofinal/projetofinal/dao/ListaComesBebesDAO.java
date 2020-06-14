@@ -50,7 +50,13 @@ public class ListaComesBebesDAO {
         return listaItens;
     }
 
-    // Update doesnt need
+    public boolean updateListaComesBebes(){
+        boolean resultado = false;
+        try {
+        } catch (Exception e) {
+        }
+        return resultado;
+    }
 
     public boolean deletarListaComesBebes(Integer codigoEvento, Integer codigoComesBebes) {
         boolean resultado = false;

@@ -1,7 +1,6 @@
 package ads.db.projetofinal.projetofinal.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import lombok.Data;
 
