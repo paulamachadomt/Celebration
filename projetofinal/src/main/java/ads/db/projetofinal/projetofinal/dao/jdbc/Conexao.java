@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class Conexao {
+    
     public static Connection getConexao() {
         Settings settings = new Settings();
         Connection conexao = null;
@@ -23,4 +24,5 @@ public class Conexao {
         }
         return conexao;
     }
+
 }

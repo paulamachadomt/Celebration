@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class Pessoa {
+    
     private String nome;
     private String cpf;
     
@@ -11,4 +12,5 @@ public class Pessoa {
         this.cpf = cpf;
         this.nome = nome;
     }
+
 }

@@ -4,11 +4,9 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 import ads.db.projetofinal.projetofinal.dao.jdbc.Conexao;
 import ads.db.projetofinal.projetofinal.model.Evento;
-import ads.db.projetofinal.projetofinal.model.Pessoa;
 
 public class EventoDAO {
 

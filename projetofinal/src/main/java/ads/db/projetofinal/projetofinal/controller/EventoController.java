@@ -1,7 +1,6 @@
 package ads.db.projetofinal.projetofinal.controller;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,29 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ads.db.projetofinal.projetofinal.dao.EventoDAO;
-import ads.db.projetofinal.projetofinal.dao.PessoaDAO;
 import ads.db.projetofinal.projetofinal.model.Evento;
-import ads.db.projetofinal.projetofinal.model.Pessoa;
 
 @RestController
 public class EventoController {
-
-    // @PostMapping("/localdate")
-    // public String testa(
-    // @RequestParam("localDate")
-    // @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    // LocalDate localDate) {
-
-    // System.out.println(localDate);
-
-    // System.out.println("" + localDate.getDayOfMonth()
-    // + localDate.getDayOfWeek() + localDate.getMonth() + localDate.getYear());
-
-    // return "" + localDate;
-    // }
-
-    // TERNARIO --==> (condição) ? [true] : [false]
-
+    
     @PostMapping("/cadastroEvento")
     public String doGet(
         @RequestParam("localidade") String local,

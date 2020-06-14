@@ -10,4 +10,6 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 
+	// TERNARIO --==> (condição) ? [true] : [false]
+
 }

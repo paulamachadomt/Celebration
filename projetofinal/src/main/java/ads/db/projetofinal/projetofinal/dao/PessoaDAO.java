@@ -9,6 +9,7 @@ import ads.db.projetofinal.projetofinal.dao.jdbc.Conexao;
 import ads.db.projetofinal.projetofinal.model.Pessoa;
 
 public class PessoaDAO {
+    
     public boolean cadastrarPessoa(Pessoa pessoa) {
         boolean resultado = false;
 
@@ -106,4 +107,5 @@ public class PessoaDAO {
         }
         return resultado;
     }
+
 }

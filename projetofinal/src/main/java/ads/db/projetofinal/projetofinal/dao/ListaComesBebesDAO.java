@@ -68,6 +68,5 @@ public class ListaComesBebesDAO {
             System.out.println("Item não encontrado" + e);
         }
         return resultado;
-
     }
 }

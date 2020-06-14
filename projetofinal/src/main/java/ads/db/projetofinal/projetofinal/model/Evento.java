@@ -14,10 +14,6 @@ public class Evento {
     private String descricao;
     private String nome;
 
-    private ArrayList<Pessoa> convidados;
-    private ArrayList<ComesBebes> comesBebes;
-
-    // the start event object
     public Evento(String local, LocalDate data, String descricao, String nome) {
         this.local = local;
         this.data = data;
@@ -25,7 +21,6 @@ public class Evento {
         this.nome = nome;
     }
 
-    // the final event object
     public Evento(Integer codigo, Integer senha, String local, LocalDate data, String descricao, String nome) {
         this.codigo = codigo;
         this.senha = senha;
@@ -38,7 +33,7 @@ public class Evento {
     // gerar senha de evento 
     public void gerarSenhaEvento(){
         
-        // ==---> senha é: [codigo] + [ano] + [dia]
+        // =-->   senha é:      + [codigo]         + [ano]                    + [dia]
         String concatSenha = "" + this.codigo + "" + this.data.getYear() + "" + this.data.getDayOfMonth() + "";
 
         this.senha = Integer.parseInt(concatSenha);

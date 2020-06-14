@@ -30,9 +30,7 @@ public class ListaComesBebesController {
         // agora cadastra na tabela
         new ListaComesBebesDAO().cadastrarListaComesBebes(novoRegistroComesBebesEvento);
 
-        /**
-         * Apenas a titulo de organização inicial dos crud e controllers
-         */
+        // Apenas a titulo de organização inicial dos crud e controllers
         Evento evento = new EventoDAO().selectCodEvento(codigoEvento);
         return "Foi registrado no evento: " + evento.toString() + " o item comesBebes: " + comesBebes.toString()
                 + "  || " + novoRegistroComesBebesEvento.toString();
@@ -57,7 +55,6 @@ public class ListaComesBebesController {
         boolean resultado = new ListaComesBebesDAO().deletarListaComesBebes(codigoEvento, codigoComesBebes);
 
         return resultado ? "codigoComesBebes deletado com sucesso" : "falha ao deletar";
-    
     }
 
 }
