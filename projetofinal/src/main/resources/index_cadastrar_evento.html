@@ -7,28 +7,39 @@
     <title>Document</title>
 </head>
 
-<body>
-    <div style="background-color: cornflowerblue; margin: 5px;">
+<body style="display: block;">
+    <div style="color: white; background-color: cornflowerblue; margin: 5px; display: block;">
+        <p>CRIAR EVENTO</p>
         <form action="http://localhost:8080/cadastroEvento" method="POST">
-            <input type="text" name="localidade" id="localidade">
-            <input type="date" name="localDate" id="localDate">
-            <input type="text" name="descricao" id="descricao">
-            <input type="text" name="nome" id="nome">
+            <label for="localidade">localidade</label>
+            <input type="text" name="localidade" id="localidade"> <br>
+            <label for="localDate">Data</label>
+            <input type="date" name="localDate" id="localDate"> <br>
+            <label for="descricao">descricao</label>
+            <input type="text" name="descricao" id="descricao"> <br>
+            <label for="nome">nome</label>
+            <input type="text" name="nome" id="nome"> <br>
             <input type="submit">
         </form>
     </div>
 
-    <div style="background-color: rgb(207, 237, 100);">
+    <div style="background-color: rgb(207, 237, 100); margin: 5px;  display: block;">
+        <p>ATUALIZAR EVENTO</p>
         <form action="http://localhost:8080/updateEvento" method="POST">
-            <input type="number" name="codigo" id="codigo">
-            <input type="number" name="senha" id="senha">
-            <input type="text" name="localidade" id="localidade">
-            <input type="date" name="localDate" id="localDate">
-            <input type="text" name="descricao" id="descricao">
-            <input type="text" name="nome" id="nome">
+            <label for="codigo">codigo</label>
+            <input type="number" name="codigo" id="codigo"> <br>
+            <label for="senha">senha</label>
+            <input type="number" name="senha" id="senha"> <br>
+            <label for="localidade">localidade</label>
+            <input type="text" name="localidade" id="localidade"> <br>
+            <label for="localDate">Data</label>
+            <input type="date" name="localDate" id="localDate"> <br>
+            <label for="descricao">descricao</label>
+            <input type="text" name="descricao" id="descricao"> <br>
+            <label for="nome">nome</label>
+            <input type="text" name="nome" id="nome"> <br>
             <input type="submit">
         </form>
     </div>
 </body>
-
 </html>

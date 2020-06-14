@@ -8,9 +8,7 @@ public class ComesBebes {
     private Integer codigoItem;
     
     public ComesBebes(Integer codigoItem, String nomeItem) {
-        this.codigoItem = codigoItem;
+        this.codigoItem =codigoItem;
         this.nomeItem = nomeItem;
-        
     }
-
 }

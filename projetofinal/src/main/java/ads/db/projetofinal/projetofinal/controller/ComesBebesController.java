@@ -17,9 +17,9 @@ public class ComesBebesController {
 
         ComesBebesDAO cadastro = new ComesBebesDAO();
 
-        boolean resultado = cadastro.cadastrarItem(nomeItem);
+        int codigo = cadastro.cadastrarItem(nomeItem);
 
-        return nomeItem + "\n\n" + resultado;
+        return nomeItem + "\n\n codigo do item: " + codigo;
     }
 
     @GetMapping("/pesquisaCodigoItem")
