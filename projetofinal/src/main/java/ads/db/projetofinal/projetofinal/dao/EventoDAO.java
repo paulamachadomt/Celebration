@@ -12,6 +12,10 @@ import ads.db.projetofinal.projetofinal.model.Pessoa;
 
 public class EventoDAO {
 
+    /**
+     * Para gerar senha de evento é necessário o valor do código auto_increment. 
+     * Esse método cadastra, gera a senha e atualiza. Portanto gera o evento inicial. 
+     */
     public Evento gerarEvento(Evento gerarEvento){
         Integer resultado = cadastroEvento(gerarEvento);
         if (resultado >= 1) {
@@ -77,17 +81,18 @@ public class EventoDAO {
         Evento evento = null;
         try {
             Connection conexao = Conexao.getConexao();
-            String comandoSQL = "SELECT * FROM evento WHERE senha = ?";
+            String comandoSQL = "SELECT * FROM evento WHERE codigo = ?";
             PreparedStatement statement = conexao.prepareStatement(comandoSQL);
             statement.setInt(1, codigo);
             ResultSet resultadoSelect = statement.executeQuery();
             while (resultadoSelect.next()) {
                 evento = new Evento(
+                    resultadoSelect.getInt("codigo"),
+                    resultadoSelect.getInt("senha"),
                     resultadoSelect.getString("local"), 
                     resultadoSelect.getDate("data").toLocalDate(),
                     resultadoSelect.getString("descricao"), 
                     resultadoSelect.getString("nome"));
-                evento.setCodigo(resultadoSelect.getInt("codigo"));
             }
             resultadoSelect.close();
             statement.close();

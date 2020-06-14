@@ -8,13 +8,27 @@
 </head>
 
 <body>
-    <form action="http://localhost:8080/cadastroEvento" method="POST">
-        <input type="text" name="localidade" id="localidade">
-        <input type="date" name="localDate" id="localDate">
-        <input type="text" name="descricao" id="descricao">
-        <input type="text" name="nome" id="nome">
-        <input type="submit">
-    </form>
+    <div style="background-color: cornflowerblue; margin: 5px;">
+        <form action="http://localhost:8080/cadastroEvento" method="POST">
+            <input type="text" name="localidade" id="localidade">
+            <input type="date" name="localDate" id="localDate">
+            <input type="text" name="descricao" id="descricao">
+            <input type="text" name="nome" id="nome">
+            <input type="submit">
+        </form>
+    </div>
+
+    <div style="background-color: rgb(207, 237, 100);">
+        <form action="http://localhost:8080/updateEvento" method="POST">
+            <input type="number" name="codigo" id="codigo">
+            <input type="number" name="senha" id="senha">
+            <input type="text" name="localidade" id="localidade">
+            <input type="date" name="localDate" id="localDate">
+            <input type="text" name="descricao" id="descricao">
+            <input type="text" name="nome" id="nome">
+            <input type="submit">
+        </form>
+    </div>
 </body>
 
 </html>

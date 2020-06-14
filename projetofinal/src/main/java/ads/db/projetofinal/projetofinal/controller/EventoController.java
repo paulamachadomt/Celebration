@@ -31,65 +31,63 @@ public class EventoController {
     // return "" + localDate;
     // }
 
+    // TERNARIO --==> (condição) ? [true] : [false]
+
     @PostMapping("/cadastroEvento")
     public String doGet(
-            @RequestParam("localidade") String local,
-            @RequestParam("localDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data, 
-            String descricao,
-            String nome) {
+        @RequestParam("localidade") String local,
+        @RequestParam("localDate") 
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data, 
+        String descricao,
+        String nome) {
 
         EventoDAO cadastro = new EventoDAO();
 
-        Evento evento = cadastro.gerarEvento(
-            new Evento(local, data, descricao, nome)
-            );
-        
+        Evento evento = cadastro.gerarEvento(new Evento(local, data, descricao, nome));
+
         return evento.toString();
     }
 
+    @GetMapping("/pesquisaSenhaEvento")
+    public String doGet(Integer senha) {
+
+        EventoDAO pesquisa = new EventoDAO();
+
+        Evento evento = pesquisa.selectSenhaEvento(senha);
+
+        return evento == null ? "Evento não encontrado" : "Evento cadastrado: " + evento.toString();
+    }
+
     @GetMapping("/pesquisaCodEvento")
-    public String doGet(Integer codigo) {
+    public String pesquisaCod(Integer codigo) {
 
         EventoDAO pesquisa = new EventoDAO();
 
         Evento evento = pesquisa.selectCodEvento(codigo);
 
-        return evento == null ? "Evento não encontrado" : "Evento cadastrado: " + evento.getNome();
-
-        // TERNARIO --==> (condição) ? [true] : [false]
+        return evento == null ? "Evento não encontrado" : "Evento cadastrado: " + evento.toString();
     }
 
-    @GetMapping("/pesquisaNomeEvento")
-    public String selectNome(String nome) {
+    @PostMapping("/updateEvento")
+    public String atualizaEvento(
+        Integer codigo,
+        Integer senha,
+        @RequestParam("localidade") String local,
+        @RequestParam("localDate") 
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data, 
+        String descricao,
+        String nome) {
 
-        PessoaDAO pesquisa = new PessoaDAO();
+        System.out.println(codigo +""+ senha+""+ local+""+ data+""+""+ descricao+""+ nome);
 
-        ArrayList<Pessoa> listaNomes = pesquisa.selectNomePessoa(nome);
+        EventoDAO atualiza = new EventoDAO();
 
-        String retorno = "";
+        Evento evento = new Evento(codigo, senha, local, data, descricao, nome);
+        System.out.println(evento.toString());
 
-        if (listaNomes.isEmpty()) {
-            retorno = "Nome não encontrado";
-        } else {
-            for (Pessoa pessoa : listaNomes) {
-                retorno += "Olá, " + pessoa.getNome() + "\n\n" + pessoa.getCpf();
-            }
-        }
-        return retorno;
-    }
+        boolean resultado = atualiza.updateEvento(evento);
 
-    @GetMapping("/updateEvento")
-    public String atualizaNome(String nome, String cpf) {
-
-        Pessoa pessoa = new Pessoa(cpf, nome);
-
-        PessoaDAO update = new PessoaDAO();
-
-        boolean resultado = update.updatePessoa(pessoa);
-
-        pessoa = update.selectCPFPessoa(cpf);
-
-        return "ola," + pessoa.getNome() + "\n\n  " + resultado;
+        return "ola," + evento.getNome() + "\n\n  " + resultado;
     }
 
     @GetMapping("/deleteEvento")
