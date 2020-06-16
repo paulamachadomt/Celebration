@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class ListaConvidados {
 
-    Boolean confirmacao;
-    String cpfPessoa;
-    Integer codigoEvento;
-    Integer codigoComesBebes;
+    private Boolean confirmacao;
+    private String cpfPessoa;
+    private Integer codigoEvento;
+    private Integer codigoComesBebes;
 
     public ListaConvidados(boolean confirmacao, String cpfPessoa, Integer codigoEvento) {
         this.confirmacao = confirmacao;

@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class ListaComesBebes {
 
-    Integer codigoEvento;
-    Integer codigoComesBebes;
+    private Integer codigoEvento;
+    private Integer codigoComesBebes;
     
 
     public ListaComesBebes(Integer codigoEvento, Integer codigoComesBebes) {
