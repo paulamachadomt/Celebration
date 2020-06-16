@@ -1,4 +1,4 @@
-package ads.db.projetofinal.projetofinal.controller;
+package ads.db.projetofinal.projetofinal.business;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ import ads.db.projetofinal.projetofinal.model.ComesBebes;
 import ads.db.projetofinal.projetofinal.model.Evento;
 
 @RestController
-public class ListaComesBebesController {
+public class ListaComesBebesControl {
 
     ArrayList<ListaComesBebesDAO> listaComesBebes = new ArrayList<>();
 
