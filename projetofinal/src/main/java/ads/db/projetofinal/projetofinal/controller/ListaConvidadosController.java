@@ -1,92 +1,63 @@
 package ads.db.projetofinal.projetofinal.controller;
 
-import java.util.ArrayList;
-
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import ads.db.projetofinal.projetofinal.dao.ListaConvidadosDAO;
-import ads.db.projetofinal.projetofinal.dao.PessoaDAO;
-import ads.db.projetofinal.projetofinal.model.ListaConvidados;
-import ads.db.projetofinal.projetofinal.model.Pessoa;
 
 @RestController
 public class ListaConvidadosController {
 
-    ArrayList<ListaConvidados> listaConvidados;
+    @PostMapping("/convidado")
+    public String createConvidado() {
 
-    @GetMapping("/cadastroConvidadosEvento")
-    public String doGet(String nomePessoa, String cpfPessoa, Integer codigoEvento) {
+        //params
+        //nome, cpf
 
-        // Carrega lista de convidados
-        listaConvidados = new ListaConvidadosDAO().readConvidado();
-        System.out.println(listaConvidados.toString());
+        //verificar se existe na base, 
+        //cadastrar se não houver; 
+        //associar à lista de evento; 
+        //atualizar o cookie do Evento; 
+        //e retornar os dados atualizados (inserindo na lista).
 
-        boolean resultado = false;
-
-        Pessoa convidado = new PessoaDAO().readPessoaByCPF(cpfPessoa);
-        if (convidado == null) {
-            String cadastroPessoa = new PessoaController().doGet(nomePessoa, cpfPessoa);
-            System.out.println("Resultado do cadastro: " + cadastroPessoa);
-            resultado = new ListaConvidadosDAO()
-                    .createConvidado(new ListaConvidados(false, cpfPessoa, codigoEvento));
-        } else {
-            boolean isPresent_event = false;
-            for (ListaConvidados convidadoConfima : listaConvidados) {
-                if (convidado.getCpf().equals(cpfPessoa)) {
-                    isPresent_event = true;
-                }
-            }
-            if (isPresent_event == false) {
-                resultado = new ListaConvidadosDAO()
-                        .createConvidado(new ListaConvidados(false, cpfPessoa, codigoEvento));
-            }
-        }
-        return "" + resultado;
+        return "";
     }
 
-    @GetMapping("/confirmarPresenca")
-    public String doGet(boolean confirmacao, String cpfPessoa, Integer codigoEvento) {
+    @DeleteMapping("/convidado") 
+    public String removeConvidado() {
 
-        boolean resultado = false;
+        //params
+        //cpf
 
-        resultado= new ListaConvidadosDAO().updateConvidadoByConfirmacao(new ListaConvidados(confirmacao, cpfPessoa, codigoEvento));
+        //remove da tabela lista de convidados;
+        return "";
+    }
+    
+    @PostMapping("/convidado/confirma")
+    public String confirmaConvidado() {
 
-        return "Confirmada a presença ? : " + resultado;
+        // Se não confirmado, deve confirmar
+        // se confirmado, deve desconfirmar
+
+        //params
+        //cpg
+
+        //leitura do cookies, 
+        //atualiza a lista de convidados a FLAG de confirmação do convidado.
+        //Atualiza cookies do evento; 
+        //Libera combobox de alimentos.
+        return "";
     }
 
-    @GetMapping("/confirmarComesBebes")
-    public String doGet(Integer codigoComesBebes, String cpfPessoa, Integer codigoEvento) {
+    @PostMapping("/convidado/item/")
+    public String escolhaItem() {
 
-        boolean resultado = false;
+        //params
+        //cpf, código do alimento
 
-        resultado = new ListaConvidadosDAO().updateConvidadoByComesBebes(new ListaConvidados(codigoComesBebes, cpfPessoa, codigoEvento));
-
-        return "Confirmou que levará o produto : " + codigoComesBebes;
+        //Leitura do cookies; 
+        //atualiza o codigo na tabela lista de convidados. 
+        //Atualiza cookies do evento; 
+        //Bloqueia combobox de alimentos.
+       return "";
     }
-
-    @GetMapping("/listaConvidados")
-    public String listaConvidados(Integer codigoEvento) {
-
-        ArrayList<Pessoa> listaConvidados = new ArrayList<>();
-
-        ArrayList<ListaConvidados> listaConvidadosEvento = new ListaConvidadosDAO().readConvidado();
-
-        for (ListaConvidados convidadosEvento : listaConvidadosEvento) {
-            listaConvidados.add(new PessoaDAO().readPessoaByCPF(convidadosEvento.getCpfPessoa()));
-        }
-        return "" + listaConvidados.toString();
-    }
-
-    @GetMapping("/deletaConvidado")
-    public String listaComesBebesEvento(Integer codigoEvento, Integer cpfPessoa) {
-
-        boolean resultado = new ListaConvidadosDAO().deleteConvidadoByCodigoCPF(codigoEvento, cpfPessoa);
-
-        return resultado ? "Convidado deletado com sucesso" : "falha ao deletar convidado";
-    }
-
-
-
-
 }

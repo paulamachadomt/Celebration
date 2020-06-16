@@ -1,84 +1,61 @@
 package ads.db.projetofinal.projetofinal.controller;
 
-import java.time.LocalDate;
-
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import ads.db.projetofinal.projetofinal.dao.EventoDAO;
-import ads.db.projetofinal.projetofinal.model.Evento;
 
 @RestController
 public class EventoController {
-    
-    @PostMapping("/cadastroEvento")
-    public String doGet(
-        @RequestParam("localidade") String local,
-        @RequestParam("localDate") 
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data, 
-        String descricao,
-        String nome) {
 
-        EventoDAO eventoDAO = new EventoDAO();
+    @PostMapping("/evento")
+    public String createEvento() {
 
-        Evento evento = eventoDAO.gerarEvento(new Evento(local, data, descricao, nome));
+        // Params:
+        // Nome_festa, data_festa, Local_festa
 
-        return evento.toString();
+        // --> Cria a primeira versão na base de dados, retorna o evento com código ->
+        // cadastr como evento da pessoa;
+        // --> Cria um cookie com os dados do evento
+        // --> direciona para a página de edição do evento {envaminha view}
+
+        return "";
     }
 
-    @GetMapping("/pesquisaSenhaEvento")
-    public String doGet(Integer senha) {
+    @GetMapping("/evento")
+    public String readEvento() {
 
-        EventoDAO eventoDAO = new EventoDAO();
+        // Carregar dados atualizados do evento,
+        // preencher cookies no usuário;
+        // e direcionar para a pagina de evento;
 
-        Evento evento = eventoDAO.readEventoBySenha(senha);
-
-        return evento == null ? "Evento não encontrado" : "Evento cadastrado: " + evento.toString();
+        return "resgatei um evento";
     }
 
-    @GetMapping("/pesquisaCodEvento")
-    public String pesquisaCod(Integer codigo) {
+    @PutMapping("/evento")
+    public String updateEvento() {
 
-        EventoDAO eventoDAO = new EventoDAO();
+        // params:
+        // cpf
+        // evento(todos os meta-dados)
 
-        Evento evento = eventoDAO.readEventoByCodigo(codigo);
-
-        return evento == null ? "Evento não encontrado" : "Evento cadastrado: " + evento.toString();
+        // Cookie (faz a leitura do cookie de evento)
+        // atualzia o evento por completo na base // nome, local, data, descrição,
+        return "";
     }
 
-    @PostMapping("/updateEvento")
-    public String atualizaEvento(
-        Integer codigo,
-        Integer senha,
-        @RequestParam("localidade") String local,
-        @RequestParam("localDate") 
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data, 
-        String descricao,
-        String nome) {
+    @DeleteMapping("/evento")
+    public String deleteEvento() {
 
-        System.out.println(codigo +""+ senha+""+ local+""+ data+""+""+ descricao+""+ nome);
+        // params:
+        // códiogo_evento
 
-        EventoDAO eventoDAO = new EventoDAO();
-
-        Evento evento = new Evento(codigo, senha, local, data, descricao, nome);
-        System.out.println(evento.toString());
-
-        boolean resultado = eventoDAO.updateEvento(evento);
-
-        return "ola," + evento.getNome() + "\n\n  " + resultado;
+        // deleta a lista d
+        // deleta a lista de convidados e
+        // deleta o evento;
+        // direciona para a página inicial {index}
+        return "";
     }
-
-    @GetMapping("/deleteEvento")
-    public String deleteEvento(Integer codigo) {
-
-        EventoDAO eventoDAO = new EventoDAO();
-
-        boolean resultado = eventoDAO.deleteEventoByCodigo(codigo);
-
-        return resultado == true ? "Deletado com sucesso." : "Erro ao deletar";
-    }
-
 }

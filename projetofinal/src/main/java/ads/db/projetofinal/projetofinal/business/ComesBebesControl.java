@@ -1,4 +1,4 @@
-package ads.db.projetofinal.projetofinal.controller;
+package ads.db.projetofinal.projetofinal.business;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,7 @@ import ads.db.projetofinal.projetofinal.dao.ComesBebesDAO;
 import ads.db.projetofinal.projetofinal.model.ComesBebes;
 
 @RestController
-public class ComesBebesController {
+public class ComesBebesControl {
 
     @GetMapping("/cadastroItem")
     public String cadastrar(String nomeItem) {
