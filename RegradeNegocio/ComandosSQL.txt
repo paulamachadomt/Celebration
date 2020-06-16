@@ -133,3 +133,77 @@ mysql> desc evento;
 | nome      | varchar(50)  | YES  |     | NULL    |                |
 +-----------+--------------+------+-----+---------+----------------+
 6 rows in set (0.00 sec)
+
+
+mysql> alter table evento drop column senha;
+
+mysql> alter table comesbebes rename to Item;
+
+mysql> alter table listacomesbebes rename to ItemEvento;
+
+mysql> alter table listaconvidados rename to Convidado;
+
+mysql> alter table convidado add column criadorEvento boolean not null;
+
+mysql> alter table convidado change column codigoComesBebes codigoItem int;
+
+mysql> desc evento;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| codigo    | int          | NO   | PRI | NULL    | auto_increment |
+| local     | varchar(100) | YES  |     | NULL    |                |
+| data      | date         | YES  |     | NULL    |                |
+| descricao | varchar(200) | YES  |     | NULL    |                |
+| nome      | varchar(50)  | YES  |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+
+mysql> desc pessoa;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| cpf   | char(11)    | NO   | PRI | NULL    |       |
+| nome  | varchar(50) | NO   |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> desc convidado;
++---------------+------------+------+-----+---------+-------+
+| Field         | Type       | Null | Key | Default | Extra |
++---------------+------------+------+-----+---------+-------+
+| confirmacao   | tinyint(1) | YES  |     | NULL    |       |
+| cpfPessoa     | char(11)   | NO   | MUL | NULL    |       |
+| codigoEvento  | int        | NO   | MUL | NULL    |       |
+| codigoItem    | int        | YES  | MUL | NULL    |       |
+| criadorEvento | tinyint(1) | NO   |     | NULL    |       |
++---------------+------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql>  desc item;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| codigoItem | int         | NO   | PRI | NULL    | auto_increment |
+| nomeItem   | varchar(30) | NO   |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> desc itemevento;
++------------------+------+------+-----+---------+-------+
+| Field            | Type | Null | Key | Default | Extra |
++------------------+------+------+-----+---------+-------+
+| codigoEvento     | int  | NO   | MUL | NULL    |       |
+| codigoComesBebes | int  | NO   | MUL | NULL    |       |
++------------------+------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+

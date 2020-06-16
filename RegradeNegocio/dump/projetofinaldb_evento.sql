@@ -24,13 +24,12 @@ DROP TABLE IF EXISTS `evento`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `evento` (
   `codigo` int NOT NULL AUTO_INCREMENT,
-  `senha` int DEFAULT NULL,
   `local` varchar(100) DEFAULT NULL,
   `data` date DEFAULT NULL,
   `descricao` varchar(200) DEFAULT NULL,
   `nome` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`codigo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +38,7 @@ CREATE TABLE `evento` (
 
 LOCK TABLES `evento` WRITE;
 /*!40000 ALTER TABLE `evento` DISABLE KEYS */;
+INSERT INTO `evento` VALUES (1,'sao jose','2020-06-11','hoje tem mais sexo','paula'),(2,'sao jose','2020-06-23','deu certo aki','paula'),(3,'Sao Jose','2020-06-11','A paula vai acabar prova','Paula'),(4,'Sao Jose','2020-06-11','A paula vai acabar prova','Paula'),(5,'Sao Jose','2020-06-11','A paula vai acabar prova','Paula'),(6,'Sao Jose','2020-06-11','A paula vai acabar prova','Paula'),(7,'Sao Jose','2020-06-11','A paula vai acabar prova','Paula'),(8,'Sao Jose','2020-06-11','A paula vai acabar prova','Paula'),(9,'Sao Jose','2020-06-11','A paula vai acabar prova','Paula'),(10,'Sao Jose','2020-06-11','A paula vai acabar prova','Paula');
 /*!40000 ALTER TABLE `evento` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-11 14:21:08
+-- Dump completed on 2020-06-16 20:44:13

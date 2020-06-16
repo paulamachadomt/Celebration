@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `projetofinaldb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `projetofinaldb`;
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
 -- Host: localhost    Database: projetofinaldb
@@ -18,33 +16,34 @@ USE `projetofinaldb`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `listaconvidados`
+-- Table structure for table `convidado`
 --
 
-DROP TABLE IF EXISTS `listaconvidados`;
+DROP TABLE IF EXISTS `convidado`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `listaconvidados` (
+CREATE TABLE `convidado` (
   `confirmacao` tinyint(1) DEFAULT NULL,
   `cpfPessoa` char(11) NOT NULL,
   `codigoEvento` int NOT NULL,
-  `codigoComesBebes` int DEFAULT NULL,
+  `codigoItem` int DEFAULT NULL,
+  `criadorEvento` tinyint(1) NOT NULL,
   KEY `cpfPessoa` (`cpfPessoa`),
   KEY `codigoEvento` (`codigoEvento`),
-  KEY `codigoComesBebes` (`codigoComesBebes`),
-  CONSTRAINT `listaconvidados_ibfk_1` FOREIGN KEY (`cpfPessoa`) REFERENCES `pessoa` (`cpf`),
-  CONSTRAINT `listaconvidados_ibfk_2` FOREIGN KEY (`codigoEvento`) REFERENCES `evento` (`codigo`),
-  CONSTRAINT `listaconvidados_ibfk_3` FOREIGN KEY (`codigoComesBebes`) REFERENCES `comesbebes` (`codigoItem`)
+  KEY `codigoComesBebes` (`codigoItem`),
+  CONSTRAINT `convidado_ibfk_1` FOREIGN KEY (`cpfPessoa`) REFERENCES `pessoa` (`cpf`),
+  CONSTRAINT `convidado_ibfk_2` FOREIGN KEY (`codigoEvento`) REFERENCES `evento` (`codigo`),
+  CONSTRAINT `convidado_ibfk_3` FOREIGN KEY (`codigoItem`) REFERENCES `item` (`codigoItem`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `listaconvidados`
+-- Dumping data for table `convidado`
 --
 
-LOCK TABLES `listaconvidados` WRITE;
-/*!40000 ALTER TABLE `listaconvidados` DISABLE KEYS */;
-/*!40000 ALTER TABLE `listaconvidados` ENABLE KEYS */;
+LOCK TABLES `convidado` WRITE;
+/*!40000 ALTER TABLE `convidado` DISABLE KEYS */;
+/*!40000 ALTER TABLE `convidado` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-09 22:10:51
+-- Dump completed on 2020-06-16 20:44:13

@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `projetofinaldb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `projetofinaldb`;
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
 -- Host: localhost    Database: projetofinaldb
@@ -18,29 +16,29 @@ USE `projetofinaldb`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `listacomesbebes`
+-- Table structure for table `itemevento`
 --
 
-DROP TABLE IF EXISTS `listacomesbebes`;
+DROP TABLE IF EXISTS `itemevento`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `listacomesbebes` (
+CREATE TABLE `itemevento` (
   `codigoEvento` int NOT NULL,
   `codigoComesBebes` int NOT NULL,
   KEY `codigoEvento` (`codigoEvento`),
   KEY `codigoComesBebes` (`codigoComesBebes`),
-  CONSTRAINT `listacomesbebes_ibfk_1` FOREIGN KEY (`codigoEvento`) REFERENCES `evento` (`codigo`),
-  CONSTRAINT `listacomesbebes_ibfk_2` FOREIGN KEY (`codigoComesBebes`) REFERENCES `comesbebes` (`codigoItem`)
+  CONSTRAINT `itemevento_ibfk_1` FOREIGN KEY (`codigoEvento`) REFERENCES `evento` (`codigo`),
+  CONSTRAINT `itemevento_ibfk_2` FOREIGN KEY (`codigoComesBebes`) REFERENCES `item` (`codigoItem`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `listacomesbebes`
+-- Dumping data for table `itemevento`
 --
 
-LOCK TABLES `listacomesbebes` WRITE;
-/*!40000 ALTER TABLE `listacomesbebes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `listacomesbebes` ENABLE KEYS */;
+LOCK TABLES `itemevento` WRITE;
+/*!40000 ALTER TABLE `itemevento` DISABLE KEYS */;
+/*!40000 ALTER TABLE `itemevento` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-09 22:10:51
+-- Dump completed on 2020-06-16 20:44:13
