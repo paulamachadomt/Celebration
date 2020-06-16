@@ -10,7 +10,7 @@ import ads.db.projetofinal.projetofinal.model.ListaConvidados;
 
 public class ListaConvidadosDAO {
 
-    public boolean cadastrarListaConvidados(ListaConvidados convidadosEvento) {
+    public boolean createConvidado(ListaConvidados convidadosEvento) {
         boolean resultado = false;
         try {
             Connection conexao = Conexao.getConexao();
@@ -26,12 +26,12 @@ public class ListaConvidadosDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Algum erro ao cadastrar convidado no evento " + e);
+            System.out.println("Erro ao cadastrar Convidado(a):  " + e);
         }
         return resultado;
     }
 
-    public ArrayList<ListaConvidados> selectListaConvidados() {
+    public ArrayList<ListaConvidados> readConvidado() {
         ArrayList<ListaConvidados> listaConvidados = new ArrayList<>();
         try {
             Connection conexao = Conexao.getConexao();
@@ -48,12 +48,12 @@ public class ListaConvidadosDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Algum erro ao resgatar convidados do evento " + e);
+            System.out.println("Erro ao localizar Convidado(a):  " + e);
         }
         return listaConvidados;
     }
 
-    public boolean updadeListaConvidadosConfirmacao(ListaConvidados convidadosEvento) {
+    public boolean updateConvidadoByConfirmacao(ListaConvidados convidadosEvento) {
         boolean resultado = false;
         try {
             Connection conexao = Conexao.getConexao();
@@ -68,12 +68,12 @@ public class ListaConvidadosDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Algum erro ao atualizar confirmação do convidado do evento " + e);
+            System.out.println("Erro ao atualizar Convidado(a):  " + e);
         }
         return resultado;
     }
 
-    public boolean updadeListaConvidadosComesBebes(ListaConvidados convidadosEvento) {
+    public boolean updateConvidadoByComesBebes(ListaConvidados convidadosEvento) {
         boolean resultado = false;
         try {
             Connection conexao = Conexao.getConexao();
@@ -88,12 +88,12 @@ public class ListaConvidadosDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Algum erro ao atualizar confirmação do convidado do evento " + e);
+            System.out.println("Erro ao atualizar Convidado(a):  " + e);
         }
         return resultado;
     }
 
-    public boolean deleteListaConvidados(Integer codigoEvento, Integer cpfPessoa) {
+    public boolean deleteConvidadoByCodigoCPF(Integer codigoEvento, Integer cpfPessoa) {
         boolean resultado = false;
         try {
             Connection conexao = Conexao.getConexao();
@@ -107,7 +107,7 @@ public class ListaConvidadosDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Algum erro ao deletar convidado do evento " + e);
+            System.out.println("Erro ao deletar Convidado(a):  " + e);
         }
         return resultado;
     }

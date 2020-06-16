@@ -15,7 +15,7 @@ public class EventoDAO {
      * Esse método cadastra, gera a senha e atualiza. Portanto gera o evento inicial. 
      */
     public Evento gerarEvento(Evento gerarEvento){
-        Integer resultado = cadastroEvento(gerarEvento);
+        Integer resultado = createEvento(gerarEvento);
         if (resultado >= 1) {
             gerarEvento.setCodigo(resultado);
             gerarEvento.gerarSenhaEvento();
@@ -24,7 +24,7 @@ public class EventoDAO {
         return gerarEvento;
     }
 
-    public int cadastroEvento(Evento evento) {
+    public int createEvento(Evento evento) {
         int codigo = -1;
         try {
             Connection conexao = Conexao.getConexao();
@@ -39,17 +39,17 @@ public class EventoDAO {
             if (resultSet.next()) {
                 codigo = resultSet.getInt(1);
             } else {
-                System.out.println("Algum erro ao resgatar auto_increment evento \n");
+                System.out.println("Erro ao cadastrar evento \n");
             }
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Erro ao cadastrar evento \n" + e);
+            System.out.println("Erro ao cadastrar Evento: " + e);
         }
         return codigo;
     }
 
-    public Evento selectSenhaEvento(Integer senha) {
+    public Evento readEventoBySenha(Integer senha) {
         Evento evento = null;
         try {
             Connection conexao = Conexao.getConexao();
@@ -70,12 +70,12 @@ public class EventoDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Erro ao localizar evento por senha \n" + e);
+            System.out.println("Erro ao localizar Evento: " + e);
         }
         return evento;
     }
 
-    public Evento selectCodEvento(Integer codigo) {
+    public Evento readEventoByCodigo(Integer codigo) {
         Evento evento = null;
         try {
             Connection conexao = Conexao.getConexao();
@@ -96,7 +96,7 @@ public class EventoDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Erro ao localizar evento por codigo \n" + e);
+            System.out.println("Erro ao localizar Evento: " + e);
         }
         return evento;
     }
@@ -119,12 +119,12 @@ public class EventoDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Erro ao localizar evento " + e);
+            System.out.println("Erro ao atualizar Evento: " + e);
         }
         return resultado;
     }
 
-    public Boolean deleteEvento(Integer codigo) {
+    public Boolean deleteEventoByCodigo(Integer codigo) {
         boolean resultado = false;
         try {
             Connection conexao = Conexao.getConexao();
@@ -137,7 +137,7 @@ public class EventoDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Erro ao localizar evento " + e);
+            System.out.println("Erro ao deletar Evento: " + e);
         }
         return resultado;
     }

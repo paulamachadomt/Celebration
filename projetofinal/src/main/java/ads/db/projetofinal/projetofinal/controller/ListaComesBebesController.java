@@ -24,16 +24,16 @@ public class ListaComesBebesController {
     @GetMapping("/cadastroComesBebesEvento")
     public String doGet(String nomeItem, Integer codigoEvento) {
         // abstrair para "pesquisar/cadastrar item de festa"
-        ComesBebes comesBebes = new ComesBebesDAO().selectNomeItemUnico(nomeItem);
+        ComesBebes comesBebes = new ComesBebesDAO().readItemByNome(nomeItem);
         if (comesBebes == null) {
-            comesBebes = new ComesBebes(new ComesBebesDAO().cadastrarItem(nomeItem), nomeItem); 
+            comesBebes = new ComesBebes(new ComesBebesDAO().createItem(nomeItem), nomeItem); 
         }
         ListaComesBebes novoRegistroComesBebesEvento = new ListaComesBebes(comesBebes.getCodigoItem(), codigoEvento);
         // agora cadastra na tabela
-        new ListaComesBebesDAO().cadastrarListaComesBebes(novoRegistroComesBebesEvento);
+        new ListaComesBebesDAO().createListaComesBebes(novoRegistroComesBebesEvento);
 
         // Apenas a titulo de organização inicial dos crud e controllers
-        Evento evento = new EventoDAO().selectCodEvento(codigoEvento);
+        Evento evento = new EventoDAO().readEventoByCodigo(codigoEvento);
         return "Foi registrado no evento: " + evento.toString() + " o item comesBebes: " + comesBebes.toString()
                 + "  || " + novoRegistroComesBebesEvento.toString();
     }
@@ -43,9 +43,9 @@ public class ListaComesBebesController {
 
         ArrayList<ComesBebes> listaComesBebes = new ArrayList<>();
 
-        ArrayList<ListaComesBebes> listaComesBebesEvento = new ListaComesBebesDAO().selectListaComesBebes();
+        ArrayList<ListaComesBebes> listaComesBebesEvento = new ListaComesBebesDAO().readListaComesBebes();
         for (ListaComesBebes comesBebesEvento : listaComesBebesEvento) {
-            listaComesBebes.add(new ComesBebesDAO().selectCodigoItem(comesBebesEvento.getCodigoComesBebes()));
+            listaComesBebes.add(new ComesBebesDAO().readItemByCodigo(comesBebesEvento.getCodigoComesBebes()));
         }
 
         return listaComesBebes.toString();
@@ -54,7 +54,7 @@ public class ListaComesBebesController {
     @GetMapping("/deletaComesBebesEvento")
     public String listaComesBebesEvento(Integer codigoEvento, Integer codigoComesBebes) {
 
-        boolean resultado = new ListaComesBebesDAO().deletarListaComesBebes(codigoEvento, codigoComesBebes);
+        boolean resultado = new ListaComesBebesDAO().deleteListaComesBebes(codigoEvento, codigoComesBebes);
 
         return resultado ? "codigoComesBebes deletado com sucesso" : "falha ao deletar";
     }

@@ -14,9 +14,9 @@ public class ComesBebesController {
     @GetMapping("/cadastroItem")
     public String cadastrar(String nomeItem) {
 
-        ComesBebesDAO cadastro = new ComesBebesDAO();
+        ComesBebesDAO comesBebesDAO = new ComesBebesDAO();
 
-        int codigo = cadastro.cadastrarItem(nomeItem);
+        int codigo = comesBebesDAO.createItem(nomeItem);
 
         return nomeItem + "\n\n codigo do item: " + codigo;
     }
@@ -24,9 +24,9 @@ public class ComesBebesController {
     @GetMapping("/pesquisaCodigoItem")
     public String selectCodigo(Integer codigoItem) {
 
-        ComesBebesDAO pesquisaCodigo = new ComesBebesDAO();
+        ComesBebesDAO comesBebesDAO = new ComesBebesDAO();
 
-        ComesBebes item = pesquisaCodigo.selectCodigoItem(codigoItem);
+        ComesBebes item = comesBebesDAO.readItemByCodigo(codigoItem);
 
         return item == null ? "código não encontrada" : item.getNomeItem() + item.getCodigoItem();
 
@@ -35,9 +35,9 @@ public class ComesBebesController {
     @GetMapping("/pesquisaNomeItem")
     public String selectNomeItem(String nomeItem) {
 
-        ComesBebesDAO pesquisaNome = new ComesBebesDAO();
+        ComesBebesDAO comesBebesDAO = new ComesBebesDAO();
 
-        ArrayList<ComesBebes> listaItens = pesquisaNome.selectNomeItem(nomeItem);
+        ArrayList<ComesBebes> listaItens = comesBebesDAO.readItensByNome(nomeItem);
 
         String retorno = "";
 
@@ -56,11 +56,11 @@ public class ComesBebesController {
 
         ComesBebes item = new ComesBebes(codigoItem, nomeItem);
 
-        ComesBebesDAO update = new ComesBebesDAO();
+        ComesBebesDAO comesBebesDAO = new ComesBebesDAO();
 
-        boolean resultado = update.updateItem(item);
+        boolean resultado = comesBebesDAO.updateItem(item);
 
-        item = update.selectCodigoItem(codigoItem);
+        item = comesBebesDAO.readItemByCodigo(codigoItem);
 
         return item.getNomeItem() + "\n\n  " + resultado;
     }
@@ -68,9 +68,9 @@ public class ComesBebesController {
     @GetMapping("/deleteItem")
     public String deletaItem(int codigoItem) {
 
-        ComesBebesDAO delete = new ComesBebesDAO();
+        ComesBebesDAO comesBebesDAO = new ComesBebesDAO();
 
-        boolean resultado = delete.deleteItem(codigoItem);
+        boolean resultado = comesBebesDAO.deleteItemByCodigo(codigoItem);
 
         return resultado == true ? "Deletado com sucesso." : "Erro ao deletar.";
     }

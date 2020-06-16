@@ -10,7 +10,7 @@ import ads.db.projetofinal.projetofinal.model.ListaComesBebes;
 
 public class ListaComesBebesDAO {
 
-    public boolean cadastrarListaComesBebes(ListaComesBebes comesBebesEvento) {
+    public boolean createListaComesBebes(ListaComesBebes comesBebesEvento) {
         boolean resultado = false;
         try {
             Connection conexao = Conexao.getConexao();
@@ -24,12 +24,12 @@ public class ListaComesBebesDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Algum erro ao cadastrar item no evento " + e);
+            System.out.println("Erro ao cadastrar item de comes e bebes no evento: " + e);
         }
         return resultado;
     }
 
-    public ArrayList<ListaComesBebes> selectListaComesBebes() {
+    public ArrayList<ListaComesBebes> readListaComesBebes() {
         ArrayList<ListaComesBebes> listaItens = new ArrayList<>();
         try {
             Connection conexao = Conexao.getConexao();
@@ -45,20 +45,20 @@ public class ListaComesBebesDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Item não encontrado" + e);
+            System.out.println("Erro ao localizar item de comes e bebes no evento: " + e);
         }
         return listaItens;
     }
 
-    public boolean updateListaComesBebes(){
-        boolean resultado = false;
-        try {
-        } catch (Exception e) {
-        }
-        return resultado;
-    }
+    // public boolean updateListaComesBebes(){
+    //     boolean resultado = false;
+    //     try {
+    //     } catch (Exception e) {
+    //     }
+    //     return resultado;
+    // }
 
-    public boolean deletarListaComesBebes(Integer codigoEvento, Integer codigoComesBebes) {
+    public boolean deleteListaComesBebes(Integer codigoEvento, Integer codigoComesBebes) {
         boolean resultado = false;
         try {
             Connection conexao = Conexao.getConexao();
@@ -72,7 +72,7 @@ public class ListaComesBebesDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Item não encontrado" + e);
+            System.out.println("Erro ao deletar item de comes e bebes no evento: " + e);
         }
         return resultado;
     }

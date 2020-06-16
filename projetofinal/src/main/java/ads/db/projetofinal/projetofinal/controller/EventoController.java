@@ -22,9 +22,9 @@ public class EventoController {
         String descricao,
         String nome) {
 
-        EventoDAO cadastro = new EventoDAO();
+        EventoDAO eventoDAO = new EventoDAO();
 
-        Evento evento = cadastro.gerarEvento(new Evento(local, data, descricao, nome));
+        Evento evento = eventoDAO.gerarEvento(new Evento(local, data, descricao, nome));
 
         return evento.toString();
     }
@@ -32,9 +32,9 @@ public class EventoController {
     @GetMapping("/pesquisaSenhaEvento")
     public String doGet(Integer senha) {
 
-        EventoDAO pesquisa = new EventoDAO();
+        EventoDAO eventoDAO = new EventoDAO();
 
-        Evento evento = pesquisa.selectSenhaEvento(senha);
+        Evento evento = eventoDAO.readEventoBySenha(senha);
 
         return evento == null ? "Evento não encontrado" : "Evento cadastrado: " + evento.toString();
     }
@@ -42,9 +42,9 @@ public class EventoController {
     @GetMapping("/pesquisaCodEvento")
     public String pesquisaCod(Integer codigo) {
 
-        EventoDAO pesquisa = new EventoDAO();
+        EventoDAO eventoDAO = new EventoDAO();
 
-        Evento evento = pesquisa.selectCodEvento(codigo);
+        Evento evento = eventoDAO.readEventoByCodigo(codigo);
 
         return evento == null ? "Evento não encontrado" : "Evento cadastrado: " + evento.toString();
     }
@@ -61,12 +61,12 @@ public class EventoController {
 
         System.out.println(codigo +""+ senha+""+ local+""+ data+""+""+ descricao+""+ nome);
 
-        EventoDAO atualiza = new EventoDAO();
+        EventoDAO eventoDAO = new EventoDAO();
 
         Evento evento = new Evento(codigo, senha, local, data, descricao, nome);
         System.out.println(evento.toString());
 
-        boolean resultado = atualiza.updateEvento(evento);
+        boolean resultado = eventoDAO.updateEvento(evento);
 
         return "ola," + evento.getNome() + "\n\n  " + resultado;
     }
@@ -74,9 +74,9 @@ public class EventoController {
     @GetMapping("/deleteEvento")
     public String deleteEvento(Integer codigo) {
 
-        EventoDAO delete = new EventoDAO();
+        EventoDAO eventoDAO = new EventoDAO();
 
-        boolean resultado = delete.deleteEvento(codigo);
+        boolean resultado = eventoDAO.deleteEventoByCodigo(codigo);
 
         return resultado == true ? "Deletado com sucesso." : "Erro ao deletar";
     }

@@ -16,9 +16,9 @@ public class PessoaController {
 
         Pessoa pessoa = new Pessoa(cpf, nome);
 
-        PessoaDAO cadastro = new PessoaDAO();
+        PessoaDAO pessoaDAO = new PessoaDAO();
 
-        boolean resultado = cadastro.cadastrarPessoa(pessoa);
+        boolean resultado = pessoaDAO.createPessoa(pessoa);
 
         return "ola," + nome + "\n\n" + resultado;
     }
@@ -26,9 +26,9 @@ public class PessoaController {
     @GetMapping("/pesquisaCPF")
     public String doGet(String cpf) {
 
-        PessoaDAO pesquisa = new PessoaDAO();
+        PessoaDAO pessoaDAO = new PessoaDAO();
 
-        Pessoa pessoa = pesquisa.selectCPFPessoa(cpf);
+        Pessoa pessoa = pessoaDAO.readPessoaByCPF(cpf);
 
         return pessoa == null ? "cpf não encontrada" : "ola," + pessoa.getNome() + "\n\n" + pessoa.getCpf();
 
@@ -38,9 +38,9 @@ public class PessoaController {
     @GetMapping("/pesquisaNome")
     public String selectNome(String nome) {
 
-        PessoaDAO pesquisa = new PessoaDAO();
+        PessoaDAO pessoaDAO = new PessoaDAO();
 
-        ArrayList<Pessoa> listaNomes = pesquisa.selectNomePessoa(nome);
+        ArrayList<Pessoa> listaNomes = pessoaDAO.readPessoaByName(nome);
 
         String retorno = "";
 
@@ -59,11 +59,11 @@ public class PessoaController {
 
         Pessoa pessoa = new Pessoa(cpf, nome);
 
-        PessoaDAO update = new PessoaDAO();
+        PessoaDAO pessoaDAO = new PessoaDAO();
 
-        boolean resultado = update.updatePessoa(pessoa);
+        boolean resultado = pessoaDAO.updatePessoa(pessoa);
 
-        pessoa = update.selectCPFPessoa(cpf);
+        // pessoa = pessoaDAO.readPessoaByCPF(cpf);
 
         return "ola," + pessoa.getNome() + "\n\n  " + resultado;
     }
@@ -71,9 +71,9 @@ public class PessoaController {
     @GetMapping("/delete")
     public String deletaPessoa(String cpf) {
 
-        PessoaDAO delete = new PessoaDAO();
+        PessoaDAO pessoaDAO = new PessoaDAO();
 
-        boolean resultado = delete.deletePessoa(cpf);
+        boolean resultado = pessoaDAO.deletePessoaByCPF(cpf);
 
         return resultado == true ? "Deletado com sucesso." : "Erro ao deletar";
     }

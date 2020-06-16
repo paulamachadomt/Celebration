@@ -10,7 +10,7 @@ import ads.db.projetofinal.projetofinal.model.ComesBebes;
 
 public class ComesBebesDAO {
 
-    public int cadastrarItem(String nomeItem) {
+    public int createItem(String nomeItem) {
         int codigo = -1;
         try {
             Connection conexao = Conexao.getConexao();
@@ -22,17 +22,17 @@ public class ComesBebesDAO {
             if (resultSet.next()) {
                 codigo = resultSet.getInt(1);
             } else {
-                System.out.println("Algum erro ao resgatar auto_increment evento \n");
+                System.out.println("Erro ao cadastrar item");
             }
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Erro ao cadastrar " + nomeItem + "\n" + e);
+            System.out.println("Erro ao cadastrar Item: " + e);
         }
         return codigo;
     }
 
-    public ComesBebes selectCodigoItem(Integer codigoItem) {
+    public ComesBebes readItemByCodigo(Integer codigoItem) {
         ComesBebes item = null;
         try {
             Connection conexao = Conexao.getConexao();
@@ -47,16 +47,16 @@ public class ComesBebesDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Erro ao localizar item com código " + codigoItem + "\n" + e);
+            System.out.println("Erro ao localizar Item: " + e);
         }
         return item;
     }
 
-    public ComesBebes selectNomeItemUnico(String nomeItem) {
+    public ComesBebes readItemByNome(String nomeItem) {
         ComesBebes comesBebes = null;
         try {
             Connection conexao = Conexao.getConexao();
-            String comandoSQL = "SELECT * FROM comesbebes WHERE nomeItem LIKE ?";
+            String comandoSQL = "SELECT * FROM comesbebes WHERE nomeItem = ?";
             PreparedStatement statement = conexao.prepareStatement(comandoSQL);
             statement.setString(1, nomeItem);
             ResultSet resultadoSelect = statement.executeQuery();
@@ -68,16 +68,16 @@ public class ComesBebesDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Item não encontrado" + e);
+            System.out.println("Erro ao localizar Item: " + e);
         }
         return comesBebes;
     }
 
-    public ArrayList<ComesBebes> selectNomeItem(String nomeItem) {
+    public ArrayList<ComesBebes> readItensByNome(String nomeItem) {
         ArrayList<ComesBebes> listaItens = new ArrayList<>();
         try {
             Connection conexao = Conexao.getConexao();
-            String comandoSQL = "SELECT * FROM comesbebes WHERE nomeItem LIKE ?";
+            String comandoSQL = "SELECT * FROM comesbebes WHERE nomeItem LIKE %?%";
             PreparedStatement statement = conexao.prepareStatement(comandoSQL);
             statement.setString(1, "%" + nomeItem + "%");
             ResultSet resultadoSelect = statement.executeQuery();
@@ -90,7 +90,7 @@ public class ComesBebesDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Item não encontrado" + e);
+            System.out.println("Erro ao localizar Item: " + e);
         }
         return listaItens;
     }
@@ -109,12 +109,12 @@ public class ComesBebesDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Item não encontrado " + e);
+            System.out.println("Erro ao atualizar Item: " + e);
         }
         return resultado;
     }
 
-    public Boolean deleteItem(int codigoItem) {
+    public Boolean deleteItemByCodigo(int codigoItem) {
         boolean resultado = false;
         try {
             Connection conexao = Conexao.getConexao();
@@ -127,7 +127,7 @@ public class ComesBebesDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Item não encontrado " + e);
+            System.out.println("Erro ao deletar Item: " + e);
         }
         return resultado;
     }

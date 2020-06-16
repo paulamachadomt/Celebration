@@ -19,17 +19,17 @@ public class ListaConvidadosController {
     public String doGet(String nomePessoa, String cpfPessoa, Integer codigoEvento) {
 
         // Carrega lista de convidados
-        listaConvidados = new ListaConvidadosDAO().selectListaConvidados();
+        listaConvidados = new ListaConvidadosDAO().readConvidado();
         System.out.println(listaConvidados.toString());
 
         boolean resultado = false;
 
-        Pessoa convidado = new PessoaDAO().selectCPFPessoa(cpfPessoa);
+        Pessoa convidado = new PessoaDAO().readPessoaByCPF(cpfPessoa);
         if (convidado == null) {
             String cadastroPessoa = new PessoaController().doGet(nomePessoa, cpfPessoa);
             System.out.println("Resultado do cadastro: " + cadastroPessoa);
             resultado = new ListaConvidadosDAO()
-                    .cadastrarListaConvidados(new ListaConvidados(false, cpfPessoa, codigoEvento));
+                    .createConvidado(new ListaConvidados(false, cpfPessoa, codigoEvento));
         } else {
             boolean isPresent_event = false;
             for (ListaConvidados convidadoConfima : listaConvidados) {
@@ -39,7 +39,7 @@ public class ListaConvidadosController {
             }
             if (isPresent_event == false) {
                 resultado = new ListaConvidadosDAO()
-                        .cadastrarListaConvidados(new ListaConvidados(false, cpfPessoa, codigoEvento));
+                        .createConvidado(new ListaConvidados(false, cpfPessoa, codigoEvento));
             }
         }
         return "" + resultado;
@@ -50,7 +50,7 @@ public class ListaConvidadosController {
 
         boolean resultado = false;
 
-        resultado= new ListaConvidadosDAO().updadeListaConvidadosConfirmacao(new ListaConvidados(confirmacao, cpfPessoa, codigoEvento));
+        resultado= new ListaConvidadosDAO().updateConvidadoByConfirmacao(new ListaConvidados(confirmacao, cpfPessoa, codigoEvento));
 
         return "Confirmada a presença ? : " + resultado;
     }
@@ -60,7 +60,7 @@ public class ListaConvidadosController {
 
         boolean resultado = false;
 
-        resultado = new ListaConvidadosDAO().updadeListaConvidadosComesBebes(new ListaConvidados(codigoComesBebes, cpfPessoa, codigoEvento));
+        resultado = new ListaConvidadosDAO().updateConvidadoByComesBebes(new ListaConvidados(codigoComesBebes, cpfPessoa, codigoEvento));
 
         return "Confirmou que levará o produto : " + codigoComesBebes;
     }
@@ -70,10 +70,10 @@ public class ListaConvidadosController {
 
         ArrayList<Pessoa> listaConvidados = new ArrayList<>();
 
-        ArrayList<ListaConvidados> listaConvidadosEvento = new ListaConvidadosDAO().selectListaConvidados();
+        ArrayList<ListaConvidados> listaConvidadosEvento = new ListaConvidadosDAO().readConvidado();
 
         for (ListaConvidados convidadosEvento : listaConvidadosEvento) {
-            listaConvidados.add(new PessoaDAO().selectCPFPessoa(convidadosEvento.getCpfPessoa()));
+            listaConvidados.add(new PessoaDAO().readPessoaByCPF(convidadosEvento.getCpfPessoa()));
         }
         return "" + listaConvidados.toString();
     }
@@ -81,7 +81,7 @@ public class ListaConvidadosController {
     @GetMapping("/deletaConvidado")
     public String listaComesBebesEvento(Integer codigoEvento, Integer cpfPessoa) {
 
-        boolean resultado = new ListaConvidadosDAO().deleteListaConvidados(codigoEvento, cpfPessoa);
+        boolean resultado = new ListaConvidadosDAO().deleteConvidadoByCodigoCPF(codigoEvento, cpfPessoa);
 
         return resultado ? "Convidado deletado com sucesso" : "falha ao deletar convidado";
     }

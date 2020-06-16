@@ -10,7 +10,7 @@ import ads.db.projetofinal.projetofinal.model.Pessoa;
 
 public class PessoaDAO {
     
-    public boolean cadastrarPessoa(Pessoa pessoa) {
+    public boolean createPessoa(Pessoa pessoa) {
         boolean resultado = false;
 
         try {
@@ -25,12 +25,12 @@ public class PessoaDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("erro ao cadastrar pessoa \n" + e);
+            System.out.println("Erro ao cadastrar Pessoa: " + e);
         }
         return resultado;
     }
 
-    public Pessoa selectCPFPessoa(String cpf) {
+    public Pessoa readPessoaByCPF(String cpf) {
         Pessoa pessoa = null;
         try {
             Connection conexao = Conexao.getConexao();
@@ -45,12 +45,12 @@ public class PessoaDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Erro ao localizar pessoa por CPF \n" + e);
+            System.out.println("Erro ao localizar Pessoa: " + e);
         }
         return pessoa;
     }
 
-    public ArrayList<Pessoa> selectNomePessoa(String nome) {
+    public ArrayList<Pessoa> readPessoaByName(String nome) {
         ArrayList<Pessoa> listaPessoas = new ArrayList<>();
         try {
             Connection conexao = Conexao.getConexao();
@@ -66,7 +66,7 @@ public class PessoaDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Nome de pessoa não encontrado " + e);
+            System.out.println("Erro ao localizar Pessoa: " + e);
         }
         return listaPessoas;
     }
@@ -85,12 +85,12 @@ public class PessoaDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("Pessoa não encontrada " + e);
+            System.out.println("Erro ao atualizar Pessoa: " + e);
         }
         return resultado;
     }  
 
-    public Boolean deletePessoa(String cpf){
+    public Boolean deletePessoaByCPF(String cpf){
         boolean resultado = false;
         try {
             Connection conexao = Conexao.getConexao();
@@ -103,7 +103,7 @@ public class PessoaDAO {
             statement.close();
             conexao.close();
         } catch (Exception e) {
-            System.out.println("CPF não encontrado " + e);
+            System.out.println("Erro ao deletar Pessoa: " + e);
         }
         return resultado;
     }
