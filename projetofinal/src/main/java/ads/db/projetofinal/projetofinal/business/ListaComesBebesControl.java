@@ -1,60 +1,59 @@
 package ads.db.projetofinal.projetofinal.business;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ads.db.projetofinal.projetofinal.dao.ComesBebesDAO;
-import ads.db.projetofinal.projetofinal.dao.EventoDAO;
-import ads.db.projetofinal.projetofinal.model.ListaComesBebes;
-import ads.db.projetofinal.projetofinal.dao.ListaComesBebesDAO;
-import ads.db.projetofinal.projetofinal.model.ComesBebes;
 import ads.db.projetofinal.projetofinal.model.Evento;
+import ads.db.projetofinal.projetofinal.dao.EventoDAO;
+import ads.db.projetofinal.projetofinal.model.ItemEvento;
+import ads.db.projetofinal.projetofinal.dao.ItemEventoDAO;
+import ads.db.projetofinal.projetofinal.model.Item;
+import ads.db.projetofinal.projetofinal.dao.ItemDAO;
 
 @RestController
 public class ListaComesBebesControl {
 
-    ArrayList<ListaComesBebesDAO> listaComesBebes = new ArrayList<>();
+    @GetMapping("/createItemEvento")
+    public String createItemEvento(String nomeItem, Integer codigoEvento) {
 
-    /**
-     * Esse metodo é complicado e deve ser alterado com cuidado. Apenas a criação do
-     * Evento evento não é importante.
-     */
-    @GetMapping("/cadastroComesBebesEvento")
-    public String doGet(String nomeItem, Integer codigoEvento) {
-        // abstrair para "pesquisar/cadastrar item de festa"
-        ComesBebes comesBebes = new ComesBebesDAO().readItemByNome(nomeItem);
-        if (comesBebes == null) {
-            comesBebes = new ComesBebes(new ComesBebesDAO().createItem(nomeItem), nomeItem); 
-        }
-        ListaComesBebes novoRegistroComesBebesEvento = new ListaComesBebes(comesBebes.getCodigoItem(), codigoEvento);
-        // agora cadastra na tabela
-        new ListaComesBebesDAO().createListaComesBebes(novoRegistroComesBebesEvento);
+        Item item = new ItemDAO().read(nomeItem);
 
-        // Apenas a titulo de organização inicial dos crud e controllers
-        Evento evento = new EventoDAO().readEventoByCodigo(codigoEvento);
-        return "Foi registrado no evento: " + evento.toString() + " o item comesBebes: " + comesBebes.toString()
-                + "  || " + novoRegistroComesBebesEvento.toString();
-    }
-
-    @GetMapping("/listaComesBebesEvento") 
-    public String listaComesBebesEvento(Integer codigoEvento) {
-
-        ArrayList<ComesBebes> listaComesBebes = new ArrayList<>();
-
-        ArrayList<ListaComesBebes> listaComesBebesEvento = new ListaComesBebesDAO().readListaComesBebes();
-        for (ListaComesBebes comesBebesEvento : listaComesBebesEvento) {
-            listaComesBebes.add(new ComesBebesDAO().readItemByCodigo(comesBebesEvento.getCodigoComesBebes()));
+        if (item == null) {
+            int codigoItemEvento = new ItemDAO().create_getCodigo(nomeItem);
+            item = new Item(codigoItemEvento, nomeItem);
         }
 
-        return listaComesBebes.toString();
+        ItemEvento itemEvento = new ItemEvento(item.getCodigoItem(), codigoEvento);
+
+        boolean resultado = new ItemEventoDAO().create(itemEvento);
+
+        Evento evento = new EventoDAO().read(codigoEvento);
+
+        return "Foi registrado no evento: " + evento.toString() + " o item comesBebes: " + item.toString()
+                + "  || " + itemEvento.toString();
     }
 
-    @GetMapping("/deletaComesBebesEvento")
-    public String listaComesBebesEvento(Integer codigoEvento, Integer codigoComesBebes) {
+    @GetMapping("/readAllItemEvento")
+    public String readAllItensEvento(Integer codigoEvento) {
+        List<Item> itens = new ArrayList<>();
 
-        boolean resultado = new ListaComesBebesDAO().deleteListaComesBebes(codigoEvento, codigoComesBebes);
+        List<ItemEvento> itensEvento = new ItemEventoDAO().readAll();
+    
+        for (ItemEvento itemEvento : itensEvento) {
+            Item item = new ItemDAO().read(itemEvento.getCodigoItem());
+            itens.add(item);
+        }
+    
+        return itens.toString();
+    }
+
+    @GetMapping("/deletaItemEvento")
+    public String deletaItemEvento(Integer codigoEvento, Integer codigoItem) {
+
+        boolean resultado = new ItemEventoDAO().delete(codigoEvento, codigoItem); 
 
         return resultado ? "codigoComesBebes deletado com sucesso" : "falha ao deletar";
     }

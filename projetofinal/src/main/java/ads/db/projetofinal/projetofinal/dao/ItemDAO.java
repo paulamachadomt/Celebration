@@ -4,17 +4,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
 import ads.db.projetofinal.projetofinal.dao.jdbc.Conexao;
-import ads.db.projetofinal.projetofinal.model.ComesBebes;
+import ads.db.projetofinal.projetofinal.model.Item;
 
-public class ComesBebesDAO {
+public class ItemDAO {
 
-    public int createItem(String nomeItem) {
+    public int create_getCodigo(String nomeItem) {
         int codigo = -1;
         try {
             Connection conexao = Conexao.getConexao();
-            String comandoSQL = "INSERT INTO comesbebes (nomeItem) VALUES (?)";
+            String comandoSQL = "INSERT INTO item (nomeItem) VALUES (?)";
             PreparedStatement statement = conexao.prepareStatement(comandoSQL);
             statement.setString(1, nomeItem);
             statement.executeUpdate();
@@ -32,16 +33,16 @@ public class ComesBebesDAO {
         return codigo;
     }
 
-    public ComesBebes readItemByCodigo(Integer codigoItem) {
-        ComesBebes item = null;
+    public Item read(Integer codigoItem) {
+        Item item = null;
         try {
             Connection conexao = Conexao.getConexao();
-            String comandoSQL = "SELECT * FROM comesbebes WHERE codigoItem = ?";
+            String comandoSQL = "SELECT * FROM item WHERE codigoItem = ?";
             PreparedStatement statement = conexao.prepareStatement(comandoSQL);
             statement.setInt(1, codigoItem);
             ResultSet resultadoSelect = statement.executeQuery();
             while (resultadoSelect.next()) {
-                item = new ComesBebes(resultadoSelect.getInt("codigoItem"), resultadoSelect.getString("nomeItem"));
+                item = new Item(resultadoSelect.getInt("codigoItem"), resultadoSelect.getString("nomeItem"));
             }
             resultadoSelect.close();
             statement.close();
@@ -52,16 +53,16 @@ public class ComesBebesDAO {
         return item;
     }
 
-    public ComesBebes readItemByNome(String nomeItem) {
-        ComesBebes comesBebes = null;
+    public Item read(String nomeItem) {
+        Item comesBebes = null;
         try {
             Connection conexao = Conexao.getConexao();
-            String comandoSQL = "SELECT * FROM comesbebes WHERE nomeItem = ?";
+            String comandoSQL = "SELECT * FROM item WHERE nomeItem = ?";
             PreparedStatement statement = conexao.prepareStatement(comandoSQL);
             statement.setString(1, nomeItem);
             ResultSet resultadoSelect = statement.executeQuery();
             while (resultadoSelect.next()) {
-                comesBebes = new ComesBebes(resultadoSelect.getInt("codigoItem"),
+                comesBebes = new Item(resultadoSelect.getInt("codigoItem"),
                         resultadoSelect.getString("nomeItem"));
             }
             resultadoSelect.close();
@@ -73,18 +74,18 @@ public class ComesBebesDAO {
         return comesBebes;
     }
 
-    public ArrayList<ComesBebes> readItensByNome(String nomeItem) {
-        ArrayList<ComesBebes> listaItens = new ArrayList<>();
+    public List<Item> readAll(String nomeItem) {
+        List<Item> itens = new ArrayList<>();
         try {
             Connection conexao = Conexao.getConexao();
-            String comandoSQL = "SELECT * FROM comesbebes WHERE nomeItem LIKE %?%";
+            String comandoSQL = "SELECT * FROM item WHERE nomeItem LIKE %?%";
             PreparedStatement statement = conexao.prepareStatement(comandoSQL);
             statement.setString(1, "%" + nomeItem + "%");
             ResultSet resultadoSelect = statement.executeQuery();
             while (resultadoSelect.next()) {
-                ComesBebes item = new ComesBebes(resultadoSelect.getInt("codigoItem"),
+                Item item = new Item(resultadoSelect.getInt("codigoItem"),
                         resultadoSelect.getString("nomeItem"));
-                listaItens.add(item);
+                itens.add(item);
             }
             resultadoSelect.close();
             statement.close();
@@ -92,14 +93,14 @@ public class ComesBebesDAO {
         } catch (Exception e) {
             System.out.println("Erro ao localizar Item: " + e);
         }
-        return listaItens;
+        return itens;
     }
 
-    public Boolean updateItem(ComesBebes item) {
+    public Boolean update(Item item) {
         boolean resultado = false;
         try {
             Connection conexao = Conexao.getConexao();
-            String comandoSQL = "UPDATE comesbebes SET nomeItem = ? WHERE codigoItem = ?";
+            String comandoSQL = "UPDATE item SET nomeItem = ? WHERE codigoItem = ?";
             PreparedStatement statement = conexao.prepareStatement(comandoSQL);
             statement.setString(1, item.getNomeItem());
             statement.setInt(2, item.getCodigoItem());
@@ -114,11 +115,11 @@ public class ComesBebesDAO {
         return resultado;
     }
 
-    public Boolean deleteItemByCodigo(int codigoItem) {
+    public Boolean delete(int codigoItem) {
         boolean resultado = false;
         try {
             Connection conexao = Conexao.getConexao();
-            String comandoSQL = "DELETE FROM comesbebes WHERE codigoItem = ?";
+            String comandoSQL = "DELETE FROM item WHERE codigoItem = ?";
             PreparedStatement statement = conexao.prepareStatement(comandoSQL);
             statement.setInt(1, codigoItem);
             if (statement.executeUpdate() >= 1) {

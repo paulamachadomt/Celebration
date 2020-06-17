@@ -14,8 +14,8 @@ import ads.db.projetofinal.projetofinal.model.Evento;
 @RestController
 public class EventoControl {
     
-    @PostMapping("/cadastroEvento")
-    public String doGet(
+    @PostMapping("/createEvento")
+    public String createEvento(
         @RequestParam("localidade") String local,
         @RequestParam("localDate") 
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data, 
@@ -24,33 +24,23 @@ public class EventoControl {
 
         EventoDAO eventoDAO = new EventoDAO();
 
-        Evento evento = eventoDAO.gerarEvento(new Evento(local, data, descricao, nome));
+        Evento evento = eventoDAO.create_getEvento(new Evento(local, data, nome));
 
         return evento.toString();
     }
 
-    @GetMapping("/pesquisaSenhaEvento")
-    public String doGet(Integer senha) {
-
-        EventoDAO eventoDAO = new EventoDAO();
-
-        Evento evento = eventoDAO.readEventoBySenha(senha);
-
-        return evento == null ? "Evento não encontrado" : "Evento cadastrado: " + evento.toString();
-    }
-
     @GetMapping("/pesquisaCodEvento")
-    public String pesquisaCod(Integer codigo) {
+    public String pesquisaCodEvento(Integer codigo) {
 
         EventoDAO eventoDAO = new EventoDAO();
 
-        Evento evento = eventoDAO.readEventoByCodigo(codigo);
+        Evento evento = eventoDAO.read(codigo);
 
         return evento == null ? "Evento não encontrado" : "Evento cadastrado: " + evento.toString();
     }
 
     @PostMapping("/updateEvento")
-    public String atualizaEvento(
+    public String updateEvento(
         Integer codigo,
         Integer senha,
         @RequestParam("localidade") String local,
@@ -59,14 +49,11 @@ public class EventoControl {
         String descricao,
         String nome) {
 
-        System.out.println(codigo +""+ senha+""+ local+""+ data+""+""+ descricao+""+ nome);
-
         EventoDAO eventoDAO = new EventoDAO();
 
-        Evento evento = new Evento(codigo, senha, local, data, descricao, nome);
-        System.out.println(evento.toString());
+        Evento evento = new Evento(codigo, local, data, descricao, nome);
 
-        boolean resultado = eventoDAO.updateEvento(evento);
+        boolean resultado = eventoDAO.update(evento);
 
         return "ola," + evento.getNome() + "\n\n  " + resultado;
     }
@@ -76,7 +63,7 @@ public class EventoControl {
 
         EventoDAO eventoDAO = new EventoDAO();
 
-        boolean resultado = eventoDAO.deleteEventoByCodigo(codigo);
+        boolean resultado = eventoDAO.delete(codigo);
 
         return resultado == true ? "Deletado com sucesso." : "Erro ao deletar";
     }

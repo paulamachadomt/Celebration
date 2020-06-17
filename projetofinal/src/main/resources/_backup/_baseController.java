@@ -7,8 +7,6 @@ public class _baseController {
 
     // (home) - redireciona para a página home, (remove cookies do evento);
 
-    // ---------------------- AuthenticationController.java
-
     // (logar) nome, cpf -> Cookier (informações usuário, listas de festas participantes e criadas), Eventos (Nome, local, data, descrição, proprietario)
 
     // (logout) nome, cpf -> Destroi cookie, fecha sistema

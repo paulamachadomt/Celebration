@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class Pessoa {
 
-    private String nome;
     private String cpf;
+    private String nome;
 
     public Pessoa(String cpf, String nome) {
         this.cpf = cpf;

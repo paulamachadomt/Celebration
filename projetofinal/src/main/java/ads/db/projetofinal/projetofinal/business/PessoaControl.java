@@ -9,38 +9,37 @@ import ads.db.projetofinal.projetofinal.dao.PessoaDAO;
 import ads.db.projetofinal.projetofinal.model.Pessoa;
 
 @RestController
-public class PessoaController {
+public class PessoaControl {
 
-    @GetMapping("/cadastro")
-    public String doGet(String nome, String cpf) {
+    @GetMapping("/createPessoa")
+    public String createPessoa(String nome, String cpf) {
 
         Pessoa pessoa = new Pessoa(cpf, nome);
 
         PessoaDAO pessoaDAO = new PessoaDAO();
 
-        boolean resultado = pessoaDAO.createPessoa(pessoa);
+        boolean resultado = pessoaDAO.create(pessoa);
 
         return "ola," + nome + "\n\n" + resultado;
     }
 
-    @GetMapping("/pesquisaCPF")
-    public String doGet(String cpf) {
+    @GetMapping("/pesquisaPessoaCPF")
+    public String pesquisaPessoaCPF(String cpf) {
 
         PessoaDAO pessoaDAO = new PessoaDAO();
 
-        Pessoa pessoa = pessoaDAO.readPessoaByCPF(cpf);
+        Pessoa pessoa = pessoaDAO.read(cpf);
 
         return pessoa == null ? "cpf não encontrada" : "ola," + pessoa.getNome() + "\n\n" + pessoa.getCpf();
 
-        // TERNARIO --==> (condição) ? [true] : [false]
     }
 
     @GetMapping("/pesquisaNome")
-    public String selectNome(String nome) {
+    public String pesquisaNome(String nome) {
 
         PessoaDAO pessoaDAO = new PessoaDAO();
 
-        ArrayList<Pessoa> listaNomes = pessoaDAO.readPessoaByName(nome);
+        ArrayList<Pessoa> listaNomes = pessoaDAO.read_ByNome(nome);
 
         String retorno = "";
 
@@ -54,26 +53,26 @@ public class PessoaController {
         return retorno;
     }
 
-    @GetMapping("/update")
-    public String atualizaNome(String nome, String cpf) {
+    @GetMapping("/updatePessoa")
+    public String updatePessoa(String nome, String cpf) {
 
         Pessoa pessoa = new Pessoa(cpf, nome);
 
         PessoaDAO pessoaDAO = new PessoaDAO();
 
-        boolean resultado = pessoaDAO.updatePessoa(pessoa);
+        boolean resultado = pessoaDAO.update(pessoa);
 
         // pessoa = pessoaDAO.readPessoaByCPF(cpf);
 
         return "ola," + pessoa.getNome() + "\n\n  " + resultado;
     }
 
-    @GetMapping("/delete")
+    @GetMapping("/deletePessoa")
     public String deletaPessoa(String cpf) {
 
         PessoaDAO pessoaDAO = new PessoaDAO();
 
-        boolean resultado = pessoaDAO.deletePessoaByCPF(cpf);
+        boolean resultado = pessoaDAO.delete(cpf);
 
         return resultado == true ? "Deletado com sucesso." : "Erro ao deletar";
     }

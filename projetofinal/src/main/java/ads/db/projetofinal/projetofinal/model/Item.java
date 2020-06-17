@@ -3,13 +3,12 @@ package ads.db.projetofinal.projetofinal.model;
 import lombok.Data;
 
 @Data
-public class ComesBebes {
-    
-    private Integer codigoItem;
+public class Item {
+
+    private Integer codigoItem; // auto_increment
     private String nomeItem;
-    
-    
-    public ComesBebes(Integer codigoItem, String nomeItem) {
+
+    public Item(Integer codigoItem, String nomeItem) {
         this.codigoItem = codigoItem;
         this.nomeItem = nomeItem;
     }

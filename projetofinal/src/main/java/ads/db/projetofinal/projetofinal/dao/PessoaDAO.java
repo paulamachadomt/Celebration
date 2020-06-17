@@ -9,28 +9,27 @@ import ads.db.projetofinal.projetofinal.dao.jdbc.Conexao;
 import ads.db.projetofinal.projetofinal.model.Pessoa;
 
 public class PessoaDAO {
-    
-    public boolean createPessoa(Pessoa pessoa) {
-        boolean resultado = false;
 
+    public boolean create(Pessoa pessoa) {
+        boolean resultado = false;
         try {
-            Connection conexao = Conexao.getConexao();
-            String comandoSQL = "INSERT INTO pessoa VALUES (?, ?)";
-            PreparedStatement statement = conexao.prepareStatement(comandoSQL);
-            statement.setString(1, pessoa.getCpf());
-            statement.setString(2, pessoa.getNome());
-            if (statement.executeUpdate() >= 1) {
+            Connection conn = Conexao.getConexao();
+            String sql = "INSERT INTO pessoa VALUES (?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, pessoa.getCpf());
+            stmt.setString(2, pessoa.getNome().toLowerCase());
+            if (stmt.executeUpdate() >= 1) {
                 resultado = true;
             }
-            statement.close();
-            conexao.close();
+            stmt.close();
+            conn.close();
         } catch (Exception e) {
             System.out.println("Erro ao cadastrar Pessoa: " + e);
         }
         return resultado;
     }
 
-    public Pessoa readPessoaByCPF(String cpf) {
+    public Pessoa read(String cpf) {
         Pessoa pessoa = null;
         try {
             Connection conexao = Conexao.getConexao();
@@ -50,8 +49,8 @@ public class PessoaDAO {
         return pessoa;
     }
 
-    public ArrayList<Pessoa> readPessoaByName(String nome) {
-        ArrayList<Pessoa> listaPessoas = new ArrayList<>();
+    public ArrayList<Pessoa> read_ByNome(String nome) {
+        ArrayList<Pessoa> pessoas = new ArrayList<>();
         try {
             Connection conexao = Conexao.getConexao();
             String comandoSQL = "SELECT * FROM pessoa WHERE nome = ?";
@@ -60,7 +59,7 @@ public class PessoaDAO {
             ResultSet resultadoSelect = statement.executeQuery();
             while (resultadoSelect.next()) {
                 Pessoa pessoa = new Pessoa(resultadoSelect.getString("cpf"), resultadoSelect.getString("nome"));
-                listaPessoas.add(pessoa);
+                pessoas.add(pessoa);
             }
             resultadoSelect.close();
             statement.close();
@@ -68,17 +67,17 @@ public class PessoaDAO {
         } catch (Exception e) {
             System.out.println("Erro ao localizar Pessoa: " + e);
         }
-        return listaPessoas;
+        return pessoas;
     }
 
-    public Boolean updatePessoa(Pessoa pessoa){
+    public Boolean update(Pessoa pessoa) {
         boolean resultado = false;
         try {
             Connection conexao = Conexao.getConexao();
             String comandoSQL = "UPDATE pessoa SET nome = ? WHERE cpf = ?";
             PreparedStatement statement = conexao.prepareStatement(comandoSQL);
             statement.setString(1, pessoa.getNome());
-            statement.setString(2, pessoa.getCpf());            
+            statement.setString(2, pessoa.getCpf());
             if (statement.executeUpdate() >= 1) {
                 resultado = true;
             }
@@ -88,9 +87,9 @@ public class PessoaDAO {
             System.out.println("Erro ao atualizar Pessoa: " + e);
         }
         return resultado;
-    }  
+    }
 
-    public Boolean deletePessoaByCPF(String cpf){
+    public Boolean delete(String cpf) {
         boolean resultado = false;
         try {
             Connection conexao = Conexao.getConexao();
