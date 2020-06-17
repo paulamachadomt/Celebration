@@ -58,6 +58,32 @@ public class ConvidadosDAO {
         return convidados;
     }
 
+    public List<Convidado> readAll(Integer codigoEvento) {
+        List<Convidado> convidados = new ArrayList<>();
+        try {
+            Connection conexao = Conexao.getConexao();
+            String comandoSQL = "SELECT * FROM convidado WHERE codigoEvento = ?";
+            PreparedStatement statement = conexao.prepareStatement(comandoSQL);
+            statement.setInt(1, codigoEvento);
+            ResultSet resultadoSelect = statement.executeQuery();
+            while (resultadoSelect.next()) {
+                Convidado convidadoEvento = new Convidado(
+                    resultadoSelect.getBoolean("confirmacao"),
+                    resultadoSelect.getInt("codigoItem"),
+                    resultadoSelect.getString("cpfPessoa"), 
+                    resultadoSelect.getInt("codigoEvento"),
+                    resultadoSelect.getBoolean("criadorEvento"));
+                    convidados.add(convidadoEvento);
+            }
+            resultadoSelect.close();
+            statement.close();
+            conexao.close();
+        } catch (Exception e) {
+            System.out.println("Erro ao localizar Convidado(a):  " + e);
+        }
+        return convidados;
+    }
+
     public List<Convidado> readAll() {
         List<Convidado> convidados = new ArrayList<>();
         try {
@@ -123,13 +149,13 @@ public class ConvidadosDAO {
         return resultado;
     }
 
-    public boolean delete(Integer codigoEvento, Integer cpfPessoa) {
+    public boolean delete(Integer codigoEvento, String cpfPessoa) {
         boolean resultado = false;
         try {
             Connection conexao = Conexao.getConexao();
             String comandoSQL = "DELETE FROM convidado WHERE cpfPessoa = ? AND codigoEvento = ?";
             PreparedStatement statement = conexao.prepareStatement(comandoSQL);
-            statement.setInt(1, cpfPessoa);
+            statement.setString(1, cpfPessoa);
             statement.setInt(2, codigoEvento);
             if (statement.executeUpdate() >= 1) {
                 resultado = true;

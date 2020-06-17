@@ -93,7 +93,7 @@ public class ConvidadosControle {
     }
 
     @GetMapping("/deletaConvidado")
-    public String deletaConvidado(Integer codigoEvento, Integer cpfPessoa) {
+    public String deletaConvidado(Integer codigoEvento, String cpfPessoa) {
 
         boolean resultado = new ConvidadosDAO().delete(codigoEvento, cpfPessoa); 
         

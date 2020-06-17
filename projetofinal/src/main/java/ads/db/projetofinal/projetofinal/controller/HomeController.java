@@ -67,7 +67,7 @@ public class HomeController {
         try {
             resultado = new PessoaDAO().create(pessoa);
             if (resultado) {
-                log("OK: " + "\nSucesso ao cadastrar pessoa " + pessoa.toString());
+                log("SUCCESS: " + "\nSucesso ao cadastrar pessoa " + pessoa.toString());
             } else {
                 log("ERROR: " + "\nErro ao cadastrar nova Pessoa. Nome errado.");
             }
@@ -97,7 +97,7 @@ public class HomeController {
         return eventos;
     }
 
-    // JSON : { "pessoa.nome":"nome","pessoa.cpf":"00000000000"}
+    // JSON : example : { "nome":"nome","cpf":"00000000000"}
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/home/login")
     public List<Evento> login(
         @RequestBody Pessoa pessoa,
