@@ -77,7 +77,7 @@ public class ConvidadosController {
             ) {
         boolean resultado = false;
         if (!cpf.equalsIgnoreCase("default")) {
-            Item item = new ItemEventoController().CarregarItem(nomeItem);
+            Item item = UtilEvento.CarregarItem(nomeItem);
             if (item != null) {
                 resultado = new ConvidadosDAO()
                         .update_item(new Convidado(item.getCodigoItem(), cpfPessoa, codigoEvento, false));
