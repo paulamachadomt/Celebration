@@ -32,6 +32,32 @@ public class ConvidadosDAO {
         return resultado;
     }
 
+    public Convidado read_cpfEvento(String cpfPessoa, Integer codigoEvento) {
+        Convidado convidados = null;
+        try {
+            Connection conexao = Conexao.getConexao();
+            String comandoSQL = "SELECT * FROM convidado WHERE cpfpessoa = ? AND codigoEvento = ?";
+            PreparedStatement statement = conexao.prepareStatement(comandoSQL);
+            statement.setString(1, cpfPessoa);
+            statement.setInt(1, codigoEvento);
+            ResultSet resultadoSelect = statement.executeQuery();
+            while (resultadoSelect.next()) {
+                convidados = new Convidado(
+                    resultadoSelect.getBoolean("confirmacao"),
+                    resultadoSelect.getInt("codigoItem"),
+                    resultadoSelect.getString("cpfPessoa"), 
+                    resultadoSelect.getInt("codigoEvento"),
+                    resultadoSelect.getBoolean("criadorEvento"));
+            }
+            resultadoSelect.close();
+            statement.close();
+            conexao.close();
+        } catch (Exception e) {
+            System.out.println("Erro ao localizar Convidado(a):  " + e);
+        }
+        return convidados;
+    }
+
     public List<Convidado> read(String cpfPessoa) {
         List<Convidado> convidados = new ArrayList<>();
         try {

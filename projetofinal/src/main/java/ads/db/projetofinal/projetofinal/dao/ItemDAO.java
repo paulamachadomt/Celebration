@@ -62,8 +62,7 @@ public class ItemDAO {
             statement.setString(1, nomeItem);
             ResultSet resultadoSelect = statement.executeQuery();
             while (resultadoSelect.next()) {
-                comesBebes = new Item(resultadoSelect.getInt("codigoItem"),
-                        resultadoSelect.getString("nomeItem"));
+                comesBebes = new Item(resultadoSelect.getInt("codigoItem"), resultadoSelect.getString("nomeItem"));
             }
             resultadoSelect.close();
             statement.close();
@@ -83,8 +82,7 @@ public class ItemDAO {
             statement.setString(1, "%" + nomeItem + "%");
             ResultSet resultadoSelect = statement.executeQuery();
             while (resultadoSelect.next()) {
-                Item item = new Item(resultadoSelect.getInt("codigoItem"),
-                        resultadoSelect.getString("nomeItem"));
+                Item item = new Item(resultadoSelect.getInt("codigoItem"), resultadoSelect.getString("nomeItem"));
                 itens.add(item);
             }
             resultadoSelect.close();
