@@ -24,7 +24,7 @@ public class _baseController {
 
     // (carregar dados do evento) -> carregar dados atualizados do evento, preencher cookies no usuário; e direcionar para a pagina de evento;
 
-    // ---------------------- ListaConvidadosController.java
+    // ---------------------- ConvidadosController.java
 
     // (Inserir convidado) - nome, cpf -> verificar se existe na base, cadastrar se não houver; associar à lista de evento; atualizar o cookie do Evento; e retornar os dados atualizados (inserindo na lista).
     
@@ -35,7 +35,7 @@ public class _baseController {
 
     // (Escolha do alimento) cpf, código do alimento -> Leitura do cookies; atualiza o codigo na tabela lista de convidados. Atualiza cookies do evento; Bloqueia combobox de alimentos.
 
-    // ---------------------- ListaComesBebes.java
+    // ---------------------- ItemEventoController.java
 
     // (Inserir comida) - nome -> verificar se existe na base, cadastrar se não houver; associar (o código) à lista de evento; atualizar o cookie do Evento; e retornar os dados atualizados (inserindo na lista).
 

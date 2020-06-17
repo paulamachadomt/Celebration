@@ -165,6 +165,7 @@ public class EventoController {
             Integer codigoEvento = cadastrarEvento(evento); // auto_increment
             evento.setCodigo(codigoEvento);
             boolean resultadoCriadorEvento = cadastrarConvidadoDono(new Convidado(true, cpf, evento.getCodigo(), true));
+            System.out.println(resultadoCriadorEvento);
         }
 
         return evento;
@@ -187,14 +188,14 @@ public class EventoController {
     }
 
     // JSON example : EVENTO : {"codigo":"1","local":"São
-    // José","data":"2020-10-10","nome":"Festa do Kobrasol","descricao":"Festa
-    // pósdemia"}
+    // José","data":"2020-10-10","nome":"Festa do Kobrasol","descricao":"Festa pósdemia"}
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento/{codigo}/")
     public String updateEvento(@CookieValue(value = "cpf", defaultValue = "default") String cpf,
             @RequestBody Evento evento, @PathVariable Integer codigo) {
 
         if (!cpf.equalsIgnoreCase("default")) {
             boolean resultado = atualizarEvento(evento);
+            System.out.println(resultado);
 
         }
         // atualzia o evento por completo na base // nome, local, data, descrição,

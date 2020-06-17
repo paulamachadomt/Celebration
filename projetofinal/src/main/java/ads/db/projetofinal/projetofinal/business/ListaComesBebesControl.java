@@ -26,7 +26,7 @@ public class ListaComesBebesControl {
             item = new Item(codigoItemEvento, nomeItem);
         }
 
-        ItemEvento itemEvento = new ItemEvento(item.getCodigoItem(), codigoEvento);
+        ItemEvento itemEvento = new ItemEvento(codigoEvento, item.getCodigoItem());
 
         boolean resultado = new ItemEventoDAO().create(itemEvento);
 
