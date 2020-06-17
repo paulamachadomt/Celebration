@@ -24,11 +24,11 @@ DROP TABLE IF EXISTS `itemevento`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `itemevento` (
   `codigoEvento` int NOT NULL,
-  `codigoComesBebes` int NOT NULL,
+  `codigoItem` int DEFAULT NULL,
   KEY `codigoEvento` (`codigoEvento`),
-  KEY `codigoComesBebes` (`codigoComesBebes`),
+  KEY `codigoComesBebes` (`codigoItem`),
   CONSTRAINT `itemevento_ibfk_1` FOREIGN KEY (`codigoEvento`) REFERENCES `evento` (`codigo`),
-  CONSTRAINT `itemevento_ibfk_2` FOREIGN KEY (`codigoComesBebes`) REFERENCES `item` (`codigoItem`)
+  CONSTRAINT `itemevento_ibfk_2` FOREIGN KEY (`codigoItem`) REFERENCES `item` (`codigoItem`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-16 20:44:13
+-- Dump completed on 2020-06-16 21:11:52
