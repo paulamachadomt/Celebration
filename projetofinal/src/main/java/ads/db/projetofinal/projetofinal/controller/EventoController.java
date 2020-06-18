@@ -1,6 +1,9 @@
 package ads.db.projetofinal.projetofinal.controller;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,14 +36,26 @@ public class EventoController extends UtilEvento{
     @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/evento/{codigo}")
     public Evento readEvento(
         @CookieValue(value = "cpf", defaultValue = "default") String cpf,
-        @PathVariable Integer codigo
+        @PathVariable Integer codigo,
+        HttpServletResponse response
             ) {
         Evento evento = null;
         if (!cpf.equalsIgnoreCase("default")) {
             evento = carregarEvento(codigo);
             if (evento != null) {
+                Convidado convidado = null;
+                List<Convidado> registroConvidados = carregarRegistroConvidado(codigo);
+                for (Convidado convidadoRegistrado : registroConvidados) {
+                    if (cpf.equalsIgnoreCase(convidadoRegistrado.getCpfPessoa())) {
+                        convidado = convidadoRegistrado;
+                    }
+                }
+                evento.setRegistroConvidados(registroConvidados);
                 evento.setConvidados(carregarConvidado(codigo));
+                evento.setRegistroItens(carregarRegistroItens(codigo));
                 evento.setItens(carregarItens(codigo));
+                response.addCookie(getCookie("cookieCodigoEvento", ""+evento.getCodigo()));
+                response.addCookie(getCookie("cookieCriadorEvento", ""+convidado.getCriadorEvento()));
             }
         }
         return evento;
@@ -49,15 +64,17 @@ public class EventoController extends UtilEvento{
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento/{codigo}/")
     public Boolean updateEvento(
         @CookieValue(value = "cpf", defaultValue = "default") String cpf,
+        @CookieValue(value = "cookieCodigoEvento") String cookieCodigoEvento,
+        @CookieValue(value = "cookieCriadorEvento") String cookieCriadorEvento,
         @RequestBody Evento evento, 
         @PathVariable Integer codigo
             ) {
         boolean resultado = false;
-        if (!cpf.equalsIgnoreCase("default")) {
-            if (codigo == evento.getCodigo()) {
-                resultado = atualizarEvento(evento);
-            }
+
+        if (codigo == evento.getCodigo()) {
+            resultado = atualizarEvento(evento);
         }
+       
         return resultado;
     }
 

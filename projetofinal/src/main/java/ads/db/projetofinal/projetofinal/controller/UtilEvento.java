@@ -52,7 +52,7 @@ public class UtilEvento extends Util {
         return ressultado;
     }
 
-    List<Convidado> carregaEventosConvidado(Pessoa pessoa){
+    List<Convidado> carregaEventosConvidado(Pessoa pessoa) {
         List<Convidado> eventosConvidado = new ArrayList<>();
         try {
             eventosConvidado = new ConvidadosDAO().read(pessoa.getCpf());
@@ -163,7 +163,7 @@ public class UtilEvento extends Util {
         return ressultado;
     }
 
-    boolean atualizarConvidado(Convidado convidado){
+    boolean atualizarConvidado(Convidado convidado) {
         boolean resultado = false;
         try {
             resultado = new ConvidadosDAO().update_confirmacao(convidado);
@@ -193,7 +193,7 @@ public class UtilEvento extends Util {
         return resultado;
     }
 
-    Pessoa carregarPessoa(String cpf){
+    Pessoa carregarPessoa(String cpf) {
         Pessoa pessoa = null;
         try {
             pessoa = new PessoaDAO().read(cpf);
@@ -228,7 +228,7 @@ public class UtilEvento extends Util {
         try {
             int codigoItem = new ItemDAO().create_getCodigo(nomeItem);
             if (codigoItem >= 1) {
-                item =  new Item(codigoItem, nomeItem);
+                item = new Item(codigoItem, nomeItem);
                 log("SUCCESS: " + "\nSucesso ao cadastrar novo item " + new Item(codigoItem, nomeItem).toString());
             } else {
                 log("ERROR: " + "\nErro ao cadastrar novo item. Problema ao resgatar código.");
@@ -269,7 +269,7 @@ public class UtilEvento extends Util {
         return item;
     }
 
-    boolean deletarRegistroConvidado(Convidado convidado){
+    boolean deletarRegistroConvidado(Convidado convidado) {
         boolean resultado = false;
         try {
             resultado = new ConvidadosDAO().delete(convidado.getCodigoEvento(), convidado.getCpfPessoa());
@@ -284,7 +284,7 @@ public class UtilEvento extends Util {
         return resultado;
     }
 
-    boolean deletarRegistroItem(ItemEvento itemEvento){
+    boolean deletarRegistroItem(ItemEvento itemEvento) {
         boolean resultado = false;
         try {
             resultado = new ItemEventoDAO().delete(itemEvento.getCodigoEvento(), itemEvento.getCodigoItem());
@@ -299,7 +299,7 @@ public class UtilEvento extends Util {
         return resultado;
     }
 
-    boolean deletarEvento(Integer codigoEvento){
+    boolean deletarEvento(Integer codigoEvento) {
         boolean resultado = false;
         try {
             resultado = new EventoDAO().delete(codigoEvento);

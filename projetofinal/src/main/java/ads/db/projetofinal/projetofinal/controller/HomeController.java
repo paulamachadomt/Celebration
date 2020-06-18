@@ -21,7 +21,8 @@ public class HomeController extends UtilLogin {
     @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/home")
     public List<Evento> getHome(
         @CookieValue(value = "nome", defaultValue = "default") String nome,
-        @CookieValue(value = "cpf", defaultValue = "default") String cpf
+        @CookieValue(value = "cpf", defaultValue = "default") String cpf,
+        HttpServletResponse response
             ) {
         List<Evento> eventos = new ArrayList<>();
         Pessoa pessoa = new Pessoa(cpf, nome.toLowerCase());
@@ -31,6 +32,8 @@ public class HomeController extends UtilLogin {
                 eventos.add(util.carregarEvento(eventoConvidados.getCodigoEvento())); 
             }
         }
+        response.addCookie(killCookie("cookieCodigoEvento", ""));
+        response.addCookie(killCookie("cookieCriadorEvento", ""));
         return eventos;
     }
 
@@ -40,6 +43,7 @@ public class HomeController extends UtilLogin {
         HttpServletResponse response
             ) {
         boolean getCookie = false;
+        pessoa.setNome(pessoa.getNome().toLowerCase());
         if (autenticarLogin(pessoa)) {
             getCookie = true;
         } else if (cadastrarPessoa(pessoa)) {
@@ -49,7 +53,7 @@ public class HomeController extends UtilLogin {
             response.addCookie(getCookie("nome", pessoa.getNome().toLowerCase()));
             response.addCookie(getCookie("cpf", pessoa.getCpf()));
         }
-        return getHome(pessoa.getNome().toLowerCase(), pessoa.getCpf());
+        return getHome(pessoa.getNome().toLowerCase(), pessoa.getCpf(), response);
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/home/logout")
@@ -57,8 +61,8 @@ public class HomeController extends UtilLogin {
         @CookieValue(value = "cpf", defaultValue = "default") String cpf,
         HttpServletResponse response
             ) {
-        response.addCookie(getCookie("nome", "default"));
-        response.addCookie(getCookie("cpf", "default"));
-        return getHome("default", "default");
+        response.addCookie(killCookie("nome", "default"));
+        response.addCookie(killCookie("cpf", "default"));
+        return getHome("default", "default", response);
     }
 }
