@@ -21,86 +21,96 @@ public class EventoController extends UtilEvento{
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento")
     public Integer createEvento(
-        @CookieValue(value = "cpf", defaultValue = "default") String cpf,
+        @CookieValue(value = "cpf", defaultValue = "null") String cpf,
         @RequestBody Evento evento
             ) {
-        if (!cpf.equalsIgnoreCase("default")) {
+        if (!cpf.equalsIgnoreCase("null")) {
             Integer codigoEvento = cadastrarEvento(evento); // auto_increment
             evento.setCodigo(codigoEvento);
             boolean resultadoCriadorEvento = cadastrarConvidado(new Convidado(true, cpf, evento.getCodigo(), true));
-            System.out.println(resultadoCriadorEvento);
         }
         return evento.getCodigo() == null ? -1 : evento.getCodigo();
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/evento/{codigo}")
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/evento/{codigoEvento}")
     public Evento readEvento(
-        @CookieValue(value = "cpf", defaultValue = "default") String cpf,
-        @PathVariable Integer codigo,
+        @CookieValue(value = "cpf", defaultValue = "null") String cpf,
+        @PathVariable Integer codigoEvento,
         HttpServletResponse response
             ) {
         Evento evento = null;
-        if (!cpf.equalsIgnoreCase("default")) {
-            evento = carregarEvento(codigo);
-            if (evento != null) {
-                Convidado convidado = null;
-                List<Convidado> registroConvidados = carregarRegistroConvidado(codigo);
-                for (Convidado convidadoRegistrado : registroConvidados) {
-                    if (cpf.equalsIgnoreCase(convidadoRegistrado.getCpfPessoa())) {
-                        convidado = convidadoRegistrado;
+        if (!cpf.equalsIgnoreCase("null")) {
+                evento = carregarEvento(codigoEvento);
+                if (evento != null) {
+                    Convidado convidado = null;
+                    List<Convidado> registroConvidados = carregarRegistroConvidado(codigoEvento);
+                    for (Convidado convidadoRegistrado : registroConvidados) {
+                        if (cpf.equalsIgnoreCase(convidadoRegistrado.getCpfPessoa())) {
+                            convidado = convidadoRegistrado;
+                            break;
+                        } 
+                    }
+                    if (convidado == null) {
+                        evento = new Evento();
+                    } else {
+                        // evento.setRegistroConvidados(registroConvidados);
+                        // evento.setConvidados(carregarConvidado(codigoEvento));
+                        // evento.setRegistroItens(carregarRegistroItens(codigoEvento));
+                        // evento.setItens(carregarItens(codigoEvento));
+                        response.addCookie(getCookie("codigo_evento", ""+evento.getCodigo()));
+                        response.addCookie(getCookie("criador_evento", ""+convidado.getCriadorEvento()));
                     }
                 }
-                evento.setRegistroConvidados(registroConvidados);
-                evento.setConvidados(carregarConvidado(codigo));
-                evento.setRegistroItens(carregarRegistroItens(codigo));
-                evento.setItens(carregarItens(codigo));
-                response.addCookie(getCookie("cookieCodigoEvento", ""+evento.getCodigo()));
-                response.addCookie(getCookie("cookieCriadorEvento", ""+convidado.getCriadorEvento()));
-            }
         }
         return evento;
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento/{codigo}/")
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento/{codigoEvento}/")
     public Boolean updateEvento(
-        @CookieValue(value = "cpf", defaultValue = "default") String cpf,
-        @CookieValue(value = "cookieCodigoEvento") String cookieCodigoEvento,
-        @CookieValue(value = "cookieCriadorEvento") String cookieCriadorEvento,
+        @CookieValue(value = "cpf", defaultValue = "null") String cpf,
+        @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
+        @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
         @RequestBody Evento evento, 
-        @PathVariable Integer codigo
+        @PathVariable Integer codigoEvento
             ) {
         boolean resultado = false;
-
-        if (codigo == evento.getCodigo()) {
-            resultado = atualizarEvento(evento);
+        if (!cpf.equalsIgnoreCase("null") && codigo_evento.equalsIgnoreCase(""+codigoEvento)) {
+            if (criador_evento.equalsIgnoreCase("true")) {
+                if (codigoEvento == evento.getCodigo()) {
+                    resultado = atualizarEvento(evento);
+                }
+            }
         }
-       
         return resultado;
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento/{codigo}/delete")
     public boolean deleteEvento(
-        @CookieValue(value = "cpf", defaultValue = "default") String cpf,
+        @CookieValue(value = "cpf", defaultValue = "null") String cpf,
+        @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
+        @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
         @PathVariable Integer codigo
             ) {
         boolean resultado = false;
-        if (!cpf.equalsIgnoreCase("default")) {
-            Evento evento = carregarEvento(codigo);
-            if (evento != null) {
-                evento.setRegistroConvidados(carregarRegistroConvidado(codigo));
-                evento.setRegistroItens(carregarRegistroItens(codigo));
-            } else {
-                evento = new Evento();
-                evento.setRegistroConvidados(new ArrayList<>());
-                evento.setRegistroItens(new ArrayList<>());
+        if (!cpf.equalsIgnoreCase("null") && codigo_evento.equalsIgnoreCase(""+codigo)) {
+            if (criador_evento.equalsIgnoreCase("true")) {
+                Evento evento = carregarEvento(codigo);
+                if (evento != null) {
+                    evento.setRegistroConvidados(carregarRegistroConvidado(codigo));
+                    evento.setRegistroItens(carregarRegistroItens(codigo));
+                } else {
+                    evento = new Evento();
+                    evento.setRegistroConvidados(new ArrayList<>());
+                    evento.setRegistroItens(new ArrayList<>());
+                }
+                for (Convidado registroConvidado : evento.getRegistroConvidados()) {
+                    deletarRegistroConvidado(registroConvidado);
+                }
+                for (ItemEvento registroItem : evento.getRegistroItens()) {
+                    deletarRegistroItem(registroItem);
+                }
+                resultado = deletarEvento(codigo);
             }
-            for (Convidado registroConvidado : evento.getRegistroConvidados()) {
-                deletarRegistroConvidado(registroConvidado);
-            }
-            for (ItemEvento registroItem : evento.getRegistroItens()) {
-                deletarRegistroItem(registroItem);
-            }
-            resultado = deletarEvento(codigo);
         }
         return resultado;
     }

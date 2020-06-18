@@ -27,7 +27,7 @@ public class UtilLogin extends Util {
             if (resultado) {
                 log("SUCCESS: " + "\nSucesso ao cadastrar pessoa " + pessoa.toString());
             } else {
-                log("ERROR: " + "\nErro ao cadastrar nova Pessoa. Nome errado.");
+                log("ERROR: " + "\nErro ao cadastrar nova Pessoa. Nome errado ou já existe CPF.");
             }
         } catch (Exception e) {
             log("ERROR: " + e + "\nErro ao cadastrar nova Pessoa.");

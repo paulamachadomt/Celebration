@@ -20,8 +20,8 @@ public class HomeController extends UtilLogin {
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/home")
     public List<Evento> getHome(
-        @CookieValue(value = "nome", defaultValue = "default") String nome,
-        @CookieValue(value = "cpf", defaultValue = "default") String cpf,
+        @CookieValue(value = "nome", defaultValue = "null") String nome,
+        @CookieValue(value = "cpf", defaultValue = "null") String cpf,
         HttpServletResponse response
             ) {
         List<Evento> eventos = new ArrayList<>();
@@ -32,8 +32,8 @@ public class HomeController extends UtilLogin {
                 eventos.add(util.carregarEvento(eventoConvidados.getCodigoEvento())); 
             }
         }
-        response.addCookie(killCookie("cookieCodigoEvento", ""));
-        response.addCookie(killCookie("cookieCriadorEvento", ""));
+        response.addCookie(killCookie("codigo_evento", ""));  // remove cookie de segurança para acessar e editar eventos
+        response.addCookie(killCookie("criador_evento", "")); // remove cookie de segurança para acessar e editar eventos
         return eventos;
     }
 
@@ -58,7 +58,7 @@ public class HomeController extends UtilLogin {
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/home/logout")
     public List<Evento> logout(
-        @CookieValue(value = "cpf", defaultValue = "default") String cpf,
+        @CookieValue(value = "cpf", defaultValue = "null") String cpf,
         HttpServletResponse response
             ) {
         response.addCookie(killCookie("nome", "default"));

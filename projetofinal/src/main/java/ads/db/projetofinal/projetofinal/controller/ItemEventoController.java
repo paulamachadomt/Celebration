@@ -16,20 +16,24 @@ public class ItemEventoController extends UtilEvento {
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento/{codigoEvento}/item/{nomeItem}")
     public boolean creatItemEvento(
-        @CookieValue(value = "cpf", defaultValue = "default") String cpf,
+        @CookieValue(value = "cpf", defaultValue = "null") String cpf,
+        @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
+        @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
         @PathVariable Integer codigoEvento, 
         @PathVariable String nomeItem
             ) {
         boolean resultado = false;
-        if (!cpf.equalsIgnoreCase("default")) {
-            Item item = CarregarItem(nomeItem);
-            if (item == null) {
-                item = cadastrarItem(nomeItem);
-            }
-            ItemEvento itemEvento = new ItemEvento(codigoEvento, item.getCodigoItem());
-            List<ItemEvento> registroItemEvento = carregarRegistroItens(codigoEvento);
-            if (!registroItemEvento.contains(itemEvento)) {
-                resultado = cadastrarItemEvento(itemEvento);
+        if (!cpf.equalsIgnoreCase("null") && codigo_evento.equalsIgnoreCase(""+codigoEvento)) {
+            if (criador_evento.equalsIgnoreCase("true")) {
+                Item item = CarregarItem(nomeItem);
+                if (item == null) {
+                    item = cadastrarItem(nomeItem);
+                }
+                ItemEvento itemEvento = new ItemEvento(codigoEvento, item.getCodigoItem());
+                List<ItemEvento> registroItemEvento = carregarRegistroItens(codigoEvento);
+                if (!registroItemEvento.contains(itemEvento)) {
+                    resultado = cadastrarItemEvento(itemEvento);
+                }
             }
         }
         return resultado;
@@ -37,17 +41,21 @@ public class ItemEventoController extends UtilEvento {
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento/{codigoEvento}/item/{nomeItem}/remover")
     public boolean deleteItemEvento(
-        @CookieValue(value = "cpf", defaultValue = "default") String cpf,
+        @CookieValue(value = "cpf", defaultValue = "null") String cpf,
+        @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
+        @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
         @PathVariable Integer codigoEvento, 
         @PathVariable String nomeItem
             ) {
         boolean resultado = false;
-        if (!cpf.equalsIgnoreCase("default")) {
-            Item item = CarregarItem(nomeItem);
-            ItemEvento itemEvento = new ItemEvento(codigoEvento, item.getCodigoItem());
-            List<ItemEvento> registroItemEvento = carregarRegistroItens(codigoEvento);
-            if (registroItemEvento.contains(itemEvento)) {
-                 resultado = deletarRegistroItem(itemEvento);
+        if (!cpf.equalsIgnoreCase("null") && codigo_evento.equalsIgnoreCase(""+codigoEvento)) {
+            if (criador_evento.equalsIgnoreCase("true")) {
+                Item item = CarregarItem(nomeItem);
+                ItemEvento itemEvento = new ItemEvento(codigoEvento, item.getCodigoItem());
+                List<ItemEvento> registroItemEvento = carregarRegistroItens(codigoEvento);
+                if (registroItemEvento.contains(itemEvento)) {
+                    resultado = deletarRegistroItem(itemEvento);
+                }
             }
         }
         return resultado;

@@ -17,7 +17,7 @@ public class ConvidadosDAO {
             Connection conexao = Conexao.getConexao();
             String comandoSQL = "INSERT INTO convidado (confirmacao, cpfPessoa, codigoEvento, criadorEvento) VALUES (?, ?, ?, ?)";
             PreparedStatement statement = conexao.prepareStatement(comandoSQL);
-            statement.setBoolean(1, false);
+            statement.setBoolean(1, convidado.getConfirmacao());
             statement.setString(2, convidado.getCpfPessoa());
             statement.setInt(3, convidado.getCodigoEvento());
             statement.setBoolean(4, convidado.getCriadorEvento());

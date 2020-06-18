@@ -65,15 +65,4 @@ public class Convidado {
         result = prime * result + ((cpfPessoa == null) ? 0 : cpfPessoa.hashCode());
         return result;
     }
-
-    // @Override
-    // public boolean equals(Object obj) {
-    //     return (this.cpfPessoa.equals(((Convidado) obj).cpfPessoa)
-    //             && this.codigoEvento.equals(((Convidado) obj).codigoEvento));
-    // }
-
-
-
-    
-
 }
