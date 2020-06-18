@@ -14,74 +14,90 @@ import ads.db.projetofinal.projetofinal.dao.ItemEventoDAO;
 import ads.db.projetofinal.projetofinal.model.Item;
 import ads.db.projetofinal.projetofinal.model.ItemEvento;
 
-public class UtilEvento {
+public class UtilEvento extends Util {
 
-    static List<Convidado> eteventosConvidado(Pessoa pessoa) {
-        return new ConvidadosDAO().read(pessoa.getCpf());
+    boolean autenticaDonoEvento(Convidado convidado) {
+        boolean resultado = false;
+
+        return resultado;
     }
 
-    static Integer cadastrarEvento(Evento evento) {
+    Integer cadastrarEvento(Evento evento) {
         Integer codigoEvento = -1;
         try {
             codigoEvento = new EventoDAO().create(evento);
             if (codigoEvento >= 1) {
-                Util.log("SUCCESS: " + "\nSucesso ao cadastrar novo evento " + evento.toString());
+                log("SUCCESS: " + "\nSucesso ao cadastrar novo evento " + evento.toString());
             } else {
-                Util.log("ERROR: " + "\nErro ao cadastrar novo evento. Problema ao resgatar código.");
+                log("ERROR: " + "\nErro ao cadastrar novo evento. Problema ao resgatar código.");
             }
-
         } catch (Exception e) {
-            Util.log("ERROR: " + e + "\nErro ao cadastrar novo evento.");
+            log("ERROR: " + e + "\nErro ao cadastrar novo evento.");
         }
         return codigoEvento;
     }
 
-    static boolean atualizarEvento(Evento evento) {
+    boolean atualizarEvento(Evento evento) {
         boolean ressultado = false;
         try {
             ressultado = new EventoDAO().update(evento);
             if (ressultado) {
-                Util.log("SUCCESS: " + "\nSucesso ao atualizar o evento " + evento.toString());
+                log("SUCCESS: " + "\nSucesso ao atualizar o evento " + evento.toString());
             } else {
-                Util.log("ERROR: " + "\nErro ao atualizar o evento.");
+                log("ERROR: " + "\nErro ao atualizar o evento.");
             }
         } catch (Exception e) {
-            Util.log("ERROR: " + e + "\nErro  ao atualizar o evento.");
+            log("ERROR: " + e + "\nErro  ao atualizar o evento.");
         }
         return ressultado;
     }
 
-    static Evento carregarEvento(Integer codigoEvento) {
+    List<Convidado> carregaEventosConvidado(Pessoa pessoa){
+        List<Convidado> eventosConvidado = new ArrayList<>();
+        try {
+            eventosConvidado = new ConvidadosDAO().read(pessoa.getCpf());
+            if (!eventosConvidado.isEmpty()) {
+                log("SUCCESS: " + "\nSucesso ao carregar eventoas convidado " + eventosConvidado);
+            } else {
+                log("ERROR: " + "\nLista vazia, ou Erro ao carregar eventos convidado.");
+            }
+        } catch (Exception e) {
+            log("ERROR: " + e + "\nErro ao carregar eventos convidado.");
+        }
+        return eventosConvidado;
+    }
+
+    Evento carregarEvento(Integer codigoEvento) {
         Evento evento = null;
         try {
             evento = new EventoDAO().read(codigoEvento);
             if (evento.getCodigo() >= 1) {
-                Util.log("SUCCESS: " + "\nSucesso ao carregar evento " + evento.toString());
+                log("SUCCESS: " + "\nSucesso ao carregar evento " + evento.toString());
             } else {
-                Util.log("ERROR: " + "\nErro ao carregar evento. Problema com o código.");
+                log("ERROR: " + "\nErro ao carregar evento. Problema com o código.");
             }
         } catch (Exception e) {
-            Util.log("ERROR: " + e + "\nErro ao carregar evento.");
+            log("ERROR: " + e + "\nErro ao carregar evento.");
         }
         return evento;
     }
 
-    static List<Convidado> carregarRegistroConvidado(Integer codigoEvento) {
+    List<Convidado> carregarRegistroConvidado(Integer codigoEvento) {
         List<Convidado> registroConvidados = new ArrayList<>();
         try {
             registroConvidados = new ConvidadosDAO().readAll(codigoEvento);
             if (!registroConvidados.isEmpty()) {
-                Util.log("SUCCESS: " + "\nSucesso ao carregar registros convidados " + registroConvidados.toString());
+                log("SUCCESS: " + "\nSucesso ao carregar registros convidados " + registroConvidados);
             } else {
-                Util.log("ERROR: " + "\nLista vazia, ou Erro ao carregar registros convidados.");
+                log("ERROR: " + "\nLista vazia, ou Erro ao carregar registros convidados.");
             }
         } catch (Exception e) {
-            Util.log("ERROR: " + e + "\nLista vazia, ou Erro ao carregar registros convidados.");
+            log("ERROR: " + e + "\nLista vazia, ou Erro ao carregar registros convidados.");
         }
         return registroConvidados;
     }
 
-    static List<Pessoa> carregarConvidado(Integer codigoEvento) {
+    List<Pessoa> carregarConvidado(Integer codigoEvento) {
         List<Pessoa> convidados = new ArrayList<>();
         try {
             List<Convidado> registroConvidados = carregarRegistroConvidado(codigoEvento);
@@ -89,32 +105,32 @@ public class UtilEvento {
                 convidados.add(new PessoaDAO().read(convidado.getCpfPessoa()));
             }
             if (!convidados.isEmpty()) {
-                Util.log("SUCCESS: " + "\nSucesso ao carregar convidados " + convidados.toString());
+                log("SUCCESS: " + "\nSucesso ao carregar convidados " + convidados);
             } else {
-                Util.log("ERROR: " + "\nLista vazia, ou Erro ao carregar convidados.");
+                log("ERROR: " + "\nLista vazia, ou Erro ao carregar convidados.");
             }
         } catch (Exception e) {
-            Util.log("ERROR: " + e + "\nLista vazia, ou Erro ao carregar convidados.");
+            log("ERROR: " + e + "\nLista vazia, ou Erro ao carregar convidados.");
         }
         return convidados;
     }
 
-    static List<ItemEvento> carregarRegistroItens(Integer codigoEvento) {
+    List<ItemEvento> carregarRegistroItens(Integer codigoEvento) {
         List<ItemEvento> registroItens = new ArrayList<>();
         try {
             registroItens = new ItemEventoDAO().readAll(codigoEvento);
             if (!registroItens.isEmpty()) {
-                Util.log("SUCCESS: " + "\nSucesso ao registros carregar itens " + registroItens.toString());
+                log("SUCCESS: " + "\nSucesso ao registros carregar itens " + registroItens);
             } else {
-                Util.log("ERROR: " + "\nLista vazia, ou Erro ao registros carregar itens.");
+                log("ERROR: " + "\nLista vazia, ou Erro ao registros carregar itens.");
             }
         } catch (Exception e) {
-            Util.log("ERROR: " + e + "\nLista vazia, ou Erro ao registros carregar itens.");
+            log("ERROR: " + e + "\nLista vazia, ou Erro ao registros carregar itens.");
         }
         return registroItens;
     }
 
-    static List<Item> carregarItens(Integer codigoEvento) {
+    List<Item> carregarItens(Integer codigoEvento) {
         List<Item> itens = new ArrayList<>();
         try {
             List<ItemEvento> registroItens = carregarRegistroItens(codigoEvento);
@@ -122,106 +138,179 @@ public class UtilEvento {
                 itens.add(new ItemDAO().read(item.getCodigoItem()));
             }
             if (!itens.isEmpty()) {
-                Util.log("SUCCESS: " + "\nSucesso ao carregar itens " + itens.toString());
+                log("SUCCESS: " + "\nSucesso ao carregar itens " + itens);
             } else {
-                Util.log("ERROR: " + "\nLista vazia, ou Erro ao carregar itens.");
+                log("ERROR: " + "\nLista vazia, ou Erro ao carregar itens.");
             }
         } catch (Exception e) {
-            Util.log("ERROR: " + e + "\nLista vazia, ou Erro ao carregar itens.");
+            log("ERROR: " + e + "\nLista vazia, ou Erro ao carregar itens.");
         }
         return itens;
     }
 
-    static boolean cadastrarConvidadoDono(Convidado convidado) {
+    boolean cadastrarConvidado(Convidado convidado) {
         boolean ressultado = false;
         try {
             ressultado = new ConvidadosDAO().create(convidado);
             if (ressultado) {
-                Util.log("SUCCESS: " + "\nSucesso ao cadastrar o dono do evento " + convidado.toString());
+                log("SUCCESS: " + "\nSucesso ao cadastrar o dono do evento " + convidado.toString());
             } else {
-                Util.log("ERROR: " + "\nErro ao cadastrar o dono do evento.");
+                log("ERROR: " + "\nErro ao cadastrar o dono do evento.");
             }
         } catch (Exception e) {
-            Util.log("ERROR: " + e + "\nErro ao cadastrar o dono do evento.");
+            log("ERROR: " + e + "\nErro ao cadastrar o dono do evento.");
         }
         return ressultado;
     }
 
-    static boolean cadastrarPessoa(Pessoa pessoa) {
+    boolean atualizarConvidado(Convidado convidado){
+        boolean resultado = false;
+        try {
+            resultado = new ConvidadosDAO().update_confirmacao(convidado);
+            if (resultado) {
+                log("SUCCESS: " + "\nSucesso ao atualizar convidado " + convidado.toString());
+            } else {
+                log("ERROR: " + "\nErro ao atualizar convidado.");
+            }
+        } catch (Exception e) {
+            log("ERROR: " + e + "\nErro ao atualizar convidado.");
+        }
+        return resultado;
+    }
+
+    boolean cadastrarPessoa(Pessoa pessoa) {
         boolean resultado = false;
         try {
             resultado = new PessoaDAO().create(pessoa);
             if (resultado) {
-                Util.log("SUCCESS: " + "\nSucesso ao cadastrar pessoa " + pessoa.toString());
+                log("SUCCESS: " + "\nSucesso ao cadastrar pessoa " + pessoa.toString());
             } else {
-                Util.log("ERROR: " + "\nErro ao cadastrar nova Pessoa. Nome errado.");
+                log("ERROR: " + "\nErro ao cadastrar nova Pessoa. Nome errado.");
             }
         } catch (Exception e) {
-            Util.log("ERROR: " + e + "\nErro ao cadastrar nova Pessoa.");
+            log("ERROR: " + e + "\nErro ao cadastrar nova Pessoa.");
         }
         return resultado;
     }
 
-    static boolean cadastrarItemEvento(ItemEvento itemEvento) {
+    Pessoa carregarPessoa(String cpf){
+        Pessoa pessoa = null;
+        try {
+            pessoa = new PessoaDAO().read(cpf);
+            if (pessoa != null) {
+                log("SUCCESS: " + "\nSucesso ao carregar pessoa " + pessoa.toString());
+            } else {
+                log("ERROR: " + "\nErro ao carregar pessoa. Nome errado.");
+            }
+        } catch (Exception e) {
+            log("ERROR: " + e + "\nErro ao carregar pessoa.");
+        }
+        return pessoa;
+    }
+
+    boolean cadastrarItemEvento(ItemEvento itemEvento) {
         boolean resultado = false;
         try {
             resultado = new ItemEventoDAO().create(itemEvento);
             if (resultado) {
-                Util.log("SUCCESS: " + "\nSucesso ao cadastrar novo item ao evento" + itemEvento.toString());
+                log("SUCCESS: " + "\nSucesso ao cadastrar novo item ao evento" + itemEvento.toString());
             } else {
-                Util.log("ERROR: " + "\nErro ao cadastrar novo item ao evento. Problema ao resgatar por código.");
+                log("ERROR: " + "\nErro ao cadastrar novo item ao evento. Problema ao resgatar por código.");
             }
         } catch (Exception e) {
-            Util.log("ERROR: " + e + "\nErro ao cadastrar novo item evento.");
+            log("ERROR: " + e + "\nErro ao cadastrar novo item evento.");
         }
         return resultado;
     }
 
-    static Item cadastrarItem(String nomeItem) {
+    Item cadastrarItem(String nomeItem) {
         Item item = null;
         try {
             int codigoItem = new ItemDAO().create_getCodigo(nomeItem);
             if (codigoItem >= 1) {
                 item =  new Item(codigoItem, nomeItem);
-                Util.log("SUCCESS: " + "\nSucesso ao cadastrar novo item " + new Item(codigoItem, nomeItem).toString());
+                log("SUCCESS: " + "\nSucesso ao cadastrar novo item " + new Item(codigoItem, nomeItem).toString());
             } else {
-                Util.log("ERROR: " + "\nErro ao cadastrar novo item. Problema ao resgatar código.");
+                log("ERROR: " + "\nErro ao cadastrar novo item. Problema ao resgatar código.");
             }
         } catch (Exception e) {
-            Util.log("ERROR: " + e + "\nErro ao cadastrar novo item.");
+            log("ERROR: " + e + "\nErro ao cadastrar novo item.");
         }
         return item;
     }
 
-    static Item CarregarItem(String nomeItem) {
+    Item CarregarItem(String nomeItem) {
         Item item = null;
         try {
             item = new ItemDAO().read(nomeItem);
             if (item.getCodigoItem() >= 1) {
-                Util.log("SUCCESS: " + "\nSucesso ao carregar evento " + item.toString());
+                log("SUCCESS: " + "\nSucesso ao carregar evento " + item.toString());
             } else {
-                Util.log("ERROR: " + "\nErro ao carregar item. Problema com o nome.");
+                log("ERROR: " + "\nErro ao carregar item. Problema com o nome.");
             }
         } catch (Exception e) {
-            Util.log("ERROR: " + e + "\nErro ao carregar item.");
+            log("ERROR: " + e + "\nErro ao carregar item.");
         }
         return item;
     }
 
-    static Item CarregarItem(Integer codigoItem) {
+    Item CarregarItem(Integer codigoItem) {
         Item item = null;
         try {
             item = new ItemDAO().read(codigoItem);
             if (item.getCodigoItem() >= 1) {
-                Util.log("SUCCESS: " + "\nSucesso ao carregar item " + item.toString());
+                log("SUCCESS: " + "\nSucesso ao carregar item " + item.toString());
             } else {
-                Util.log("ERROR: " + "\nErro ao carregar item. Problema com o código.");
+                log("ERROR: " + "\nErro ao carregar item. Problema com o código.");
             }
         } catch (Exception e) {
-            Util.log("ERROR: " + e + "\nErro ao carregar item.");
+            log("ERROR: " + e + "\nErro ao carregar item.");
         }
         return item;
     }
 
+    boolean deletarRegistroConvidado(Convidado convidado){
+        boolean resultado = false;
+        try {
+            resultado = new ConvidadosDAO().delete(convidado.getCodigoEvento(), convidado.getCpfPessoa());
+            if (resultado) {
+                log("SUCCESS: " + "\nSucesso ao remover convidado " + convidado.toString());
+            } else {
+                log("ERROR: " + "\nErro ao remover convidado. Problema com os códigos.");
+            }
+        } catch (Exception e) {
+            log("ERROR: " + e + "\nErro ao remover convidado.");
+        }
+        return resultado;
+    }
 
+    boolean deletarRegistroItem(ItemEvento itemEvento){
+        boolean resultado = false;
+        try {
+            resultado = new ItemEventoDAO().delete(itemEvento.getCodigoEvento(), itemEvento.getCodigoItem());
+            if (resultado) {
+                log("SUCCESS: " + "\nSucesso ao remover item " + itemEvento.toString());
+            } else {
+                log("ERROR: " + "\nErro ao remover item. Problema com os códigos.");
+            }
+        } catch (Exception e) {
+            log("ERROR: " + e + "\nErro ao remover item.");
+        }
+        return resultado;
+    }
+
+    boolean deletarEvento(Integer codigoEvento){
+        boolean resultado = false;
+        try {
+            resultado = new EventoDAO().delete(codigoEvento);
+            if (resultado) {
+                log("SUCCESS: " + "\nSucesso ao excluir evento" + codigoEvento.toString());
+            } else {
+                log("ERROR: " + "\nErro ao excluir evento. Problema com o código.");
+            }
+        } catch (Exception e) {
+            log("ERROR: " + e + "\nErro ao excluir evento.");
+        }
+        return resultado;
+    }
 }

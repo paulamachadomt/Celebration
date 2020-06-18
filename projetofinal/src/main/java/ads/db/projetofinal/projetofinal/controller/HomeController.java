@@ -11,13 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ads.db.projetofinal.projetofinal.dao.EventoDAO;
 import ads.db.projetofinal.projetofinal.model.Evento;
 import ads.db.projetofinal.projetofinal.model.Convidado;
 import ads.db.projetofinal.projetofinal.model.Pessoa;
 
 @RestController
-public class HomeController {
+public class HomeController extends UtilLogin {
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/home")
     public List<Evento> getHome(
@@ -26,30 +25,29 @@ public class HomeController {
             ) {
         List<Evento> eventos = new ArrayList<>();
         Pessoa pessoa = new Pessoa(cpf, nome.toLowerCase());
-        if (UtilLogin.autenticarLogin(pessoa)) {
-            for (Convidado eventoConvidados : UtilEvento.eteventosConvidado(new Pessoa(cpf, nome))) {
-                eventos.add(new EventoDAO().read(eventoConvidados.getCodigoEvento()));
+        UtilEvento util = new UtilEvento();
+        if (autenticarLogin(pessoa)) {
+            for (Convidado eventoConvidados : util.carregaEventosConvidado(new Pessoa(cpf, nome))) {
+                eventos.add(util.carregarEvento(eventoConvidados.getCodigoEvento())); 
             }
         }
         return eventos;
     }
 
-    // JSON : example : { "nome":"nome","cpf":"00000000000"}
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/home/login")
     public List<Evento> login(
         @RequestBody Pessoa pessoa, 
         HttpServletResponse response
             ) {
         boolean getCookie = false;
-        if (UtilLogin.autenticarLogin(pessoa)) {
+        if (autenticarLogin(pessoa)) {
             getCookie = true;
-        } else if (UtilLogin.cadastrarPessoa(pessoa)) {
+        } else if (cadastrarPessoa(pessoa)) {
             getCookie = true;
         }
         if (getCookie) {
-            response.addCookie(UtilLogin.getCookie("nome", pessoa.getNome().toLowerCase()));
-            response.addCookie(UtilLogin.getCookie("cpf", pessoa.getCpf()));
-
+            response.addCookie(getCookie("nome", pessoa.getNome().toLowerCase()));
+            response.addCookie(getCookie("cpf", pessoa.getCpf()));
         }
         return getHome(pessoa.getNome().toLowerCase(), pessoa.getCpf());
     }
@@ -59,8 +57,8 @@ public class HomeController {
         @CookieValue(value = "cpf", defaultValue = "default") String cpf,
         HttpServletResponse response
             ) {
-        response.addCookie(UtilLogin.getCookie("nome", "default"));
-        response.addCookie(UtilLogin.getCookie("cpf", "default"));
+        response.addCookie(getCookie("nome", "default"));
+        response.addCookie(getCookie("cpf", "default"));
         return getHome("default", "default");
     }
 }
