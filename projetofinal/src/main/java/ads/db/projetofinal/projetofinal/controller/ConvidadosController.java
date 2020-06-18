@@ -1,5 +1,6 @@
 package ads.db.projetofinal.projetofinal.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CookieValue;
@@ -10,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ads.db.projetofinal.projetofinal.dao.ConvidadosDAO;
+import ads.db.projetofinal.projetofinal.dao.ResponseDAO;
 import ads.db.projetofinal.projetofinal.model.Convidado;
 import ads.db.projetofinal.projetofinal.model.Item;
 import ads.db.projetofinal.projetofinal.model.ItemEvento;
 import ads.db.projetofinal.projetofinal.model.Pessoa;
+import ads.db.projetofinal.projetofinal.model.ResponseConvidado;
 
 @RestController
 public class ConvidadosController extends UtilEvento{
@@ -47,7 +50,26 @@ public class ConvidadosController extends UtilEvento{
         return resultado;
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento/{codigoEvento}/convidado/{cpfPessoa}/remover")
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/evento/{codigoEvento}/convidado")
+    public List<ResponseConvidado> creatConvidado(
+        @CookieValue(value = "cpf", defaultValue = "null") String cpf,
+        @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
+        @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
+        @PathVariable Integer codigoEvento
+            ) {
+        List<ResponseConvidado> response = new ArrayList<>();
+        if (!cpf.equalsIgnoreCase("null") && codigo_evento.equalsIgnoreCase(""+codigoEvento)) {
+            if (!criador_evento.equalsIgnoreCase("null")) {
+                List<Convidado> registroConvidados = carregarRegistroConvidado(codigoEvento);
+                for (Convidado registroConvidado : registroConvidados) {
+                    response.add(new ResponseDAO().read(registroConvidado.getCpfPessoa(), codigoEvento));
+                }
+            }
+        }
+        return response;
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, produces = "application/json", value = "/evento/{codigoEvento}/convidado/{cpfPessoa}")
     public boolean deleteConvidado(
         @CookieValue(value = "cpf", defaultValue = "default") String cpf,
         @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
@@ -70,7 +92,7 @@ public class ConvidadosController extends UtilEvento{
         return resultado;
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento/{codigoEvento}/convidado/{cpfPessoa}/confirmar/{confirmacao}")
+    @RequestMapping(method = RequestMethod.PUT, produces = "application/json", value = "/evento/{codigoEvento}/convidado/{cpfPessoa}/{confirmacao}")
     public boolean confirmarEvento(
         @CookieValue(value = "cpf", defaultValue = "default") String cpf,
         @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
@@ -92,7 +114,7 @@ public class ConvidadosController extends UtilEvento{
         return resultado;
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento/{codigoEvento}/convidado/{cpfPessoa}/item/{nomeItem}")
+    @RequestMapping(method = RequestMethod.PUT, produces = "application/json", value = "/evento/{codigoEvento}/convidado/{cpfPessoa}/{nomeItem}")
     public boolean confirmarItem(
         @CookieValue(value = "cpf", defaultValue = "default") String cpf,
         @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,

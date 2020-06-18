@@ -65,7 +65,7 @@ public class EventoController extends UtilEvento{
         return evento;
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento/{codigoEvento}/")
+    @RequestMapping(method = RequestMethod.PUT, produces = "application/json", value = "/evento/{codigoEvento}/")
     public Boolean updateEvento(
         @CookieValue(value = "cpf", defaultValue = "null") String cpf,
         @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
@@ -84,7 +84,7 @@ public class EventoController extends UtilEvento{
         return resultado;
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento/{codigo}/delete")
+    @RequestMapping(method = RequestMethod.DELETE, produces = "application/json", value = "/evento/{codigo}")
     public boolean deleteEvento(
         @CookieValue(value = "cpf", defaultValue = "null") String cpf,
         @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,

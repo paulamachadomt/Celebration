@@ -1,5 +1,6 @@
 package ads.db.projetofinal.projetofinal.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CookieValue;
@@ -13,6 +14,25 @@ import ads.db.projetofinal.projetofinal.model.ItemEvento;
 
 @RestController
 public class ItemEventoController extends UtilEvento {
+
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/evento/{codigoEvento}/item")
+    public List<Item> creatConvidado(
+        @CookieValue(value = "cpf", defaultValue = "null") String cpf,
+        @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
+        @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
+        @PathVariable Integer codigoEvento
+            ) {
+        List<Item> response = new ArrayList<>();
+        if (!cpf.equalsIgnoreCase("null") && codigo_evento.equalsIgnoreCase(""+codigoEvento)) {
+            if (!criador_evento.equalsIgnoreCase("null")) {
+                List<ItemEvento> registroItens = carregarRegistroItens(codigoEvento);
+                for (ItemEvento registroItem : registroItens) {
+                    response.add(CarregarItem(registroItem.getCodigoItem()));
+                }
+            }
+        }
+        return response;
+    }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento/{codigoEvento}/item/{nomeItem}")
     public boolean creatItemEvento(
@@ -39,7 +59,7 @@ public class ItemEventoController extends UtilEvento {
         return resultado;
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento/{codigoEvento}/item/{nomeItem}/remover")
+    @RequestMapping(method = RequestMethod.DELETE, produces = "application/json", value = "/evento/{codigoEvento}/item/{nomeItem}")
     public boolean deleteItemEvento(
         @CookieValue(value = "cpf", defaultValue = "null") String cpf,
         @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
