@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ads.db.projetofinal.projetofinal.model.Item;
@@ -34,15 +35,16 @@ public class ItemEventoController extends UtilEvento {
         return response;
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento/{codigoEvento}/item/{nomeItem}")
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento/{codigoEvento}/item")
     public boolean creatItemEvento(
         @CookieValue(value = "cpf", defaultValue = "null") String cpf,
         @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
         @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
         @PathVariable Integer codigoEvento, 
-        @PathVariable String nomeItem
+        @RequestParam String nomeItem // by form
             ) {
         boolean resultado = false;
+        System.out.println(nomeItem);
         if (!cpf.equalsIgnoreCase("null") && codigo_evento.equalsIgnoreCase(""+codigoEvento)) {
             if (criador_evento.equalsIgnoreCase("true")) {
                 Item item = CarregarItem(nomeItem);

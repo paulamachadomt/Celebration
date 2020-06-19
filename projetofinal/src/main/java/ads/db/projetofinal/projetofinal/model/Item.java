@@ -12,5 +12,4 @@ public class Item {
         this.codigoItem = codigoItem;
         this.nomeItem = nomeItem;
     }
-
 }

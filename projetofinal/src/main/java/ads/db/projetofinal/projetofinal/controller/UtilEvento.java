@@ -6,9 +6,11 @@ import java.util.List;
 import ads.db.projetofinal.projetofinal.dao.EventoDAO;
 import ads.db.projetofinal.projetofinal.dao.ConvidadosDAO;
 import ads.db.projetofinal.projetofinal.dao.PessoaDAO;
+import ads.db.projetofinal.projetofinal.dao.ResponseDAO;
 import ads.db.projetofinal.projetofinal.model.Evento;
 import ads.db.projetofinal.projetofinal.model.Convidado;
 import ads.db.projetofinal.projetofinal.model.Pessoa;
+import ads.db.projetofinal.projetofinal.model.ResponseConvidado;
 import ads.db.projetofinal.projetofinal.dao.ItemDAO;
 import ads.db.projetofinal.projetofinal.dao.ItemEventoDAO;
 import ads.db.projetofinal.projetofinal.model.Item;
@@ -18,7 +20,6 @@ public class UtilEvento extends Util {
 
     boolean autenticaDonoEvento(Convidado convidado) {
         boolean resultado = false;
-
         return resultado;
     }
 
@@ -115,6 +116,24 @@ public class UtilEvento extends Util {
         return convidados;
     }
 
+    List<ResponseConvidado> carregarResponseConvidado(Integer codigoEvento){
+        List<ResponseConvidado> response = new ArrayList<>();
+        try {
+            List<Convidado> registroConvidados = carregarRegistroConvidado(codigoEvento);
+            for (Convidado registroConvidado : registroConvidados) {
+                response.add(new ResponseDAO().read(registroConvidado.getCpfPessoa(), codigoEvento));
+            }
+            if (!response.isEmpty()) {
+                log("SUCCESS: " + "\nSucesso ao carregar convidados " + response);
+            } else {
+                log("ERROR: " + "\nLista vazia, ou Erro ao carregar convidados.");
+            }
+        } catch (Exception e) {
+            log("ERROR: " + e + "\nLista vazia, ou Erro ao carregar convidados.");
+        }
+        return response;
+    }
+
     List<ItemEvento> carregarRegistroItens(Integer codigoEvento) {
         List<ItemEvento> registroItens = new ArrayList<>();
         try {
@@ -163,10 +182,25 @@ public class UtilEvento extends Util {
         return ressultado;
     }
 
-    boolean atualizarConvidado(Convidado convidado) {
+    boolean atualizarConvidadoConfirmacao(Convidado convidado) {
         boolean resultado = false;
         try {
             resultado = new ConvidadosDAO().update_confirmacao(convidado);
+            if (resultado) {
+                log("SUCCESS: " + "\nSucesso ao atualizar convidado " + convidado.toString());
+            } else {
+                log("ERROR: " + "\nErro ao atualizar convidado.");
+            }
+        } catch (Exception e) {
+            log("ERROR: " + e + "\nErro ao atualizar convidado.");
+        }
+        return resultado;
+    }
+
+    boolean atualizarConvidadoItem(Convidado convidado) {
+        boolean resultado = false;
+        try {
+            resultado = new ConvidadosDAO().update_item(convidado);
             if (resultado) {
                 log("SUCCESS: " + "\nSucesso ao atualizar convidado " + convidado.toString());
             } else {

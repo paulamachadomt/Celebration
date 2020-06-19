@@ -1,7 +1,6 @@
 package ads.db.projetofinal.projetofinal.model;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import lombok.Data;
 
@@ -14,15 +13,7 @@ public class Evento {
     private String nome;
     private String descricao;
 
-    private List<Pessoa> convidados;
-    private List<Item> Itens;
-
-    private List<Convidado> registroConvidados;
-    private List<ItemEvento> registroItens;
-
-    public Evento(){
-        
-    }
+    public Evento() { }
 
     public Evento(String local, LocalDate data, String nome) {
         this.local = local;
@@ -37,5 +28,4 @@ public class Evento {
         this.nome = nome;
         this.descricao = descricao;
     }
-
 }

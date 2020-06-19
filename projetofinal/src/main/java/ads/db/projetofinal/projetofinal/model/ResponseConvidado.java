@@ -17,5 +17,4 @@ public class ResponseConvidado {
         this.confirmacao = convidado.getConfirmacao();
         this.codigoItem = convidado.getCodigoItem();
     }
-    
 }

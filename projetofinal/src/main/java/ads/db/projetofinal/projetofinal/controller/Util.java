@@ -21,5 +21,4 @@ public class Util {
         cookie.setPath("/");
         return cookie;
     }
-
 }

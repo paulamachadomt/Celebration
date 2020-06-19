@@ -6,9 +6,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ads.db.projetofinal.projetofinal.model.Evento;
@@ -39,9 +39,11 @@ public class HomeController extends UtilLogin {
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/home/login")
     public List<Evento> login(
-        @RequestBody Pessoa pessoa, 
+        @RequestParam String cpf,  // by simple form
+        @RequestParam String nome, // by simple form
         HttpServletResponse response
             ) {
+        Pessoa pessoa = new Pessoa(cpf, nome);
         boolean getCookie = false;
         pessoa.setNome(pessoa.getNome().toLowerCase());
         if (autenticarLogin(pessoa)) {
