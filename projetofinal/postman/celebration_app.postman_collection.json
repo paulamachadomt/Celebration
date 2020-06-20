@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "1  - /home/login",
+			"name": "1  - /login",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -31,13 +31,12 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/home/login",
+					"raw": "localhost:8080/login",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"home",
 						"login"
 					],
 					"query": [
@@ -58,18 +57,17 @@
 			"response": []
 		},
 		{
-			"name": "2 - /home/logout",
+			"name": "2 - /logout",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/home/logout",
+					"raw": "localhost:8080/logout",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"home",
 						"logout"
 					]
 				},
@@ -78,7 +76,7 @@
 			"response": []
 		},
 		{
-			"name": "3 - /evento",
+			"name": "3 - /eventos",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -96,13 +94,13 @@
 					}
 				],
 				"url": {
-					"raw": "localhost:8080/evento",
+					"raw": "localhost:8080/eventos",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"evento"
+						"eventos"
 					],
 					"query": [
 						{
@@ -122,7 +120,7 @@
 			"response": []
 		},
 		{
-			"name": "4 - /evento",
+			"name": "4 - /eventos",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -152,13 +150,13 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/evento",
+					"raw": "localhost:8080/eventos",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"evento"
+						"eventos"
 					]
 				},
 				"description": "Cadastra evento"
@@ -166,19 +164,19 @@
 			"response": []
 		},
 		{
-			"name": "5 - /evento/{codigo}",
+			"name": "5 - /eventos/{codigo}",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/evento/1",
+					"raw": "localhost:8080/eventos/11",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"evento",
-						"1"
+						"eventos",
+						"11"
 					]
 				},
 				"description": "Carrega dados evento"
@@ -186,18 +184,13 @@
 			"response": []
 		},
 		{
-			"name": "6 - /evento/{codigo}",
+			"name": "6 - /eventos/{codigo}",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [
-						{
-							"key": "codigo",
-							"value": "15",
-							"type": "text"
-						},
 						{
 							"key": "local",
 							"value": "São José do Kobrasol",
@@ -217,6 +210,12 @@
 							"key": "descricao",
 							"value": "Festa pósdemi",
 							"type": "text"
+						},
+						{
+							"key": "codigo",
+							"value": "15",
+							"type": "text",
+							"disabled": true
 						}
 					],
 					"options": {
@@ -226,14 +225,14 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/evento/15",
+					"raw": "localhost:8080/eventos/12",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"evento",
-						"15"
+						"eventos",
+						"12"
 					]
 				},
 				"description": "atualiza evento"
@@ -241,18 +240,18 @@
 			"response": []
 		},
 		{
-			"name": "7 - /evento/{codigo}",
+			"name": "7 - /eventos/{codigo}",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/evento/15",
+					"raw": "localhost:8080/eventos/15",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"evento",
+						"eventos",
 						"15"
 					]
 				},
@@ -261,27 +260,27 @@
 			"response": []
 		},
 		{
-			"name": "9 - /evento/{codigo}/item",
+			"name": "9 - /eventos/{codigo}/itens",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/evento/1/item",
+					"raw": "localhost:8080/eventos/1/itens",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"evento",
+						"eventos",
 						"1",
-						"item"
+						"itens"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "10 /evento/{codigo}/item",
+			"name": "10 /eventos/{codigo}/itens",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -301,15 +300,15 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/evento/1/item",
+					"raw": "localhost:8080/eventos/1/itens",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"evento",
+						"eventos",
 						"1",
-						"item"
+						"itens"
 					]
 				},
 				"description": "criar item"
@@ -317,20 +316,20 @@
 			"response": []
 		},
 		{
-			"name": "13 /evento/{codigo}/item/{nomeItem}",
+			"name": "13 /eventos/{codigo}/itens/{nomeItem}",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/evento/1/item/magoo",
+					"raw": "localhost:8080/eventos/1/itens/magoo",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"evento",
+						"eventos",
 						"1",
-						"item",
+						"itens",
 						"magoo"
 					]
 				},
@@ -339,27 +338,27 @@
 			"response": []
 		},
 		{
-			"name": "11 /evento/{codigo}/convidado",
+			"name": "11 /eventos/{codigo}/convidados",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/evento/1/convidado",
+					"raw": "localhost:8080/eventos/1/convidados",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"evento",
+						"eventos",
 						"1",
-						"convidado"
+						"convidados"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "12 /evento/{codigo}/convidado",
+			"name": "12 /eventos/{codigo}/convidados",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -384,15 +383,15 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/evento/1/convidado",
+					"raw": "localhost:8080/eventos/1/convidados",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"evento",
+						"eventos",
 						"1",
-						"convidado"
+						"convidados"
 					]
 				},
 				"description": "remove convidado"
@@ -400,7 +399,7 @@
 			"response": []
 		},
 		{
-			"name": "13 /evento/{codigo}/convidado/{cpf}/confirmar/{boolean}",
+			"name": "13 /eventos/{codigo}/convidados/{cpf}/confirmar/{boolean}",
 			"request": {
 				"method": "PUT",
 				"header": [],
@@ -414,15 +413,15 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/evento/1/convidado/10000000000/confirmar/true",
+					"raw": "localhost:8080/eventos/1/convidados/10000000000/confirmar/true",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"evento",
+						"eventos",
 						"1",
-						"convidado",
+						"convidados",
 						"10000000000",
 						"confirmar",
 						"true"
@@ -432,22 +431,22 @@
 			"response": []
 		},
 		{
-			"name": "14 /evento/{codigo}/convidado/{cpf}/item/{nomeItem}",
+			"name": "14 /eventos/{codigo}/convidados/{cpf}/itens/{nomeItem}",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/evento/1/convidado/10000000000/item/dog-do-tio",
+					"raw": "localhost:8080/eventos/1/convidados/10000000000/itens/dog-do-tio",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"evento",
+						"eventos",
 						"1",
-						"convidado",
+						"convidados",
 						"10000000000",
-						"item",
+						"itens",
 						"dog-do-tio"
 					]
 				}
@@ -455,20 +454,20 @@
 			"response": []
 		},
 		{
-			"name": "15 /evento/{codigo}/convidado/{cpf}",
+			"name": "15 /eventos/{codigo}/convidados/{cpf}",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/evento/1/convidado/12345678909",
+					"raw": "localhost:8080/eventos/1/convidados/12345678909",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"evento",
+						"eventos",
 						"1",
-						"convidado",
+						"convidados",
 						"12345678909"
 					]
 				}

@@ -24,14 +24,15 @@ public class ItemEventoController extends UtilEvento {
         @PathVariable Integer codigoEvento
             ) {
         List<Item> response = new ArrayList<>();
-        if (!cpf.equalsIgnoreCase("null") && codigo_evento.equalsIgnoreCase(""+codigoEvento)) {
-            if (!criador_evento.equalsIgnoreCase("null")) {
+        if (UtilCheck.loginIsAuthenticated(cpf) 
+        &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
+        &&  UtilCheck.convidadoCriadorIsAuthenticated(criador_evento)
+            ) {
                 List<ItemEvento> registroItens = carregarRegistroItens(codigoEvento);
                 for (ItemEvento registroItem : registroItens) {
                     response.add(CarregarItem(registroItem.getCodigoItem()));
                 }
             }
-        }
         return response;
     }
 
@@ -45,8 +46,10 @@ public class ItemEventoController extends UtilEvento {
             ) {
         boolean resultado = false;
         System.out.println(nomeItem);
-        if (!cpf.equalsIgnoreCase("null") && codigo_evento.equalsIgnoreCase(""+codigoEvento)) {
-            if (criador_evento.equalsIgnoreCase("true")) {
+        if (UtilCheck.loginIsAuthenticated(cpf) 
+        &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
+        &&  UtilCheck.criadorEventoIsAuthenticated(criador_evento)
+            ) {
                 Item item = CarregarItem(nomeItem);
                 if (item == null) {
                     item = cadastrarItem(nomeItem);
@@ -57,7 +60,6 @@ public class ItemEventoController extends UtilEvento {
                     resultado = cadastrarItemEvento(itemEvento);
                 }
             }
-        }
         return resultado;
     }
 
@@ -70,8 +72,10 @@ public class ItemEventoController extends UtilEvento {
         @PathVariable String nomeItem
             ) {
         boolean resultado = false;
-        if (!cpf.equalsIgnoreCase("null") && codigo_evento.equalsIgnoreCase(""+codigoEvento)) {
-            if (criador_evento.equalsIgnoreCase("true")) {
+        if (UtilCheck.loginIsAuthenticated(cpf) 
+        &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
+        &&  UtilCheck.criadorEventoIsAuthenticated(criador_evento)
+            ) {
                 Item item = CarregarItem(nomeItem);
                 ItemEvento itemEvento = new ItemEvento(codigoEvento, item.getCodigoItem());
                 List<ItemEvento> registroItemEvento = carregarRegistroItens(codigoEvento);
@@ -79,7 +83,6 @@ public class ItemEventoController extends UtilEvento {
                     resultado = deletarRegistroItem(itemEvento);
                 }
             }
-        }
         return resultado;
     }
 }

@@ -30,7 +30,7 @@ public class EventoController extends UtilEvento{
         HttpServletResponse response
             ) {
         Evento evento = new Evento(local, data, nome);
-        if (!cpf.equalsIgnoreCase("null")) {
+        if (UtilCheck.loginIsAuthenticated(cpf)) {
             Integer codigoEvento = cadastrarEvento(evento); // auto_increment
             evento.setCodigo(codigoEvento);
             boolean resultadoCriadorEvento = cadastrarConvidado(new Convidado(true, cpf, evento.getCodigo(), true));
@@ -49,24 +49,24 @@ public class EventoController extends UtilEvento{
         HttpServletResponse response
             ) {
         Evento evento = null;
-        if (!cpf.equalsIgnoreCase("null")) {
-                evento = carregarEvento(codigoEvento);
-                if (evento != null) {
-                    Convidado convidado = null;
-                    List<Convidado> registroConvidados = carregarRegistroConvidado(codigoEvento);
-                    for (Convidado convidadoRegistrado : registroConvidados) {
-                        if (cpf.equalsIgnoreCase(convidadoRegistrado.getCpfPessoa())) {
-                            convidado = convidadoRegistrado;
-                            break;
-                        } 
-                    }
-                    if (convidado == null) {
-                        evento = new Evento();
-                    } else {
-                        response.addCookie(getCookie("codigo_evento", ""+evento.getCodigo()));
-                        response.addCookie(getCookie("criador_evento", ""+convidado.getCriadorEvento()));
-                    }
+        if (UtilCheck.loginIsAuthenticated(cpf)) {
+            evento = carregarEvento(codigoEvento);
+            if (evento != null) {
+                Convidado convidado = null;
+                List<Convidado> registroConvidados = carregarRegistroConvidado(codigoEvento);
+                for (Convidado convidadoRegistrado : registroConvidados) {
+                    if (cpf.equalsIgnoreCase(convidadoRegistrado.getCpfPessoa())) {
+                        convidado = convidadoRegistrado;
+                        break;
+                    } 
                 }
+                if (convidado == null) {
+                    evento = new Evento();
+                } else {
+                    response.addCookie(getCookie("codigo_evento", ""+evento.getCodigo()));
+                    response.addCookie(getCookie("criador_evento", ""+convidado.getCriadorEvento()));
+                }
+            }
         }
         return evento;
     }
@@ -84,32 +84,35 @@ public class EventoController extends UtilEvento{
             ) {
         Evento evento = new Evento(codigoEvento, local, data, nome, descricao);
         boolean resultado = false;
-        if (!cpf.equalsIgnoreCase("null") && codigo_evento.equalsIgnoreCase(""+codigoEvento)) {
-            if (criador_evento.equalsIgnoreCase("true")) {
+        if (UtilCheck.loginIsAuthenticated(cpf) 
+        &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
+        &&  UtilCheck.criadorEventoIsAuthenticated(criador_evento)
+            ) {
                 if (codigoEvento == evento.getCodigo()) {
                     resultado = atualizarEvento(evento);
                 }
             }
-        }
         return resultado;
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, produces = "application/json", value = "/eventos/{codigo}")
+    @RequestMapping(method = RequestMethod.DELETE, produces = "application/json", value = "/eventos/{codigoEvento}")
     public boolean deleteEvento(
         @CookieValue(value = "cpf", defaultValue = "null") String cpf,
         @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
         @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
-        @PathVariable Integer codigo
+        @PathVariable Integer codigoEvento
             ) {
         boolean resultado = false;
-        if (!cpf.equalsIgnoreCase("null") && codigo_evento.equalsIgnoreCase(""+codigo)) {
-            if (criador_evento.equalsIgnoreCase("true")) {
-                Evento evento = carregarEvento(codigo);
+        if (UtilCheck.loginIsAuthenticated(cpf) 
+        &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
+        &&  UtilCheck.criadorEventoIsAuthenticated(criador_evento)
+            ) {
+                Evento evento = carregarEvento(codigoEvento);
                 List<Convidado> convidados = null;
                 List<ItemEvento> itens = null;
                 if (evento != null) {
-                    convidados = carregarRegistroConvidado(codigo);
-                    itens = carregarRegistroItens(codigo);
+                    convidados = carregarRegistroConvidado(codigoEvento);
+                    itens = carregarRegistroItens(codigoEvento);
                 } else {
                     evento = new Evento();
                     convidados = new ArrayList<>();
@@ -121,9 +124,8 @@ public class EventoController extends UtilEvento{
                 for (ItemEvento registroItem : itens) {
                     deletarRegistroItem(registroItem);
                 }
-                resultado = deletarEvento(codigo);
+                resultado = deletarEvento(codigoEvento);
             }
-        }
         return resultado;
     }
 }

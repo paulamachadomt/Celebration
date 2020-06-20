@@ -27,11 +27,13 @@ public class ConvidadosController extends UtilEvento{
         @PathVariable Integer codigoEvento
             ) {
         List<ResponseConvidado> response = new ArrayList<>();
-        if (!cpf.equalsIgnoreCase("null") && codigo_evento.equalsIgnoreCase(""+codigoEvento)) {
-            if (!criador_evento.equalsIgnoreCase("null")) {
+        if (UtilCheck.loginIsAuthenticated(cpf) 
+        &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
+        &&  UtilCheck.convidadoCriadorIsAuthenticated(criador_evento)
+            ) {
+                System.out.println("yyuiuupp");
                 response = carregarResponseConvidado(codigoEvento);
             }
-        }
         return response;
     }
 
@@ -46,8 +48,10 @@ public class ConvidadosController extends UtilEvento{
             ) {
         Pessoa pessoa = new Pessoa(cpfConvidado, nomeConvidado);
         boolean resultado = false;
-        if (!cpf.equalsIgnoreCase("null") && codigo_evento.equalsIgnoreCase(""+codigoEvento)) {
-            if (criador_evento.equalsIgnoreCase("true")) {
+        if (UtilCheck.loginIsAuthenticated(cpf) 
+        &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
+        &&  UtilCheck.criadorEventoIsAuthenticated(criador_evento)
+            ) {
                 Convidado novoConvidado = new Convidado(false, pessoa.getCpf(), codigoEvento, false);
                 Pessoa dadosNovoConvidado = carregarPessoa(pessoa.getCpf());
                 if (dadosNovoConvidado != null) {
@@ -62,7 +66,6 @@ public class ConvidadosController extends UtilEvento{
                     }
                 }
             }
-        }
         return resultado;
     }
 
@@ -76,15 +79,18 @@ public class ConvidadosController extends UtilEvento{
         @PathVariable Boolean confirmacao
             ) {
         boolean resultado = false;
-        if (!cpf.equalsIgnoreCase("null") && codigo_evento.equalsIgnoreCase(""+codigoEvento)) {
-            if (cpf.equalsIgnoreCase(cpfPessoa) && criador_evento.equalsIgnoreCase("false")) {
-                    Convidado confirmarConvidado = new Convidado(confirmacao, cpfPessoa, codigoEvento, Boolean.parseBoolean(criador_evento));
-                    List<Convidado> convidadosEvento = carregarRegistroConvidado(codigoEvento);
-                    if (convidadosEvento.contains(confirmarConvidado)){
-                        resultado = atualizarConvidadoConfirmacao(confirmarConvidado); 
+        if (UtilCheck.loginIsAuthenticated(cpf) 
+        &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
+        &&  UtilCheck.convidadoCriadorIsAuthenticated(criador_evento)
+        &&  UtilCheck.cpfIsValid(cpf, cpfPessoa)
+        &&  UtilCheck.convidadoIsAuthenticate(criador_evento)
+            ) {
+                Convidado confirmarConvidado = new Convidado(confirmacao, cpfPessoa, codigoEvento, Boolean.parseBoolean(criador_evento));
+                List<Convidado> convidadosEvento = carregarRegistroConvidado(codigoEvento);
+                if (convidadosEvento.contains(confirmarConvidado)){
+                    resultado = atualizarConvidadoConfirmacao(confirmarConvidado); 
                 }
             }
-        }
         return resultado;
     }
 
@@ -98,8 +104,10 @@ public class ConvidadosController extends UtilEvento{
         @PathVariable String nomeItem
             ) {
         boolean resultado = false;
-        if (!cpf.equalsIgnoreCase("null") && codigo_evento.equalsIgnoreCase(""+codigoEvento)) {
-            if (!criador_evento.equalsIgnoreCase("null")) {
+        if (UtilCheck.loginIsAuthenticated(cpf) 
+        &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
+        &&  UtilCheck.convidadoCriadorIsAuthenticated(criador_evento)
+            ) {
                 Item item = CarregarItem(nomeItem);
                 if (item != null) {
                     ItemEvento itemEvento = new ItemEvento(codigoEvento, item.getCodigoItem());
@@ -109,7 +117,6 @@ public class ConvidadosController extends UtilEvento{
                     }                
                 }
             }
-        }
         return resultado;
     }
 
@@ -122,17 +129,17 @@ public class ConvidadosController extends UtilEvento{
         @PathVariable String cpfPessoa
             ) {
         boolean resultado = false;
-        if (!cpf.equalsIgnoreCase("null") && codigo_evento.equalsIgnoreCase(""+codigoEvento)) {
-            if (criador_evento.equalsIgnoreCase("true")) {
-                if(!cpf.equalsIgnoreCase(cpfPessoa)){
-                    Convidado convidadoDeletar = new Convidado(false, cpfPessoa, codigoEvento, false);
-                    List<Convidado> convidadosEvento = carregarRegistroConvidado(codigoEvento);
-                    if (convidadosEvento.contains(convidadoDeletar)){
-                        resultado = deletarRegistroConvidado(convidadoDeletar);
-                    }
+        if (UtilCheck.loginIsAuthenticated(cpf) 
+        &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
+        &&  UtilCheck.criadorEventoIsAuthenticated(criador_evento)
+        &&  UtilCheck.cpfIsValid(cpf, cpfPessoa)
+            ) {
+                Convidado convidadoDeletar = new Convidado(false, cpfPessoa, codigoEvento, false);
+                List<Convidado> convidadosEvento = carregarRegistroConvidado(codigoEvento);
+                if (convidadosEvento.contains(convidadoDeletar)){
+                    resultado = deletarRegistroConvidado(convidadoDeletar);
                 }
             }
-        }
         return resultado;
     }
 }

@@ -32,6 +32,3 @@ services:
     command: ./mvnw spring-boot:run 
     depends_on:
       - db
-    # network_mode: bridge
-    # external_links:
-    #   - db:db
