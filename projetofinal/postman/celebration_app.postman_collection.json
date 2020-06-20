@@ -6,51 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "1 - /home",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "pessoa.nome",
-						"value": "Rafael",
-						"type": "text",
-						"disabled": true
-					},
-					{
-						"key": "pessoa.cpf",
-						"value": "00000000010",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "localhost:8080/home",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"home"
-					],
-					"query": [
-						{
-							"key": "nome",
-							"value": "rafael",
-							"disabled": true
-						},
-						{
-							"key": "cpf",
-							"value": "00000000000",
-							"disabled": true
-						}
-					]
-				},
-				"description": "Go home,\r\nCarrega Eventos"
-			},
-			"response": []
-		},
-		{
-			"name": "2  - /home/login",
+			"name": "1  - /home/login",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -102,7 +58,7 @@
 			"response": []
 		},
 		{
-			"name": "3 - /home/logout",
+			"name": "2 - /home/logout",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -118,6 +74,50 @@
 					]
 				},
 				"description": "Logout,\r\nKill cookie\r\n\r\n{\r\n    \"cpf\":\"00000000000\"\r\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "3 - /evento",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "pessoa.nome",
+						"value": "Rafael",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "pessoa.cpf",
+						"value": "00000000010",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/evento",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"evento"
+					],
+					"query": [
+						{
+							"key": "nome",
+							"value": "rafael",
+							"disabled": true
+						},
+						{
+							"key": "cpf",
+							"value": "00000000000",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Go home,\r\nCarrega Eventos"
 			},
 			"response": []
 		},

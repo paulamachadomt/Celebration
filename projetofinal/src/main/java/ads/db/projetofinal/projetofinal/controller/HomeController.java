@@ -18,7 +18,8 @@ import ads.db.projetofinal.projetofinal.model.Pessoa;
 @RestController
 public class HomeController extends UtilLogin {
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/home")
+    // Um nome melhor seria GET /evento , visto que tem por finalidade retornar uma lista de eventos
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/evento")
     public List<Evento> getHome(
         @CookieValue(value = "nome", defaultValue = "null") String nome,
         @CookieValue(value = "cpf", defaultValue = "null") String cpf,
