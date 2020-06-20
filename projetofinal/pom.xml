@@ -56,12 +56,6 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.19</version>
 		</dependency>
-		<!-- Miss dependency ?! -->
-		<!-- <dependency>
-			<groupId>io.grpc</groupId>
-			<artifactId>grpc-protobuf</artifactId>
-			<version>1.16.1</version>
-		</dependency> -->
 	</dependencies>
  
 	<build>
