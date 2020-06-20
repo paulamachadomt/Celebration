@@ -21,7 +21,7 @@ import ads.db.projetofinal.projetofinal.model.Convidado;
 @RestController
 public class EventoController extends UtilEvento{
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento")
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/eventos")
     public Evento createEvento(
         @CookieValue(value = "cpf", defaultValue = "null") String cpf,
         @RequestParam String local, // by simple form
@@ -42,7 +42,7 @@ public class EventoController extends UtilEvento{
         return evento; 
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/evento/{codigoEvento}")
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/eventos/{codigoEvento}")
     public Evento readEvento(
         @CookieValue(value = "cpf", defaultValue = "null") String cpf,
         @PathVariable Integer codigoEvento,
@@ -71,7 +71,7 @@ public class EventoController extends UtilEvento{
         return evento;
     }
 
-    @RequestMapping(method = RequestMethod.PUT, produces = "application/json", value = "/evento/{codigoEvento}")
+    @RequestMapping(method = RequestMethod.PUT, produces = "application/json", value = "/eventos/{codigoEvento}")
     public Boolean updateEvento(
         @CookieValue(value = "cpf", defaultValue = "null") String cpf,
         @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
@@ -94,7 +94,7 @@ public class EventoController extends UtilEvento{
         return resultado;
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, produces = "application/json", value = "/evento/{codigo}")
+    @RequestMapping(method = RequestMethod.DELETE, produces = "application/json", value = "/eventos/{codigo}")
     public boolean deleteEvento(
         @CookieValue(value = "cpf", defaultValue = "null") String cpf,
         @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,

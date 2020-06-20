@@ -19,7 +19,7 @@ import ads.db.projetofinal.projetofinal.model.Pessoa;
 public class HomeController extends UtilLogin {
 
     // Um nome melhor seria GET /evento , visto que tem por finalidade retornar uma lista de eventos
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/evento")
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/eventos")
     public List<Evento> getHome(
         @CookieValue(value = "nome", defaultValue = "null") String nome,
         @CookieValue(value = "cpf", defaultValue = "null") String cpf,
@@ -38,7 +38,7 @@ public class HomeController extends UtilLogin {
         return eventos;
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/home/login")
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/login")
     public List<Evento> login(
         @RequestParam String cpf,  // by simple form
         @RequestParam String nome, // by simple form
@@ -59,7 +59,7 @@ public class HomeController extends UtilLogin {
         return getHome(pessoa.getNome().toLowerCase(), pessoa.getCpf(), response);
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/home/logout")
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/logout")
     public List<Evento> logout(
         @CookieValue(value = "cpf", defaultValue = "null") String cpf,
         HttpServletResponse response

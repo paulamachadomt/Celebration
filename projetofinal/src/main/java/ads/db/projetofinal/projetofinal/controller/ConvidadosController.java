@@ -19,7 +19,7 @@ import ads.db.projetofinal.projetofinal.model.ResponseConvidado;
 @RestController
 public class ConvidadosController extends UtilEvento{
     
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/evento/{codigoEvento}/convidado")
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/eventos/{codigoEvento}/convidados")
     public List<ResponseConvidado> creatConvidado(
         @CookieValue(value = "cpf", defaultValue = "null") String cpf,
         @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
@@ -35,7 +35,7 @@ public class ConvidadosController extends UtilEvento{
         return response;
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento/{codigoEvento}/convidado")
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/eventos/{codigoEvento}/convidados")
     public boolean creatConvidado(
         @CookieValue(value = "cpf", defaultValue = "null") String cpf,
         @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
@@ -66,7 +66,7 @@ public class ConvidadosController extends UtilEvento{
         return resultado;
     }
 
-    @RequestMapping(method = RequestMethod.PUT, produces = "application/json", value = "/evento/{codigoEvento}/convidado/{cpfPessoa}/confirmar/{confirmacao}")
+    @RequestMapping(method = RequestMethod.PUT, produces = "application/json", value = "/eventos/{codigoEvento}/convidados/{cpfPessoa}/confirmar/{confirmacao}")
     public boolean confirmarEvento(
         @CookieValue(value = "cpf", defaultValue = "default") String cpf,
         @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
@@ -88,7 +88,7 @@ public class ConvidadosController extends UtilEvento{
         return resultado;
     }
 
-    @RequestMapping(method = RequestMethod.PUT, produces = "application/json", value = "/evento/{codigoEvento}/convidado/{cpfPessoa}/item/{nomeItem}")
+    @RequestMapping(method = RequestMethod.PUT, produces = "application/json", value = "/eventos/{codigoEvento}/convidados/{cpfPessoa}/itens/{nomeItem}")
     public boolean confirmarItem(
         @CookieValue(value = "cpf", defaultValue = "default") String cpf,
         @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
@@ -113,7 +113,7 @@ public class ConvidadosController extends UtilEvento{
         return resultado;
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, produces = "application/json", value = "/evento/{codigoEvento}/convidado/{cpfPessoa}")
+    @RequestMapping(method = RequestMethod.DELETE, produces = "application/json", value = "/eventos/{codigoEvento}/convidados/{cpfPessoa}")
     public boolean deleteConvidado(
         @CookieValue(value = "cpf", defaultValue = "default") String cpf,
         @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,

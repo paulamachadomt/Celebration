@@ -16,7 +16,7 @@ import ads.db.projetofinal.projetofinal.model.ItemEvento;
 @RestController
 public class ItemEventoController extends UtilEvento {
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/evento/{codigoEvento}/item")
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/eventos/{codigoEvento}/itens")
     public List<Item> creatConvidado(
         @CookieValue(value = "cpf", defaultValue = "null") String cpf,
         @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
@@ -35,7 +35,7 @@ public class ItemEventoController extends UtilEvento {
         return response;
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/evento/{codigoEvento}/item")
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/eventos/{codigoEvento}/itens")
     public boolean creatItemEvento(
         @CookieValue(value = "cpf", defaultValue = "null") String cpf,
         @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
@@ -61,7 +61,7 @@ public class ItemEventoController extends UtilEvento {
         return resultado;
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, produces = "application/json", value = "/evento/{codigoEvento}/item/{nomeItem}")
+    @RequestMapping(method = RequestMethod.DELETE, produces = "application/json", value = "/eventos/{codigoEvento}/itens/{nomeItem}")
     public boolean deleteItemEvento(
         @CookieValue(value = "cpf", defaultValue = "null") String cpf,
         @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
