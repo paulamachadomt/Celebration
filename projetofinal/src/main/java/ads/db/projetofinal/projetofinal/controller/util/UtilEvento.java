@@ -1,4 +1,4 @@
-package ads.db.projetofinal.projetofinal.controller;
+package ads.db.projetofinal.projetofinal.controller.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +18,12 @@ import ads.db.projetofinal.projetofinal.model.ItemEvento;
 
 public class UtilEvento extends Util {
 
-    boolean autenticaDonoEvento(Convidado convidado) {
+    protected boolean autenticaDonoEvento(Convidado convidado) {
         boolean resultado = false;
         return resultado;
     }
 
-    Integer cadastrarEvento_setupCodigo(Evento evento) {
+    protected Integer cadastrarEvento_setupCodigo(Evento evento) {
         Integer codigoEvento = -1;
         try {
             codigoEvento = new EventoDAO().create(evento);
@@ -38,7 +38,7 @@ public class UtilEvento extends Util {
         return codigoEvento;
     }
 
-    boolean atualizarEvento(Evento evento) {
+    protected boolean atualizarEvento(Evento evento) {
         boolean ressultado = false;
         try {
             ressultado = new EventoDAO().update(evento);
@@ -53,7 +53,7 @@ public class UtilEvento extends Util {
         return ressultado;
     }
 
-    List<Convidado> carregaRegistroEventosConvidado(Pessoa pessoa) {
+    protected List<Convidado> carregaRegistroEventosConvidado(Pessoa pessoa) {
         List<Convidado> eventosConvidado = new ArrayList<>();
         try {
             eventosConvidado = new ConvidadosDAO().read(pessoa.getCpf());
@@ -68,7 +68,7 @@ public class UtilEvento extends Util {
         return eventosConvidado;
     }
 
-    Evento carregarEvento(Integer codigoEvento) {
+    protected Evento carregarEvento(Integer codigoEvento) {
         Evento evento = null;
         try {
             evento = new EventoDAO().read(codigoEvento);
@@ -83,7 +83,7 @@ public class UtilEvento extends Util {
         return evento;
     }
 
-    List<Convidado> carregarRegistroConvidado(Integer codigoEvento) {
+    protected List<Convidado> carregarRegistroConvidado(Integer codigoEvento) {
         List<Convidado> registroConvidados = new ArrayList<>();
         try {
             registroConvidados = new ConvidadosDAO().readAll(codigoEvento);
@@ -98,7 +98,7 @@ public class UtilEvento extends Util {
         return registroConvidados;
     }
 
-    List<Pessoa> carregarConvidado(Integer codigoEvento) {
+    protected List<Pessoa> carregarConvidado(Integer codigoEvento) {
         List<Pessoa> convidados = new ArrayList<>();
         try {
             List<Convidado> registroConvidados = carregarRegistroConvidado(codigoEvento);
@@ -116,7 +116,7 @@ public class UtilEvento extends Util {
         return convidados;
     }
 
-    List<ResponseConvidado> carregarResponseConvidado(Integer codigoEvento) {
+    protected List<ResponseConvidado> carregarResponseConvidado(Integer codigoEvento) {
         List<ResponseConvidado> response = new ArrayList<>();
         try {
             List<Convidado> registroConvidados = carregarRegistroConvidado(codigoEvento);
@@ -134,7 +134,7 @@ public class UtilEvento extends Util {
         return response;
     }
 
-    List<ItemEvento> carregarRegistroItens(Integer codigoEvento) {
+    protected  List<ItemEvento> carregarRegistroItens(Integer codigoEvento) {
         List<ItemEvento> registroItens = new ArrayList<>();
         try {
             registroItens = new ItemEventoDAO().readAll(codigoEvento);
@@ -149,7 +149,7 @@ public class UtilEvento extends Util {
         return registroItens;
     }
 
-    List<Item> carregarItens(Integer codigoEvento) {
+    protected List<Item> carregarItens(Integer codigoEvento) {
         List<Item> itens = new ArrayList<>();
         try {
             List<ItemEvento> registroItens = carregarRegistroItens(codigoEvento);
@@ -167,7 +167,7 @@ public class UtilEvento extends Util {
         return itens;
     }
 
-    boolean cadastrarConvidado(Convidado convidado) {
+    protected boolean cadastrarConvidado(Convidado convidado) {
         boolean ressultado = false;
         try {
             ressultado = new ConvidadosDAO().create(convidado);
@@ -182,7 +182,7 @@ public class UtilEvento extends Util {
         return ressultado;
     }
 
-    boolean atualizarConvidadoConfirmacao(Convidado convidado) {
+    protected boolean atualizarConvidadoConfirmacao(Convidado convidado) {
         boolean resultado = false;
         try {
             resultado = new ConvidadosDAO().update_confirmacao(convidado);
@@ -197,7 +197,7 @@ public class UtilEvento extends Util {
         return resultado;
     }
 
-    boolean atualizarConvidadoItem(Convidado convidado) {
+    protected boolean atualizarConvidadoItem(Convidado convidado) {
         boolean resultado = false;
         try {
             resultado = new ConvidadosDAO().update_item(convidado);
@@ -212,7 +212,7 @@ public class UtilEvento extends Util {
         return resultado;
     }
 
-    boolean cadastrarPessoa(Pessoa pessoa) {
+    protected boolean cadastrarPessoa(Pessoa pessoa) {
         boolean resultado = false;
         try {
             resultado = new PessoaDAO().create(pessoa);
@@ -227,7 +227,7 @@ public class UtilEvento extends Util {
         return resultado;
     }
 
-    Pessoa carregarPessoa(String cpf) {
+    protected Pessoa carregarPessoa(String cpf) {
         Pessoa pessoa = null;
         try {
             pessoa = new PessoaDAO().read(cpf);
@@ -242,7 +242,7 @@ public class UtilEvento extends Util {
         return pessoa;
     }
 
-    boolean cadastrarItemEvento(ItemEvento itemEvento) {
+    protected boolean cadastrarItemEvento(ItemEvento itemEvento) {
         boolean resultado = false;
         try {
             resultado = new ItemEventoDAO().create(itemEvento);
@@ -257,7 +257,7 @@ public class UtilEvento extends Util {
         return resultado;
     }
 
-    Item cadastrarItem(String nomeItem) {
+    protected Item cadastrarItem(String nomeItem) {
         Item item = null;
         try {
             int codigoItem = new ItemDAO().create_getCodigo(nomeItem);
@@ -273,7 +273,7 @@ public class UtilEvento extends Util {
         return item;
     }
 
-    Item CarregarItem(String nomeItem) {
+    protected Item CarregarItem(String nomeItem) {
         Item item = null;
         try {
             item = new ItemDAO().read(nomeItem);
@@ -288,7 +288,7 @@ public class UtilEvento extends Util {
         return item;
     }
 
-    Item CarregarItem(Integer codigoItem) {
+    protected Item CarregarItem(Integer codigoItem) {
         Item item = null;
         try {
             item = new ItemDAO().read(codigoItem);
@@ -303,7 +303,7 @@ public class UtilEvento extends Util {
         return item;
     }
 
-    boolean deletarRegistroConvidado(Convidado convidado) {
+    protected boolean deletarRegistroConvidado(Convidado convidado) {
         boolean resultado = false;
         try {
             resultado = new ConvidadosDAO().delete(convidado.getCodigoEvento(), convidado.getCpfPessoa());
@@ -318,7 +318,7 @@ public class UtilEvento extends Util {
         return resultado;
     }
 
-    boolean deletarRegistroItem(ItemEvento itemEvento) {
+    protected boolean deletarRegistroItem(ItemEvento itemEvento) {
         boolean resultado = false;
         try {
             resultado = new ItemEventoDAO().delete(itemEvento.getCodigoEvento(), itemEvento.getCodigoItem());
@@ -333,7 +333,7 @@ public class UtilEvento extends Util {
         return resultado;
     }
 
-    boolean deletarEvento(Integer codigoEvento) {
+    protected boolean deletarEvento(Integer codigoEvento) {
         boolean resultado = false;
         try {
             resultado = new EventoDAO().delete(codigoEvento);
@@ -354,7 +354,7 @@ public class UtilEvento extends Util {
      *  
      */// Ações dos controllers abaixo
 
-    List<Evento> carregaEventosConvidado(Pessoa pessoa) {
+     protected List<Evento> carregaEventosConvidado(Pessoa pessoa) {
         List<Evento> eventos = new ArrayList<>();
         List<Convidado> eventosConvidado = carregaRegistroEventosConvidado(pessoa);
         for (Convidado eventoConvidados : eventosConvidado) {
@@ -364,14 +364,14 @@ public class UtilEvento extends Util {
     }
 
     @SuppressWarnings(value="all") // para remover o aviso de valor boolean não utilizado -> 'boolean resultadoCriadorEvento'
-    Evento cadastrarEvento(Evento preEvento, String cpf) {
+    protected Evento cadastrarEvento(Evento preEvento, String cpf) {
         Integer codigoEvento = cadastrarEvento_setupCodigo(preEvento);
         preEvento.setCodigo(codigoEvento); // auto_increment
         boolean resultadoCriadorEvento = cadastrarConvidado(new Convidado(true, cpf, preEvento.getCodigo(), true));
         return preEvento;
     }
 
-    Convidado verificaECarregaConvidadoDoEvento(Evento evento, String cpf_cookie) {
+    protected Convidado verificaECarregaConvidadoDoEvento(Evento evento, String cpf_cookie) {
         Convidado convidado = null;
         if (evento != null) {
             List<Convidado> registroConvidados = carregarRegistroConvidado(evento.getCodigo());
@@ -384,7 +384,7 @@ public class UtilEvento extends Util {
         }
         return convidado;
     }
-    Boolean verificaEDeletaEventoERegistros(Integer codigoEvento){
+    protected Boolean verificaEDeletaEventoERegistros(Integer codigoEvento){
         Boolean resultado = false;
         Evento evento = carregarEvento(codigoEvento);
         List<Convidado> convidados = null;
@@ -407,7 +407,7 @@ public class UtilEvento extends Util {
         return resultado;
     }
 
-    List<Item> carregaItensDoEvento(Integer codigoEvento){
+    protected List<Item> carregaItensDoEvento(Integer codigoEvento){
         List<Item> response = new ArrayList<>();
         List<ItemEvento> registroItens = carregarRegistroItens(codigoEvento);
         for (ItemEvento registroItem : registroItens) {
@@ -416,7 +416,7 @@ public class UtilEvento extends Util {
         return response;
     }
 
-    Item verificaOuCadastraItem(String nomeItem){
+    protected Item verificaOuCadastraItem(String nomeItem){
         Item item = CarregarItem(nomeItem);
         if (item == null) {
             item = cadastrarItem(nomeItem);
@@ -424,7 +424,7 @@ public class UtilEvento extends Util {
         return item;
     }
 
-    Boolean verificaRegistroDoItemNoEvento(Item item, Integer codigoEvento){
+    protected Boolean verificaRegistroDoItemNoEvento(Item item, Integer codigoEvento){
         Boolean resultado = false;
         ItemEvento itemEvento = new ItemEvento(codigoEvento, item.getCodigoItem());
         List<ItemEvento> registroItemEvento = carregarRegistroItens(codigoEvento);
@@ -434,13 +434,13 @@ public class UtilEvento extends Util {
         return resultado;
     }
 
-    Convidado novoConvidado(String cpfConvidado, Integer codigoEvento){
+    protected Convidado novoConvidado(String cpfConvidado, Integer codigoEvento){
         boolean convidadoCriador = false;
         boolean convidadoConfirmacao = false;
         return new Convidado(convidadoConfirmacao, cpfConvidado, codigoEvento, convidadoCriador);
     }
 
-    Boolean verificaDadosConvidado(String cpfConvidado){
+    protected Boolean verificaDadosConvidado(String cpfConvidado){
         boolean resultado = false;
         Pessoa dadosNovoConvidado = carregarPessoa(cpfConvidado);
         if (dadosNovoConvidado != null) {
@@ -449,7 +449,7 @@ public class UtilEvento extends Util {
         return resultado;
     }
 
-    Boolean verificaRegistroDoConvidadoNoEvento(Convidado convidado, Integer codigoEvento){
+    protected Boolean verificaRegistroDoConvidadoNoEvento(Convidado convidado, Integer codigoEvento){
         Boolean resultado = false;
         List<Convidado> convidadosEvento = carregarRegistroConvidado(codigoEvento);  
         if (convidadosEvento.contains(convidado)) {
@@ -457,8 +457,4 @@ public class UtilEvento extends Util {
         }
         return resultado;
     }
-
-
-
-
 }

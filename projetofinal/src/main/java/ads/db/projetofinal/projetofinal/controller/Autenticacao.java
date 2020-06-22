@@ -8,17 +8,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ads.db.projetofinal.projetofinal.controller.util.UtilLogin;
 import ads.db.projetofinal.projetofinal.model.Pessoa;
 
 @RestController
-public class HomeController extends UtilLogin {
+public class Autenticacao extends UtilLogin {
 
     @RequestMapping(
         method = RequestMethod.POST, 
         produces = "application/json", 
         value = "/login"
         )
-    public Boolean login(
+    public Boolean doPost(
             @RequestBody Pessoa pessoa, // JSON: {"cpf":"01010101012", "nome":"rafael"}
             // @RequestParam String cpf, // by simple form   
             // @RequestParam String nome, // by simple form  
@@ -43,7 +44,7 @@ public class HomeController extends UtilLogin {
         method = RequestMethod.POST, 
         produces = "application/json", 
         value = "/logout")
-    public Boolean logout(
+    public Boolean doPost(
             @CookieValue(value = "cpf", defaultValue = "null") String cpf,
             HttpServletResponse response
                 ) {

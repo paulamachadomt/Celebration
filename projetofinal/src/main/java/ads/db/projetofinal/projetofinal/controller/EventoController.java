@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ads.db.projetofinal.projetofinal.model.Evento;
 import ads.db.projetofinal.projetofinal.model.Pessoa;
+import ads.db.projetofinal.projetofinal.controller.util.UtilCheck;
+import ads.db.projetofinal.projetofinal.controller.util.UtilEvento;
+import ads.db.projetofinal.projetofinal.controller.util.UtilLogin;
 import ads.db.projetofinal.projetofinal.model.Convidado;
 
 @RestController
@@ -24,7 +27,7 @@ public class EventoController extends UtilEvento{
         produces = "application/json", 
         value = "/eventos"
         )
-    public List<Evento> getHome(
+    public List<Evento> doGet(
             @CookieValue(value = "nome", defaultValue = "null") String nome,
             @CookieValue(value = "cpf", defaultValue = "null") String cpf, 
             HttpServletResponse response
@@ -44,7 +47,7 @@ public class EventoController extends UtilEvento{
         produces = "application/json", 
         value = "/eventos"
         )
-    public Evento createEvento(
+    public Evento doPost(
             @CookieValue(value = "cpf", defaultValue = "null") String cpf,
             @RequestBody Evento evento, // JSON : {"local": "Meu primeiro evento de teste 2","data": "2020-10-20","nome": "Festa Pandemia 2"}
             HttpServletResponse response
@@ -68,7 +71,7 @@ public class EventoController extends UtilEvento{
         produces = "application/json", 
         value = "/eventos/{codigoEvento}"
         )
-    public Evento readEvento(
+    public Evento doGet(
             @CookieValue(value = "cpf", defaultValue = "null") String cpf,
             @PathVariable Integer codigoEvento,
             HttpServletResponse response
@@ -95,7 +98,7 @@ public class EventoController extends UtilEvento{
         produces = "application/json", 
         value = "/eventos/{codigoEvento}"
         )
-    public Boolean updateEvento(
+    public Boolean doPut(
             @CookieValue(value = "cpf", defaultValue = "null") String cpf,
             @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
             @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
@@ -123,7 +126,7 @@ public class EventoController extends UtilEvento{
         produces = "application/json", 
         value = "/eventos/{codigoEvento}"
         )
-    public boolean deleteEvento(
+    public boolean doDelete(
             @CookieValue(value = "cpf", defaultValue = "null") String cpf,
             @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
             @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ads.db.projetofinal.projetofinal.controller.util.UtilCheck;
+import ads.db.projetofinal.projetofinal.controller.util.UtilEvento;
 import ads.db.projetofinal.projetofinal.model.Item;
 import ads.db.projetofinal.projetofinal.model.ItemEvento;
 
@@ -21,7 +23,7 @@ public class ItemEventoController extends UtilEvento {
         produces = "application/json", 
         value = "/eventos/{codigoEvento}/itens"
         )
-    public List<Item> creatConvidado(
+    public List<Item> doGet(
             @CookieValue(value = "cpf", defaultValue = "null") String cpf,
             @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
             @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
@@ -42,7 +44,7 @@ public class ItemEventoController extends UtilEvento {
         produces = "application/json", 
         value = "/eventos/{codigoEvento}/itens"
         )
-    public boolean creatItemEvento(
+    public boolean doPost(
             @CookieValue(value = "cpf", defaultValue = "null") String cpf,
             @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
             @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
@@ -68,7 +70,7 @@ public class ItemEventoController extends UtilEvento {
         produces = "application/json", 
         value = "/eventos/{codigoEvento}/itens/{nomeItem}"
         )
-    public boolean deleteItemEvento(
+    public boolean doDelete(
             @CookieValue(value = "cpf", defaultValue = "null") String cpf,
             @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
             @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,

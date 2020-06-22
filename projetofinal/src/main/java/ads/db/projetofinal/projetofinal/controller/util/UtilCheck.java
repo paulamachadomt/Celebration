@@ -1,4 +1,4 @@
-package ads.db.projetofinal.projetofinal.controller;
+package ads.db.projetofinal.projetofinal.controller.util;
 
 public class UtilCheck {
 
@@ -25,8 +25,4 @@ public class UtilCheck {
     public static boolean cpfIsValid(String cpfCookie, String cpfUrl) {
         return cpfCookie.equalsIgnoreCase(cpfUrl);
     }
-
-
-
-
 }

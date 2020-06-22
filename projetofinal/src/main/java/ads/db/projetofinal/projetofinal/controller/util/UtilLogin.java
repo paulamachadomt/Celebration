@@ -1,11 +1,11 @@
-package ads.db.projetofinal.projetofinal.controller;
+package ads.db.projetofinal.projetofinal.controller.util;
 
 import ads.db.projetofinal.projetofinal.dao.PessoaDAO;
 import ads.db.projetofinal.projetofinal.model.Pessoa;
 
 public class UtilLogin extends Util {
 
-    boolean autenticarLogin(Pessoa pessoa) {
+    public boolean autenticarLogin(Pessoa pessoa) {
         boolean resultado = false;
         try {
             resultado = new PessoaDAO().read(pessoa.getCpf()).equals(pessoa) ? true : false;
@@ -20,7 +20,7 @@ public class UtilLogin extends Util {
         return resultado;
     }
 
-    boolean cadastrarPessoa(Pessoa pessoa) {
+    public boolean cadastrarPessoa(Pessoa pessoa) {
         boolean resultado = false;
         try {
             resultado = new PessoaDAO().create(pessoa);
