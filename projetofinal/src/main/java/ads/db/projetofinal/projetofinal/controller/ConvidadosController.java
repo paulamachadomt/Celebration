@@ -5,141 +5,153 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ads.db.projetofinal.projetofinal.model.Convidado;
 import ads.db.projetofinal.projetofinal.model.Item;
-import ads.db.projetofinal.projetofinal.model.ItemEvento;
 import ads.db.projetofinal.projetofinal.model.Pessoa;
 import ads.db.projetofinal.projetofinal.model.ResponseConvidado;
 
 @RestController
 public class ConvidadosController extends UtilEvento{
     
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/eventos/{codigoEvento}/convidados")
+    @RequestMapping(
+        method = RequestMethod.GET, 
+        produces = "application/json", 
+        value = "/eventos/{codigoEvento}/convidados"
+        )
     public List<ResponseConvidado> creatConvidado(
-        @CookieValue(value = "cpf", defaultValue = "null") String cpf,
-        @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
-        @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
-        @PathVariable Integer codigoEvento
-            ) {
-        List<ResponseConvidado> response = new ArrayList<>();
-        if (UtilCheck.loginIsAuthenticated(cpf) 
-        &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
-        &&  UtilCheck.convidadoCriadorIsAuthenticated(criador_evento)
-            ) {
-                System.out.println("yyuiuupp");
-                response = carregarResponseConvidado(codigoEvento);
+            @CookieValue(value = "cpf", defaultValue = "null") String cpf,
+            @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
+            @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
+            @PathVariable Integer codigoEvento
+                ) {
+                List<ResponseConvidado> response = new ArrayList<>();
+                if (UtilCheck.loginIsAuthenticated(cpf) 
+                &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
+                &&  UtilCheck.convidadoCriadorIsAuthenticated(criador_evento)
+                    ) {
+                        response = carregarResponseConvidado(codigoEvento);
+                    }
+                return response;
             }
-        return response;
-    }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/eventos/{codigoEvento}/convidados")
+    @RequestMapping(
+        method = RequestMethod.POST, 
+        produces = "application/json", 
+        value = "/eventos/{codigoEvento}/convidados"
+        )
     public boolean creatConvidado(
-        @CookieValue(value = "cpf", defaultValue = "null") String cpf,
-        @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
-        @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
-        @PathVariable Integer codigoEvento, 
-        @RequestParam String cpfConvidado, // by form
-        @RequestParam String nomeConvidado // by form
-            ) {
-        Pessoa pessoa = new Pessoa(cpfConvidado, nomeConvidado);
-        boolean resultado = false;
-        if (UtilCheck.loginIsAuthenticated(cpf) 
-        &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
-        &&  UtilCheck.criadorEventoIsAuthenticated(criador_evento)
-            ) {
-                Convidado novoConvidado = new Convidado(false, pessoa.getCpf(), codigoEvento, false);
-                Pessoa dadosNovoConvidado = carregarPessoa(pessoa.getCpf());
-                if (dadosNovoConvidado != null) {
-                    List<Convidado> convidadosEvento = carregarRegistroConvidado(codigoEvento);
-                    if (!convidadosEvento.contains(novoConvidado)) {
-                        resultado = cadastrarConvidado(novoConvidado);
+            @CookieValue(value = "cpf", defaultValue = "null") String cpf,
+            @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
+            @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
+            @PathVariable Integer codigoEvento, 
+            @RequestBody Pessoa novaPessoaConvidada
+            // @RequestParam String cpfConvidado, // by form
+            // @RequestParam String nomeConvidado // by form
+                ) {
+                // Pessoa pessoa = new Pessoa(cpfConvidado, nomeConvidado);
+                boolean resultado = false;
+                if (UtilCheck.loginIsAuthenticated(cpf) 
+                &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
+                &&  UtilCheck.criadorEventoIsAuthenticated(criador_evento)
+                    ) {
+                        Convidado novoRegistroConvidado = novoConvidado(novaPessoaConvidada.getCpf(), codigoEvento);
+                        if (verificaDadosConvidado(novaPessoaConvidada.getCpf())) {
+                            if (!verificaRegistroDoConvidadoNoEvento(novoRegistroConvidado, codigoEvento)) {
+                                resultado = cadastrarConvidado(novoRegistroConvidado);
+                            }
+                        } else {
+                            if (cadastrarPessoa(novaPessoaConvidada)) {
+                                resultado = cadastrarConvidado(novoRegistroConvidado);
+                            }
+                        } 
                     }
-                } else {
-                    boolean resultadoCadastroPessoa = cadastrarPessoa(pessoa);
-                    if (resultadoCadastroPessoa) {
-                        resultado = cadastrarConvidado(novoConvidado);
-                    }
-                }
+                return resultado;
             }
-        return resultado;
-    }
 
-    @RequestMapping(method = RequestMethod.PUT, produces = "application/json", value = "/eventos/{codigoEvento}/convidados/{cpfPessoa}/confirmar/{confirmacao}")
+    @RequestMapping(
+        method = RequestMethod.PUT, 
+        produces = "application/json", 
+        value = "/eventos/{codigoEvento}/convidados/{cpfPessoa}/confirmar/{confirmacao}"
+        )
     public boolean confirmarEvento(
-        @CookieValue(value = "cpf", defaultValue = "default") String cpf,
-        @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
-        @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
-        @PathVariable Integer codigoEvento, 
-        @PathVariable String cpfPessoa, 
-        @PathVariable Boolean confirmacao
-            ) {
-        boolean resultado = false;
-        if (UtilCheck.loginIsAuthenticated(cpf) 
-        &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
-        &&  UtilCheck.convidadoCriadorIsAuthenticated(criador_evento)
-        &&  UtilCheck.cpfIsValid(cpf, cpfPessoa)
-        &&  UtilCheck.convidadoIsAuthenticate(criador_evento)
-            ) {
-                Convidado confirmarConvidado = new Convidado(confirmacao, cpfPessoa, codigoEvento, Boolean.parseBoolean(criador_evento));
-                List<Convidado> convidadosEvento = carregarRegistroConvidado(codigoEvento);
-                if (convidadosEvento.contains(confirmarConvidado)){
-                    resultado = atualizarConvidadoConfirmacao(confirmarConvidado); 
-                }
+            @CookieValue(value = "cpf", defaultValue = "default") String cpf,
+            @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
+            @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
+            @PathVariable Integer codigoEvento, 
+            @PathVariable String cpfPessoa, 
+            @PathVariable Boolean confirmacao
+                ) {
+                boolean resultado = false;
+                if (UtilCheck.loginIsAuthenticated(cpf) 
+                &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
+                &&  UtilCheck.cpfIsValid(cpf, cpfPessoa)
+                &&  UtilCheck.convidadoIsAuthenticate(criador_evento)
+                    ) {
+                        Convidado confirmarConvidado = new Convidado(confirmacao, cpfPessoa, codigoEvento, Boolean.parseBoolean(criador_evento));
+                        if (verificaRegistroDoConvidadoNoEvento(confirmarConvidado, codigoEvento)){
+                            resultado = atualizarConvidadoConfirmacao(confirmarConvidado); 
+                        }
+                    }
+                return resultado;
             }
-        return resultado;
-    }
 
-    @RequestMapping(method = RequestMethod.PUT, produces = "application/json", value = "/eventos/{codigoEvento}/convidados/{cpfPessoa}/itens/{nomeItem}")
+    @RequestMapping(
+        method = RequestMethod.PUT, 
+        produces = "application/json", 
+        value = "/eventos/{codigoEvento}/convidados/{cpfPessoa}/itens/{nomeItem}"
+        )
     public boolean confirmarItem(
-        @CookieValue(value = "cpf", defaultValue = "default") String cpf,
-        @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
-        @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
-        @PathVariable Integer codigoEvento, 
-        @PathVariable String cpfPessoa, 
-        @PathVariable String nomeItem
-            ) {
-        boolean resultado = false;
-        if (UtilCheck.loginIsAuthenticated(cpf) 
-        &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
-        &&  UtilCheck.convidadoCriadorIsAuthenticated(criador_evento)
-            ) {
-                Item item = CarregarItem(nomeItem);
-                if (item != null) {
-                    ItemEvento itemEvento = new ItemEvento(codigoEvento, item.getCodigoItem());
-                    List<ItemEvento> itensEvento = carregarRegistroItens(codigoEvento);
-                    if (itensEvento.contains(itemEvento)) {
-                        resultado = atualizarConvidadoItem(new Convidado(item.getCodigoItem(), cpfPessoa, codigoEvento, Boolean.parseBoolean(criador_evento)));
-                    }                
-                }
+            @CookieValue(value = "cpf", defaultValue = "default") String cpf,
+            @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
+            @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
+            @PathVariable Integer codigoEvento, 
+            @PathVariable String cpfPessoa, 
+            @PathVariable String nomeItem
+                ) {
+                boolean resultado = false;
+                if (UtilCheck.loginIsAuthenticated(cpf) 
+                &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
+                &&  UtilCheck.convidadoCriadorIsAuthenticated(criador_evento)
+                    ) {
+                        Item item = CarregarItem(nomeItem);
+                        if (item != null) {
+                            if (verificaRegistroDoItemNoEvento(item, codigoEvento)) {
+                                Convidado itemConvidado = new Convidado(item.getCodigoItem(), cpfPessoa, codigoEvento, Boolean.parseBoolean(criador_evento));
+                                resultado = atualizarConvidadoItem(itemConvidado);
+                            }                
+                        }
+                    }
+                return resultado;
             }
-        return resultado;
-    }
 
-    @RequestMapping(method = RequestMethod.DELETE, produces = "application/json", value = "/eventos/{codigoEvento}/convidados/{cpfPessoa}")
+    @RequestMapping(
+        method = RequestMethod.DELETE, 
+        produces = "application/json", 
+        value = "/eventos/{codigoEvento}/convidados/{cpfConvidado}"
+        )
     public boolean deleteConvidado(
-        @CookieValue(value = "cpf", defaultValue = "default") String cpf,
-        @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
-        @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
-        @PathVariable Integer codigoEvento, 
-        @PathVariable String cpfPessoa
-            ) {
-        boolean resultado = false;
-        if (UtilCheck.loginIsAuthenticated(cpf) 
-        &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
-        &&  UtilCheck.criadorEventoIsAuthenticated(criador_evento)
-        &&  UtilCheck.cpfIsValid(cpf, cpfPessoa)
-            ) {
-                Convidado convidadoDeletar = new Convidado(false, cpfPessoa, codigoEvento, false);
-                List<Convidado> convidadosEvento = carregarRegistroConvidado(codigoEvento);
-                if (convidadosEvento.contains(convidadoDeletar)){
-                    resultado = deletarRegistroConvidado(convidadoDeletar);
-                }
+            @CookieValue(value = "cpf", defaultValue = "default") String cpf,
+            @CookieValue(value = "codigo_evento", defaultValue = "null") String codigo_evento,
+            @CookieValue(value = "criador_evento", defaultValue = "null") String criador_evento,
+            @PathVariable Integer codigoEvento, 
+            @PathVariable String cpfConvidado
+                ) {
+                boolean resultado = false;
+                if (UtilCheck.loginIsAuthenticated(cpf) 
+                &&  UtilCheck.codigoEventoIsAuthenticated(codigo_evento, codigoEvento)
+                &&  UtilCheck.criadorEventoIsAuthenticated(criador_evento)
+                &&  !UtilCheck.cpfIsValid(cpf, cpfConvidado)
+                    ) {
+                        Convidado convidadoDeletar = novoConvidado(cpfConvidado, codigoEvento);
+                        if (verificaRegistroDoConvidadoNoEvento(convidadoDeletar, codigoEvento)){
+                            resultado = deletarRegistroConvidado(convidadoDeletar);
+                        }
+                    }
+                return resultado;
             }
-        return resultado;
-    }
 }

@@ -10,7 +10,7 @@ public class Pessoa {
 
     public Pessoa(String cpf, String nome) {
         this.cpf = cpf;
-        this.nome = nome;
+        this.nome = nome.toLowerCase();
     }
 
 }

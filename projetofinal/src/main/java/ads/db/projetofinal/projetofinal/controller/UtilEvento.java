@@ -347,8 +347,12 @@ public class UtilEvento extends Util {
         }
         return resultado;
     }
-
-    // Ações dos controllers abaixo
+    
+    /**
+     *
+     * 
+     *  
+     */// Ações dos controllers abaixo
 
     List<Evento> carregaEventosConvidado(Pessoa pessoa) {
         List<Evento> eventos = new ArrayList<>();
@@ -429,6 +433,32 @@ public class UtilEvento extends Util {
         }
         return resultado;
     }
+
+    Convidado novoConvidado(String cpfConvidado, Integer codigoEvento){
+        boolean convidadoCriador = false;
+        boolean convidadoConfirmacao = false;
+        return new Convidado(convidadoConfirmacao, cpfConvidado, codigoEvento, convidadoCriador);
+    }
+
+    Boolean verificaDadosConvidado(String cpfConvidado){
+        boolean resultado = false;
+        Pessoa dadosNovoConvidado = carregarPessoa(cpfConvidado);
+        if (dadosNovoConvidado != null) {
+            resultado = true;
+        }
+        return resultado;
+    }
+
+    Boolean verificaRegistroDoConvidadoNoEvento(Convidado convidado, Integer codigoEvento){
+        Boolean resultado = false;
+        List<Convidado> convidadosEvento = carregarRegistroConvidado(codigoEvento);  
+        if (convidadosEvento.contains(convidado)) {
+            resultado = true;
+        }
+        return resultado;
+    }
+
+
 
 
 }
