@@ -359,6 +359,7 @@ public class UtilEvento extends Util {
         return eventos;
     }
 
+    @SuppressWarnings(value="all") // para remover o aviso de valor boolean não utilizado -> 'boolean resultadoCriadorEvento'
     Evento cadastrarEvento(Evento preEvento, String cpf) {
         Integer codigoEvento = cadastrarEvento_setupCodigo(preEvento);
         preEvento.setCodigo(codigoEvento); // auto_increment
@@ -399,6 +400,33 @@ public class UtilEvento extends Util {
             deletarRegistroItem(registroItem);
         }
         resultado = deletarEvento(codigoEvento);
+        return resultado;
+    }
+
+    List<Item> carregaItensDoEvento(Integer codigoEvento){
+        List<Item> response = new ArrayList<>();
+        List<ItemEvento> registroItens = carregarRegistroItens(codigoEvento);
+        for (ItemEvento registroItem : registroItens) {
+            response.add(CarregarItem(registroItem.getCodigoItem()));
+        }
+        return response;
+    }
+
+    Item verificaOuCadastraItem(String nomeItem){
+        Item item = CarregarItem(nomeItem);
+        if (item == null) {
+            item = cadastrarItem(nomeItem);
+        }
+        return item;
+    }
+
+    Boolean verificaRegistroDoItemNoEvento(Item item, Integer codigoEvento){
+        Boolean resultado = false;
+        ItemEvento itemEvento = new ItemEvento(codigoEvento, item.getCodigoItem());
+        List<ItemEvento> registroItemEvento = carregarRegistroItens(codigoEvento);
+        if (registroItemEvento.contains(itemEvento)) {
+            resultado = true;
+        }
         return resultado;
     }
 
