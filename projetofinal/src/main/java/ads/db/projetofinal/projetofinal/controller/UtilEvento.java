@@ -53,19 +53,33 @@ public class UtilEvento extends Util {
         return ressultado;
     }
 
-    List<Convidado> carregaEventosConvidado(Pessoa pessoa) {
+    List<Convidado> carregaRegistroEventosConvidado(Pessoa pessoa) {
         List<Convidado> eventosConvidado = new ArrayList<>();
         try {
             eventosConvidado = new ConvidadosDAO().read(pessoa.getCpf());
             if (!eventosConvidado.isEmpty()) {
-                log("SUCCESS: " + "\nSucesso ao carregar eventoas convidado " + eventosConvidado);
+                log("SUCCESS: " + "\nSucesso ao carregar registro de eventos convidado" + eventosConvidado);
             } else {
-                log("ERROR: " + "\nLista vazia, ou Erro ao carregar eventos convidado.");
+                log("ERROR: " + "\nErro ao carregar registro de eventos convidado.");
             }
         } catch (Exception e) {
-            log("ERROR: " + e + "\nErro ao carregar eventos convidado.");
+            log("ERROR: " + e + "\nErro ao carregar registro de eventos convidado.");
         }
         return eventosConvidado;
+    }
+
+    List<Evento> carregaEventosConvidado(Pessoa pessoa) {
+        List<Evento> eventos = new ArrayList<>();
+        List<Convidado> eventosConvidado = carregaRegistroEventosConvidado(pessoa);
+        for (Convidado eventoConvidados : eventosConvidado) {
+            eventos.add(carregarEvento(eventoConvidados.getCodigoEvento()));
+        }
+        if (!eventos.isEmpty()){
+            log("SUCCESS: " + "\nSucesso ao carregar eventos convidado " + eventosConvidado);
+        } else {
+            log("ERROR: " + "\nErro ao carregar eventos convidado.");
+        }
+        return eventos;
     }
 
     Evento carregarEvento(Integer codigoEvento) {
@@ -116,7 +130,7 @@ public class UtilEvento extends Util {
         return convidados;
     }
 
-    List<ResponseConvidado> carregarResponseConvidado(Integer codigoEvento){
+    List<ResponseConvidado> carregarResponseConvidado(Integer codigoEvento) {
         List<ResponseConvidado> response = new ArrayList<>();
         try {
             List<Convidado> registroConvidados = carregarRegistroConvidado(codigoEvento);

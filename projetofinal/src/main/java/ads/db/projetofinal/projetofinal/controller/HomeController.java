@@ -12,60 +12,66 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ads.db.projetofinal.projetofinal.model.Evento;
-import ads.db.projetofinal.projetofinal.model.Convidado;
 import ads.db.projetofinal.projetofinal.model.Pessoa;
 
 @RestController
 public class HomeController extends UtilLogin {
 
-    // Um nome melhor seria GET /evento , visto que tem por finalidade retornar uma lista de eventos
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/eventos")
+    @RequestMapping(
+        method = RequestMethod.GET, 
+        produces = "application/json", 
+        value = "/eventos"
+        )
     public List<Evento> getHome(
-        @CookieValue(value = "nome", defaultValue = "null") String nome,
-        @CookieValue(value = "cpf", defaultValue = "null") String cpf,
-        HttpServletResponse response
-            ) {
-        List<Evento> eventos = new ArrayList<>();
-        Pessoa pessoa = new Pessoa(cpf, nome.toLowerCase());
-        UtilEvento util = new UtilEvento();
-        if (autenticarLogin(pessoa)) {
-            for (Convidado eventoConvidados : util.carregaEventosConvidado(new Pessoa(cpf, nome))) {
-                eventos.add(util.carregarEvento(eventoConvidados.getCodigoEvento())); 
+            @CookieValue(value = "nome", defaultValue = "null") String nome,
+            @CookieValue(value = "cpf", defaultValue = "null") String cpf, 
+            HttpServletResponse response
+                ) {
+                Pessoa pessoa = new Pessoa(cpf, nome.toLowerCase());
+                List<Evento> eventos = new ArrayList<>();
+                if (autenticarLogin(pessoa)) {
+                    eventos = new UtilEvento().carregaEventosConvidado(pessoa);
+                }
+                response.addCookie(killCookie("codigo_evento", ""));  // remove cookie autentica acesso ao evento 
+                response.addCookie(killCookie("criador_evento", "")); // remove cookie autentica acesso a edição de evento                                                 
+                return eventos;
             }
-        }
-        response.addCookie(killCookie("codigo_evento", ""));  // remove cookie de segurança para acessar e editar eventos
-        response.addCookie(killCookie("criador_evento", "")); // remove cookie de segurança para acessar e editar eventos
-        return eventos;
-    }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/login")
-    public List<Evento> login(
-        @RequestParam String cpf,  // by simple form
-        @RequestParam String nome, // by simple form
-        HttpServletResponse response
-            ) {
-        Pessoa pessoa = new Pessoa(cpf, nome);
-        boolean getCookie = false;
-        pessoa.setNome(pessoa.getNome().toLowerCase());
-        if (autenticarLogin(pessoa)) {
-            getCookie = true;
-        } else if (cadastrarPessoa(pessoa)) {
-            getCookie = true;
-        }
-        if (getCookie) {
-            response.addCookie(getCookie("nome", pessoa.getNome().toLowerCase()));
-            response.addCookie(getCookie("cpf", pessoa.getCpf()));
-        }
-        return getHome(pessoa.getNome().toLowerCase(), pessoa.getCpf(), response);
-    }
+    @RequestMapping(
+        method = RequestMethod.POST, 
+        produces = "application/json", 
+        value = "/login"
+        )
+    public Boolean login(
+            @RequestParam String cpf, // by simple form   
+            @RequestParam String nome, // by simple form  
+            HttpServletResponse response
+                ) {
+                Pessoa pessoa = new Pessoa(cpf, nome.toLowerCase());
+                boolean getCookie = false;
+                if (autenticarLogin(pessoa)) {
+                    getCookie = true;
+                } else if (cadastrarPessoa(pessoa)) {
+                    getCookie = true;
+                }
+                if (getCookie) {
+                    response.addCookie(getCookie("nome", pessoa.getNome().toLowerCase()));
+                    response.addCookie(getCookie("cpf", pessoa.getCpf()));
+                }
+                // return getHome(pessoa.getNome().toLowerCase(), pessoa.getCpf(), response);
+                return getCookie;
+            }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json", value = "/logout")
-    public List<Evento> logout(
-        @CookieValue(value = "cpf", defaultValue = "null") String cpf,
-        HttpServletResponse response
-            ) {
-        response.addCookie(killCookie("nome", "default"));
-        response.addCookie(killCookie("cpf", "default"));
-        return getHome("default", "default", response);
-    }
+    @RequestMapping(
+        method = RequestMethod.POST, 
+        produces = "application/json", 
+        value = "/logout")
+    public Boolean logout(
+            @CookieValue(value = "cpf", defaultValue = "null") String cpf,
+            HttpServletResponse response
+                ) {
+                response.addCookie(killCookie("nome", "default"));
+                response.addCookie(killCookie("cpf", "default"));                
+                return true;
+            }
 }
