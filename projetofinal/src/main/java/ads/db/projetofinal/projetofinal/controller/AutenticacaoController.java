@@ -12,7 +12,7 @@ import ads.db.projetofinal.projetofinal.controller.util.UtilLogin;
 import ads.db.projetofinal.projetofinal.model.entity.Pessoa;
 
 @RestController
-public class Autenticacao extends UtilLogin {
+public class AutenticacaoController extends UtilLogin {
 
     @RequestMapping(
         method = RequestMethod.POST, 
