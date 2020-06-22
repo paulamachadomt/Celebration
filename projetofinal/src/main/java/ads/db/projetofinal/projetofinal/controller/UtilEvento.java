@@ -23,7 +23,7 @@ public class UtilEvento extends Util {
         return resultado;
     }
 
-    Integer cadastrarEvento(Evento evento) {
+    Integer cadastrarEvento_setupCodigo(Evento evento) {
         Integer codigoEvento = -1;
         try {
             codigoEvento = new EventoDAO().create(evento);
@@ -66,20 +66,6 @@ public class UtilEvento extends Util {
             log("ERROR: " + e + "\nErro ao carregar registro de eventos convidado.");
         }
         return eventosConvidado;
-    }
-
-    List<Evento> carregaEventosConvidado(Pessoa pessoa) {
-        List<Evento> eventos = new ArrayList<>();
-        List<Convidado> eventosConvidado = carregaRegistroEventosConvidado(pessoa);
-        for (Convidado eventoConvidados : eventosConvidado) {
-            eventos.add(carregarEvento(eventoConvidados.getCodigoEvento()));
-        }
-        if (!eventos.isEmpty()){
-            log("SUCCESS: " + "\nSucesso ao carregar eventos convidado " + eventosConvidado);
-        } else {
-            log("ERROR: " + "\nErro ao carregar eventos convidado.");
-        }
-        return eventos;
     }
 
     Evento carregarEvento(Integer codigoEvento) {
@@ -361,4 +347,60 @@ public class UtilEvento extends Util {
         }
         return resultado;
     }
+
+    // Ações dos controllers abaixo
+
+    List<Evento> carregaEventosConvidado(Pessoa pessoa) {
+        List<Evento> eventos = new ArrayList<>();
+        List<Convidado> eventosConvidado = carregaRegistroEventosConvidado(pessoa);
+        for (Convidado eventoConvidados : eventosConvidado) {
+            eventos.add(carregarEvento(eventoConvidados.getCodigoEvento()));
+        }
+        return eventos;
+    }
+
+    Evento cadastrarEvento(Evento preEvento, String cpf) {
+        Integer codigoEvento = cadastrarEvento_setupCodigo(preEvento);
+        preEvento.setCodigo(codigoEvento); // auto_increment
+        boolean resultadoCriadorEvento = cadastrarConvidado(new Convidado(true, cpf, preEvento.getCodigo(), true));
+        return preEvento;
+    }
+
+    Convidado verificaECarregaConvidadoDoEvento(Evento evento, String cpf_cookie) {
+        Convidado convidado = null;
+        if (evento != null) {
+            List<Convidado> registroConvidados = carregarRegistroConvidado(evento.getCodigo());
+            for (Convidado convidadoRegistrado : registroConvidados) {
+                if (cpf_cookie.equalsIgnoreCase(convidadoRegistrado.getCpfPessoa())) {
+                    convidado = convidadoRegistrado;
+                    break;
+                }
+            }
+        }
+        return convidado;
+    }
+    Boolean verificaEDeletaEventoERegistros(Integer codigoEvento){
+        Boolean resultado = false;
+        Evento evento = carregarEvento(codigoEvento);
+        List<Convidado> convidados = null;
+        List<ItemEvento> itens = null;
+        if (evento != null) {
+            convidados = carregarRegistroConvidado(codigoEvento);
+            itens = carregarRegistroItens(codigoEvento);
+        } else {
+            evento = new Evento();
+            convidados = new ArrayList<>();
+            itens = new ArrayList<>();
+        }
+        for (Convidado registroConvidado : convidados) {
+            deletarRegistroConvidado(registroConvidado);
+        }
+        for (ItemEvento registroItem : itens) {
+            deletarRegistroItem(registroItem);
+        }
+        resultado = deletarEvento(codigoEvento);
+        return resultado;
+    }
+
+
 }
