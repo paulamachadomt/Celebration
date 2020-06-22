@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ads.db.projetofinal.projetofinal.controller.util.UtilLogin;
-import ads.db.projetofinal.projetofinal.model.Pessoa;
+import ads.db.projetofinal.projetofinal.model.entity.Pessoa;
 
 @RestController
 public class Autenticacao extends UtilLogin {

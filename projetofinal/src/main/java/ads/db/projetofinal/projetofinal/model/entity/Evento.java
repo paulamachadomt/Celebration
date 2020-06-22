@@ -1,4 +1,4 @@
-package ads.db.projetofinal.projetofinal.model;
+package ads.db.projetofinal.projetofinal.model.entity;
 
 import java.time.LocalDate;
 

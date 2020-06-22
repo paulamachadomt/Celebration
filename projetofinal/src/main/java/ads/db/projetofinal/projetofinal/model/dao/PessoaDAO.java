@@ -1,12 +1,12 @@
-package ads.db.projetofinal.projetofinal.dao;
+package ads.db.projetofinal.projetofinal.model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import ads.db.projetofinal.projetofinal.dao.jdbc.Conexao;
-import ads.db.projetofinal.projetofinal.model.Pessoa;
+import ads.db.projetofinal.projetofinal.model.dao.jdbc.Conexao;
+import ads.db.projetofinal.projetofinal.model.entity.Pessoa;
 
 public class PessoaDAO {
 

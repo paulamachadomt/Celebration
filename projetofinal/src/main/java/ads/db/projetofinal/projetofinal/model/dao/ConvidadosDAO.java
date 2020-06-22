@@ -1,4 +1,4 @@
-package ads.db.projetofinal.projetofinal.dao;
+package ads.db.projetofinal.projetofinal.model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import ads.db.projetofinal.projetofinal.dao.jdbc.Conexao;
-import ads.db.projetofinal.projetofinal.model.Convidado;
+import ads.db.projetofinal.projetofinal.model.dao.jdbc.Conexao;
+import ads.db.projetofinal.projetofinal.model.entity.Convidado;
 
 public class ConvidadosDAO {
 

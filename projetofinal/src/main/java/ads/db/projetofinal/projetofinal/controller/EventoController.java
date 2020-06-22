@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ads.db.projetofinal.projetofinal.model.Evento;
-import ads.db.projetofinal.projetofinal.model.Pessoa;
 import ads.db.projetofinal.projetofinal.controller.util.UtilCheck;
 import ads.db.projetofinal.projetofinal.controller.util.UtilEvento;
 import ads.db.projetofinal.projetofinal.controller.util.UtilLogin;
-import ads.db.projetofinal.projetofinal.model.Convidado;
+import ads.db.projetofinal.projetofinal.model.entity.Evento;
+import ads.db.projetofinal.projetofinal.model.entity.Pessoa;
+import ads.db.projetofinal.projetofinal.model.entity.Convidado;
 
 @RestController
 public class EventoController extends UtilEvento{

@@ -2,6 +2,9 @@ package ads.db.projetofinal.projetofinal.model;
 
 import lombok.Data;
 
+import ads.db.projetofinal.projetofinal.model.entity.Convidado;
+import ads.db.projetofinal.projetofinal.model.entity.Pessoa;
+
 @Data
 public class ResponseConvidado {
 

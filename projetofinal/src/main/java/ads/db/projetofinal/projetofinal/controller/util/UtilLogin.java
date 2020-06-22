@@ -1,7 +1,7 @@
 package ads.db.projetofinal.projetofinal.controller.util;
 
-import ads.db.projetofinal.projetofinal.dao.PessoaDAO;
-import ads.db.projetofinal.projetofinal.model.Pessoa;
+import ads.db.projetofinal.projetofinal.model.dao.PessoaDAO;
+import ads.db.projetofinal.projetofinal.model.entity.Pessoa;
 
 public class UtilLogin extends Util {
 

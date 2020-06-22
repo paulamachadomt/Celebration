@@ -1,4 +1,4 @@
-package ads.db.projetofinal.projetofinal.dao.jdbc;
+package ads.db.projetofinal.projetofinal.model.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

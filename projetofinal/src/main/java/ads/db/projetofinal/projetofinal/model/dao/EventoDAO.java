@@ -1,4 +1,4 @@
-package ads.db.projetofinal.projetofinal.dao;
+package ads.db.projetofinal.projetofinal.model.dao;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import ads.db.projetofinal.projetofinal.dao.jdbc.Conexao;
-import ads.db.projetofinal.projetofinal.model.Evento;
+import ads.db.projetofinal.projetofinal.model.dao.jdbc.Conexao;
+import ads.db.projetofinal.projetofinal.model.entity.Evento;
 
 public class EventoDAO {
 

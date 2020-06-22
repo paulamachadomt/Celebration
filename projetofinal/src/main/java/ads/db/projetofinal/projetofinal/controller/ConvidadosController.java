@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ads.db.projetofinal.projetofinal.controller.util.UtilCheck;
 import ads.db.projetofinal.projetofinal.controller.util.UtilEvento;
-import ads.db.projetofinal.projetofinal.model.Convidado;
-import ads.db.projetofinal.projetofinal.model.Item;
-import ads.db.projetofinal.projetofinal.model.Pessoa;
+import ads.db.projetofinal.projetofinal.model.entity.Convidado;
+import ads.db.projetofinal.projetofinal.model.entity.Item;
+import ads.db.projetofinal.projetofinal.model.entity.Pessoa;
 import ads.db.projetofinal.projetofinal.model.ResponseConvidado;
 
 @RestController

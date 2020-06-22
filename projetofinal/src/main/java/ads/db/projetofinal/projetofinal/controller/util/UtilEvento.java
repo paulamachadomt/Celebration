@@ -3,18 +3,18 @@ package ads.db.projetofinal.projetofinal.controller.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import ads.db.projetofinal.projetofinal.dao.EventoDAO;
-import ads.db.projetofinal.projetofinal.dao.ConvidadosDAO;
-import ads.db.projetofinal.projetofinal.dao.PessoaDAO;
-import ads.db.projetofinal.projetofinal.dao.ResponseDAO;
-import ads.db.projetofinal.projetofinal.model.Evento;
-import ads.db.projetofinal.projetofinal.model.Convidado;
-import ads.db.projetofinal.projetofinal.model.Pessoa;
+import ads.db.projetofinal.projetofinal.model.dao.EventoDAO;
+import ads.db.projetofinal.projetofinal.model.dao.ConvidadosDAO;
+import ads.db.projetofinal.projetofinal.model.dao.PessoaDAO;
+import ads.db.projetofinal.projetofinal.model.dao.ResponseDAO;
+import ads.db.projetofinal.projetofinal.model.dao.ItemDAO;
+import ads.db.projetofinal.projetofinal.model.dao.ItemEventoDAO;
+import ads.db.projetofinal.projetofinal.model.entity.Evento;
+import ads.db.projetofinal.projetofinal.model.entity.Convidado;
+import ads.db.projetofinal.projetofinal.model.entity.Pessoa;
 import ads.db.projetofinal.projetofinal.model.ResponseConvidado;
-import ads.db.projetofinal.projetofinal.dao.ItemDAO;
-import ads.db.projetofinal.projetofinal.dao.ItemEventoDAO;
-import ads.db.projetofinal.projetofinal.model.Item;
-import ads.db.projetofinal.projetofinal.model.ItemEvento;
+import ads.db.projetofinal.projetofinal.model.entity.Item;
+import ads.db.projetofinal.projetofinal.model.entity.ItemEvento;
 
 public class UtilEvento extends Util {
 

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ads.db.projetofinal.projetofinal.controller.util.UtilCheck;
 import ads.db.projetofinal.projetofinal.controller.util.UtilEvento;
-import ads.db.projetofinal.projetofinal.model.Item;
-import ads.db.projetofinal.projetofinal.model.ItemEvento;
+import ads.db.projetofinal.projetofinal.model.entity.Item;
+import ads.db.projetofinal.projetofinal.model.entity.ItemEvento;
 
 @RestController
 public class ItemEventoController extends UtilEvento {
