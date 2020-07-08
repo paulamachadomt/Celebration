@@ -1,0 +1,32 @@
+@import '../../utils/variables';
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 360px;
+  padding: 42px;
+  border-radius: 6px;
+  background-color: $--white-1;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
+
+  img {
+    width: 100%;
+    height: 180px;
+    margin-bottom: 64px;
+  }
+  
+  &-text {
+    justify-self: flex-end;
+    color: $--grey-2;
+    text-align: center;
+
+    span {
+      display: block;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+  }
+}

@@ -1,0 +1,43 @@
+@import '../../utils/variables';
+@import '../../utils/global';
+
+.button {
+  padding: 16px 32px;
+  color: $--white-1;
+  font-weight: 700;
+  background-color: $--primary;
+  border: 1px solid $--primary;
+  border-radius: 6px;
+  transition: all 420ms;
+  cursor: pointer;
+
+  &:hover {
+    color: $--primary;
+    background-color: $--white-1;
+    transition: all 420ms;
+  }
+}
+
+.main-center {
+  display: flex;
+  padding: 164px 0 100px;
+
+  &-left {
+    width: 70%;
+  }
+
+  &-divider {
+    margin: 0 64px;
+    border-left: 1px solid $--primary;
+  }
+
+  &-right {
+    width: 30%;
+  }
+}
+
+.main-bottom {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 42px;
+}

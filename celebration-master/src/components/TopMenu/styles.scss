@@ -1,0 +1,85 @@
+@import '../../utils/variables';
+
+.menu{
+  // width: calc(100% + 17px);
+  height: 90px;
+  padding: 22px 0;
+  line-height: 24px;
+  font-size: 32px;
+  font-family: 'Open Sans Condensed', sans-serif;
+  color: $--primary;
+  
+  &-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &-logo {
+    display: flex;
+    align-items: flex-end;
+    margin-right: 60px;
+
+    &-image {
+      width: 42px;
+    }
+  }
+
+  &-nav {
+    display: flex;
+    justify-content: space-between;
+    width: 25%;
+
+    .menu-link {
+      margin-right: 8px;
+    }
+  }
+
+  &-user {
+    margin-left: auto;
+    width: 300px;
+    text-align: right;
+
+    &-button {
+      &.button {
+        padding: 6px 24px;
+        color: $--primary;
+        font-weight: 300;
+        background-color: $--white-1;
+        transition: all 420ms;
+
+        &:hover {
+          background-color: $--primary;
+          color: $--white-1;
+          transition: all 420ms;
+        }
+      }
+    }
+  }
+}
+
+.menu-link {
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 0;
+    height: 2px;
+    transition: all 0.2s ease-in-out;
+    transition-duration: 0.55s;
+    opacity: 0;
+    background-color: $--primary;
+  }
+
+  &:hover {
+    &:after {
+      width: 100%;
+      opacity: 1;
+    }
+  }
+}

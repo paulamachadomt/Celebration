@@ -1,0 +1,17 @@
+@import '../../utils/variables';
+@import '../../utils/global';
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding: 8px 32px;
+  color: $--grey-1;
+  font-weight: 800;
+  border-radius: 4px;
+  background-color: $--white-2;
+}
+
+.list-header > span:first-child {
+  width: 35%;
+}

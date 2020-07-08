@@ -1,0 +1,36 @@
+@import '../../utils/variables';
+
+.tab-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  margin: 0 0 32px;
+  overflow: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+  user-select: none;
+  
+  &-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid $--grey-4;
+    flex-grow: 1;
+    flex-shrink: 0;
+    list-style: none;
+
+    &-item {
+      padding: .5em 1em;
+      vertical-align: top;
+      color: $--grey-2;
+      font-size: 2.3rem;
+      font-family: 'Open Sans Condensed', sans-serif;
+      cursor: pointer;
+    }
+
+    &-item.is-active {
+      border-bottom: 1px solid $--primary;
+      color: $--primary
+    }
+  }
+}

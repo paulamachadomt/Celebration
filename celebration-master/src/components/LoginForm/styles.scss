@@ -1,0 +1,37 @@
+@import '../../utils/variables';
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  text-align: center;
+  background-color: $--white-1;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.24);
+  
+  &-title {
+    margin-bottom: 24px;
+    font-size: 22px;
+    font-weight: 700;
+    color: $--primary;
+  }
+
+  input {
+    width: 100%;
+    margin-bottom: 16px;
+    padding: 16px;
+    font-size: 14px;
+    border: 0;
+    outline: 0;
+    background-color: $--white-2;
+  }
+
+  &-register {
+    margin-top: 15px;
+    color: $--grey-4;
+    font-size: 12px;
+
+    a {
+      color: $--primary;
+    }
+  }
+}

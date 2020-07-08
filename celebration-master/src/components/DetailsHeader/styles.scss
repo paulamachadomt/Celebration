@@ -1,0 +1,76 @@
+@import '../../utils/variables';
+
+.details-header {
+  width: 100%;
+  padding: 22px 0 8px;
+    
+  &-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &-left {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    color: $--grey-2;
+
+    &-title {
+      font-size: 34px;
+      margin-bottom: 8px;
+    }
+
+    &-text {
+      display: flex;
+    }
+
+    &-info span {
+      margin-right: 54px;
+    }
+  }
+
+  &-right {
+    width: 25%;
+    height: 100px;
+  }
+
+  &-button {
+    height: 100%;
+
+    &.button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 6px 24px;
+      color: $--primary;
+      font-size: 22px;
+      font-weight: 600;
+      border: 1px solid $--white-1;
+      background-color: $--white-1;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.24);
+      transition: all 420ms;
+
+      &:hover {
+        background-color: $--primary;
+        border: 1px solid $--primary;
+        color: $--white-1;
+        transition: all 420ms;
+      }
+
+      &.active {
+        background-color: $--complementary;
+        border: 1px solid $--complementary;
+        color: $--white-1;
+
+        &:hover {
+          color: $--primary;
+        }
+      }
+    }
+  }
+
+}
